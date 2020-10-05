@@ -169,8 +169,7 @@ public class Terminal implements PropertyChangeListener {
                 }
                 break;
             case "END":
-                final int points = (int) event.getNewValue();
-                printPoints(points);
+                this.printPoints((int) event.getNewValue());
                 this.kill();
                 break;
             default:

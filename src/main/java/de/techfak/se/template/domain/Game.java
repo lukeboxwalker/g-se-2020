@@ -12,6 +12,7 @@ public class Game implements Observable {
 
     private final Board board;
     private final List<PropertyChangeListener> observers;
+    private final int[] pointsPerCol;
 
     private final Dice<Color> colorDice;
     private final Dice<Integer> numberDice;
@@ -21,6 +22,7 @@ public class Game implements Observable {
     public Game(final Board board) {
         this.board = board;
         this.observers = new ArrayList<>();
+        this.pointsPerCol = new int[]{5, 3, 3, 3, 2, 2, 2, 1, 2, 2, 2, 3, 3, 3, 5};
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.diceResult = new DiceResult();
@@ -53,7 +55,7 @@ public class Game implements Observable {
             this.observers.forEach(observer -> observer.propertyChange(crossEvent));
 
             if (gameFinished) {
-                int points = 0;
+                int points = calculatePoints();
                 PropertyChangeEvent endEvent = new PropertyChangeEvent(this, "END", null, points);
                 this.observers.forEach(observer -> observer.propertyChange(endEvent));
             }
@@ -70,6 +72,16 @@ public class Game implements Observable {
         diceResult.setRolledNumbers(numberDice.rollDice(3));
         PropertyChangeEvent diceEvent = new PropertyChangeEvent(this, "DICE_RESULT", null, diceResult);
         this.observers.forEach(observer -> observer.propertyChange(diceEvent));
+    }
+
+    private int calculatePoints() {
+        int points = 10;
+        for (int x = 0; x < board.getLengthX(); x++) {
+            if (board.isColumnFull(x)) {
+                points += this.pointsPerCol[x];
+            }
+        }
+        return points;
     }
 
     private boolean isGameFinished() {

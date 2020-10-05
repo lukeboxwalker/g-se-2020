@@ -13,6 +13,10 @@ public class Board implements Iterable<Tile> {
         startColumn = 7;
     }
 
+    public int getLengthX() {
+        return tiles.length;
+    }
+
     public int getStartColumn() {
         return startColumn;
     }
@@ -103,6 +107,20 @@ public class Board implements Iterable<Tile> {
                 getTile(position).cross();
             }
             return true;
+        }
+        return false;
+    }
+
+    public boolean isColumnFull(int x) {
+        if (x >= 0 && x < tiles.length) {
+            boolean isFull = true;
+            for (int y = 0; y < tiles[0].length; y++) {
+                if (!tiles[x][y].isCrossed()) {
+                    isFull = false;
+                    break;
+                }
+            }
+            return isFull;
         }
         return false;
     }
