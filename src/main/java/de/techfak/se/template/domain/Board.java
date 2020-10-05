@@ -45,6 +45,9 @@ public class Board implements Iterable<Tile> {
             if (!checkBounds(position)) {
                 return false;
             }
+            if (getTile(position).isCrossed()) {
+                return false;
+            }
         }
         return true;
     }
