@@ -216,8 +216,8 @@
                     <repositoryLayout>flat</repositoryLayout>
                     <programs>
                         <program>
-                            <mainClass>de.techfak.gse.ybroeker.GseRadio</mainClass>
-                            <id>helloworld</id>
+                            <mainClass>de.techfak.gse.template.GseAgain</mainClass>
+                            <id>GseAgain</id>
                         </program>
                     </programs>
                 </configuration>
