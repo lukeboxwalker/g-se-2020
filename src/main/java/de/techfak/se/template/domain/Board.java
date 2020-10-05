@@ -1,9 +1,10 @@
 package de.techfak.se.template.domain;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
-public class Board {
+public class Board implements Iterable<Tile> {
     private final Tile[][] tiles;
     private int startColumn;
 
@@ -111,5 +112,10 @@ public class Board {
         return "Board{" +
                 "tiles=" + Arrays.deepToString(tiles) +
                 '}';
+    }
+
+    @Override
+    public Iterator<Tile> iterator() {
+        return Arrays.stream(tiles).flatMap(Arrays::stream).iterator();
     }
 }

@@ -124,8 +124,6 @@ public class Terminal implements PropertyChangeListener {
         }
     }
 
-
-
     private void printDiceResult(DiceResult diceResult) {
         List<Color> colors = diceResult.getRolledColors();
         List<Integer> numbers = diceResult.getRolledNumbers();
@@ -149,23 +147,31 @@ public class Terminal implements PropertyChangeListener {
         System.out.println(stringBuilder.toString() + "\n");
     }
 
+    private void printPoints(int points) {
+        System.out.println("Points: " + points);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         switch (event.getPropertyName()) {
-            case "BOARD":
-                initBoard((Board) event.getNewValue());
+            case "START":
+                this.initBoard((Board) event.getNewValue());
                 break;
             case "DICE_RESULT":
-                DiceResult result = (DiceResult) event.getNewValue();
-                printDiceResult(result);
-                printBoard();
+                this.printDiceResult((DiceResult) event.getNewValue());
+                this.printBoard();
                 break;
             case "CROSS_POSITIONS":
                 final List<Position> positions = (List<Position>) event.getNewValue();
                 for (Position position : positions) {
                     this.stringBoard[position.getX()][position.getY()] = "X";
                 }
+                break;
+            case "END":
+                final int points = (int) event.getNewValue();
+                printPoints(points);
+                this.kill();
                 break;
             default:
                 break;
