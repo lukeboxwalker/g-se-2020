@@ -4,6 +4,7 @@ import de.techfak.se.template.domain.BoardCreationException;
 import de.techfak.se.template.domain.BoardFactory;
 import de.techfak.se.template.domain.ExitCodeException;
 import de.techfak.se.template.domain.Game;
+import de.techfak.se.template.domain.Terminal;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public final class GseAgain {
                     throw new BoardCreationException("File " + DEFAULT_BOARD_CONFIG + "did not exist!");
                 }
             }
+            Terminal terminal = new Terminal(game);
+            terminal.listenForInstructions();
         } catch (URISyntaxException e) {
             System.err.println(e.getMessage());
         } catch (ExitCodeException e) {

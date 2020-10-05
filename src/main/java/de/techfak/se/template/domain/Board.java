@@ -9,6 +9,10 @@ public class Board {
         this.tiles = tiles;
     }
 
+    public Tile[][] getTiles() {
+        return tiles;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
