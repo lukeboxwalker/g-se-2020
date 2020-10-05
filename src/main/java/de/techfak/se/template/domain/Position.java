@@ -9,6 +9,14 @@ public class Position {
         this.y = y;
     }
 
+    public Position add(Position position) {
+        return add(position.getX(), position.getY());
+    }
+
+    public Position add(int x, int y) {
+        return new Position(this.x + x, this.y + y);
+    }
+
     public int getX() {
         return x;
     }
@@ -23,6 +31,21 @@ public class Position {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(x) * Integer.hashCode(y);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Position) {
+            Position position = (Position) obj;
+            return x == position.x && y == position.y;
+        } else {
+            return false;
+        }
     }
 
     @Override

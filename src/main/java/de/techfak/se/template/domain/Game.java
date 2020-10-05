@@ -32,11 +32,27 @@ public class Game implements Observable {
     }
 
     public boolean crossTiles(final List<Position> positions) {
-        PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
-        this.observers.forEach(observer -> observer.propertyChange(crossEvent));
+        if (!diceResult.getRolledNumbers().contains(positions.size())) {
+            return false;
+        }
+        Color color = null;
+        for (Position position : positions) {
+            if (color == null) {
+                color = board.getColorAt(position);
+            } else if (color != board.getColorAt(position)){
+                return false;
+            }
+        }
 
-        rollDice();
-        return true;
+        if (board.cross(positions)) {
+            PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
+            this.observers.forEach(observer -> observer.propertyChange(crossEvent));
+
+            rollDice();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void rollDice() {
