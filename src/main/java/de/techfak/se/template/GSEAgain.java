@@ -3,9 +3,9 @@ package de.techfak.se.template;
 /**
  * The main class, contains just the main method to start the application.
  */
-public final class Main {
+public final class GSEAgain {
 
-    private Main() {
+    private GSEAgain() {
     }
 
     public static void main(final String... args) {
