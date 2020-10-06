@@ -1,4 +1,4 @@
-package de.techfak.se.template.domain;
+package de.techfak.se.lwalkenhorst.domain;
 
 public class Position {
     private int posX;

@@ -1,4 +1,4 @@
-package de.techfak.se.template.domain;
+package de.techfak.se.lwalkenhorst.domain;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
