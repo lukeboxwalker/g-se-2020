@@ -20,7 +20,10 @@ public class Board implements Iterable<Tile> {
     }
 
     public int getLengthY() {
-        return tiles.length == 0 ? 0 : tiles[0].length;
+        if (tiles.length == 0) {
+            return 0;
+        }
+        return tiles[0].length;
     }
 
     public int getStartColumn() {
