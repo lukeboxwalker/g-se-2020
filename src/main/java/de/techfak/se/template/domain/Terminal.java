@@ -85,7 +85,11 @@ public class Terminal implements PropertyChangeListener {
         this.stringBoard = new String[lengthX][lengthY];
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
-                stringBoard[x][y] = String.valueOf(tiles[x][y].getColor().getIdentifier());
+                if (tiles[x][y].isCrossed()) {
+                    stringBoard[x][y] = "X";
+                } else {
+                    stringBoard[x][y] = String.valueOf(tiles[x][y].getColor().getIdentifier());
+                }
             }
         }
     }
@@ -148,7 +152,7 @@ public class Terminal implements PropertyChangeListener {
     }
 
     private void printPoints(int points) {
-        System.out.println("Points: " + points);
+        System.out.println("Game won points: " + points);
     }
 
     @SuppressWarnings("unchecked")

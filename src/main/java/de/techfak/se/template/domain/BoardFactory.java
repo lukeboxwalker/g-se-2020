@@ -37,6 +37,10 @@ public class BoardFactory {
                     colorIdentifier = line.charAt(x);
                     if (colorMap.containsKey(colorIdentifier)) {
                         tiles[x][y] = new Tile(colorMap.get(colorIdentifier));
+                    } else if (colorIdentifier == 'X') {
+                        final Tile tile = new Tile(Color.GREEN);
+                        tile.cross();
+                        tiles[x][y] = tile;
                     } else {
                         throw new BoardCreationException("Unknown color: " + colorIdentifier + " !");
                     }

@@ -49,9 +49,9 @@ public class Game implements Observable {
                 int points = calculatePoints();
                 PropertyChangeEvent endEvent = new PropertyChangeEvent(this, "END", null, points);
                 this.observers.forEach(observer -> observer.propertyChange(endEvent));
+            } else {
+                rollDice();
             }
-
-            rollDice();
             return true;
         } else {
             return false;
