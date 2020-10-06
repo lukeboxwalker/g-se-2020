@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,17 +13,17 @@ public class BoardFactory {
     private static final int BOARD_SIZE_X = 15;
     private static final int BOARD_SIZE_Y = 7;
 
-    private final URI uri;
+    private final File file;
     private final Map<Character, Color> colorMap;
 
-    public BoardFactory(final URI uri) {
-        this.uri = uri;
+    public BoardFactory(final File file) {
+        this.file = file;
         this.colorMap = new HashMap<>();
         Arrays.stream(Color.values()).forEach(color -> colorMap.put(color.getIdentifier(), color));
     }
 
     public Board createBoard() throws IOException, BoardCreationException {
-        final BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(uri)));
+        final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         final Tile[][] tiles = new Tile[BOARD_SIZE_X][BOARD_SIZE_Y];
         String line;
         char colorIdentifier;

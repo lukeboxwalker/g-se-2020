@@ -6,7 +6,8 @@ import de.techfak.se.template.domain.ExitCodeException;
 import de.techfak.se.template.domain.Game;
 import de.techfak.se.template.domain.Terminal;
 
-import java.io.FileNotFoundException;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,29 +27,31 @@ public final class GseAgain {
         try {
             final Game game;
             if (args.length == 1) {
-                game = loadGame(new URI(args[0]));
+                game = loadGame(new File(args[0]));
             } else {
                 final URL defaultURL = (getClass().getClassLoader().getResource(DEFAULT_BOARD_CONFIG));
                 if (defaultURL != null) {
-                    game = loadGame(defaultURL.toURI());
+                    try {
+                        game = loadGame(new File(defaultURL.toURI()));
+                    } catch (URISyntaxException e) {
+                        throw new BoardCreationException(e);
+                    }
                 } else {
                     throw new BoardCreationException("File " + DEFAULT_BOARD_CONFIG + "did not exist!");
                 }
             }
             Terminal terminal = new Terminal(game);
             terminal.listenForInstructions();
-        } catch (URISyntaxException e) {
-            System.err.println(e.getMessage());
         } catch (ExitCodeException e) {
             System.err.println(e.getMessage());
             System.exit(e.getExitCode());
         }
     }
 
-    private Game loadGame(final URI fileURI) throws BoardCreationException {
+    private Game loadGame(final File file) throws BoardCreationException {
         final Game game;
         try {
-            final BoardFactory factory = new BoardFactory(fileURI);
+            final BoardFactory factory = new BoardFactory(file);
             game = new Game(factory.createBoard());
         } catch (IOException e) {
             throw new BoardCreationException(e);

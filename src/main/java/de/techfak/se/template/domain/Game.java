@@ -16,7 +16,7 @@ public class Game implements Observable {
 
     private final Dice<Color> colorDice;
     private final Dice<Integer> numberDice;
-
+    private final Map<Color, Boolean> fullColors;
     private final DiceResult diceResult;
 
     public Game(final Board board) {
@@ -26,7 +26,8 @@ public class Game implements Observable {
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.diceResult = new DiceResult();
-
+        this.fullColors = new HashMap<>();
+        Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
     }
 
     public void start() {
@@ -39,22 +40,12 @@ public class Game implements Observable {
         if (!diceResult.getRolledNumbers().contains(positions.size())) {
             return false;
         }
-        Color color = null;
-        for (Position position : positions) {
-            if (color == null) {
-                color = board.getColorAt(position);
-            } else if (color != board.getColorAt(position)){
-                return false;
-            }
-        }
 
-        if (board.cross(positions)) {
-            boolean gameFinished = isGameFinished();
-
+        if (board.cross(positions, diceResult.getRolledColors())) {
             PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
             this.observers.forEach(observer -> observer.propertyChange(crossEvent));
 
-            if (gameFinished) {
+            if (isGameFinished()) {
                 int points = calculatePoints();
                 PropertyChangeEvent endEvent = new PropertyChangeEvent(this, "END", null, points);
                 this.observers.forEach(observer -> observer.propertyChange(endEvent));
@@ -85,8 +76,7 @@ public class Game implements Observable {
     }
 
     private boolean isGameFinished() {
-        Map<Color, Boolean> fullColors = new HashMap<>();
-        Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
+        fullColors.replaceAll((key, value) -> true);
         for (Tile tile : board) {
             if (!tile.isCrossed()) {
                 fullColors.put(tile.getColor(), false);

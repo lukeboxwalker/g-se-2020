@@ -25,7 +25,7 @@ public class Board implements Iterable<Tile> {
         return tiles;
     }
 
-    public Color getColorAt(Position position) {
+    private Color getColorAt(Position position) {
         return tiles[position.getX()][position.getY()].getColor();
     }
 
@@ -41,7 +41,6 @@ public class Board implements Iterable<Tile> {
 
     private boolean checkBounds(List<Position> positions) {
         for (Position position : positions) {
-            //Check if position is out of bounds
             if (!checkBounds(position)) {
                 return false;
             }
@@ -104,8 +103,24 @@ public class Board implements Iterable<Tile> {
         return validGroup;
     }
 
-    public boolean cross(List<Position> positions) {
-        if (checkBounds(positions) && isGroup(positions) && hasNeighborOrStartColumn(positions)) {
+    private boolean isColorValid(List<Position> positions, List<Color> possibleColors) {
+        Color color = null;
+        for (Position position : positions) {
+            if (color == null) {
+                color = getColorAt(position);
+                if (!possibleColors.contains(color)) {
+                    return false;
+                }
+            } else if (color != getColorAt(position)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean cross(List<Position> positions, List<Color> possibleColors) {
+        if (checkBounds(positions) && isColorValid(positions, possibleColors)
+                && isGroup(positions) && hasNeighborOrStartColumn(positions)) {
             for (Position position : positions) {
                 getTile(position).cross();
             }

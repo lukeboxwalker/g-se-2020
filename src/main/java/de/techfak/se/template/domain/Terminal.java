@@ -120,7 +120,7 @@ public class Terminal implements PropertyChangeListener {
             }
         }
         if (!game.crossTiles(positions)) {
-            System.out.println("Could not cross these tile(s). Stick to the rules!");
+            System.out.println("Could not cross these tile(s). Stick to the rules!\n");
         }
     }
 
