@@ -28,18 +28,18 @@ public final class GseAgain {
             if (args.length == 1) {
                 game = loadGame(new File(args[0]));
             } else {
-                final URL defaultURL = (getClass().getClassLoader().getResource(DEFAULT_BOARD_CONFIG));
-                if (defaultURL != null) {
+                final URL defaultURL = Thread.currentThread().getContextClassLoader().getResource(DEFAULT_BOARD_CONFIG);
+                if (defaultURL == null) {
+                    throw new BoardCreationExceptionAbstract("File " + DEFAULT_BOARD_CONFIG + "did not exist!");
+                } else {
                     try {
                         game = loadGame(new File(defaultURL.toURI()));
                     } catch (URISyntaxException e) {
                         throw new BoardCreationExceptionAbstract(e);
                     }
-                } else {
-                    throw new BoardCreationExceptionAbstract("File " + DEFAULT_BOARD_CONFIG + "did not exist!");
                 }
             }
-            Terminal terminal = new Terminal(game);
+            final Terminal terminal = new Terminal(game);
             terminal.listenForInstructions();
         } catch (AbstractExitCodeException e) {
             System.err.println(e.getMessage());

@@ -19,23 +19,27 @@ public class Board implements Iterable<Tile> {
         return tiles.length;
     }
 
+    public int getLengthY() {
+        return tiles.length == 0 ? 0 : tiles[0].length;
+    }
+
     public int getStartColumn() {
         return startColumn;
     }
 
-    public Tile[][] getTiles() {
-        return tiles;
-    }
-
-    private Color getColorAt(Position position) {
+    private Color getColorAt(final Position position) {
         return tiles[position.getPosX()][position.getPosY()].getColor();
     }
 
-    private Tile getTile(Position position) {
-        return tiles[position.getPosX()][position.getPosY()];
+    public Tile getTileAt(final int posX, final int posY) {
+        return tiles[posX][posY];
     }
 
-    private boolean checkBounds(Position position) {
+    public Tile getTileAt(final Position position) {
+        return getTileAt(position.getPosX(), position.getPosY());
+    }
+
+    private boolean checkBounds(final Position position) {
         if (position.getPosX() >= tiles.length || position.getPosX() < 0) {
             return false;
         } else {
@@ -43,26 +47,26 @@ public class Board implements Iterable<Tile> {
         }
     }
 
-    private boolean checkBounds(List<Position> positions) {
-        for (Position position : positions) {
+    private boolean checkBounds(final List<Position> positions) {
+        for (final Position position : positions) {
             if (!checkBounds(position)) {
                 return false;
             }
-            if (getTile(position).isCrossed()) {
+            if (getTileAt(position).isCrossed()) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean isGroup(List<Position> positions) {
-        boolean hasNeighbor;
+    private boolean isGroup(final List<Position> positions) {
         if (positions.size() <= 1) {
             return true;
         }
-        for (Position root : positions) {
+        boolean hasNeighbor;
+        for (final Position root : positions) {
             hasNeighbor = false;
-            for (Position position : positions) {
+            for (final Position position : positions) {
                 if (root.add(-1, 0).equals(position) || root.add(1, 0).equals(position)
                         || root.add(0, -1).equals(position) || root.add(0, 1).equals(position)) {
                     hasNeighbor = true;
@@ -76,30 +80,30 @@ public class Board implements Iterable<Tile> {
         return true;
     }
 
-    private boolean hasNeighborOrStartColumn(List<Position> positions) {
+    private boolean hasNeighborOrStartColumn(final List<Position> positions) {
         boolean validGroup = false;
-        for (Position position : positions) {
+        for (final Position position : positions) {
             if (position.getPosX() == startColumn) {
                 validGroup = true;
                 break;
             }
             Position neighbor = position.add(-1, 0);
-            if (checkBounds(neighbor) && getTile(neighbor).isCrossed()) {
+            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
                 validGroup = true;
                 break;
             }
             neighbor = position.add(1, 0);
-            if (checkBounds(neighbor) && getTile(neighbor).isCrossed()) {
+            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
                 validGroup = true;
                 break;
             }
             neighbor = position.add(0, -1);
-            if (checkBounds(neighbor) && getTile(neighbor).isCrossed()) {
+            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
                 validGroup = true;
                 break;
             }
             neighbor = position.add(0, 1);
-            if (checkBounds(neighbor) && getTile(neighbor).isCrossed()) {
+            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
                 validGroup = true;
                 break;
             }
@@ -107,9 +111,9 @@ public class Board implements Iterable<Tile> {
         return validGroup;
     }
 
-    private boolean isColorValid(List<Position> positions, List<Color> possibleColors) {
+    private boolean isColorValid(final List<Position> positions, final List<Color> possibleColors) {
         Color color = null;
-        for (Position position : positions) {
+        for (final Position position : positions) {
             if (color == null) {
                 color = getColorAt(position);
                 if (!possibleColors.contains(color)) {
@@ -122,18 +126,18 @@ public class Board implements Iterable<Tile> {
         return true;
     }
 
-    public boolean cross(List<Position> positions, List<Color> possibleColors) {
+    public boolean cross(final List<Position> positions, final List<Color> possibleColors) {
         if (checkBounds(positions) && isColorValid(positions, possibleColors)
                 && isGroup(positions) && hasNeighborOrStartColumn(positions)) {
-            for (Position position : positions) {
-                getTile(position).cross();
+            for (final Position position : positions) {
+                getTileAt(position).cross();
             }
             return true;
         }
         return false;
     }
 
-    public boolean isColumnFull(int col) {
+    public boolean isColumnFull(final int col) {
         if (col >= 0 && col < tiles.length) {
             boolean isFull = true;
             for (int row = 0; row < tiles[0].length; row++) {

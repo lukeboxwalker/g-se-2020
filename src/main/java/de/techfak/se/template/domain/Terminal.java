@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 
 public class Terminal implements PropertyChangeListener {
 
@@ -80,20 +80,16 @@ public class Terminal implements PropertyChangeListener {
         running.set(false);
     }
 
-    private void initBoard(Board board) {
-        Tile[][] tiles = board.getTiles();
-        if (tiles.length == 0) {
-            return;
-        }
-        int lengthX = tiles.length;
-        int lengthY = tiles[0].length;
+    private void initBoard(final Board board) {
+        final int lengthX = board.getLengthX();
+        final int lengthY = board.getLengthY();
         this.stringBoard = new String[lengthX][lengthY];
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
-                if (tiles[x][y].isCrossed()) {
+                if (board.getTileAt(x, y).isCrossed()) {
                     stringBoard[x][y] = CROSS;
                 } else {
-                    stringBoard[x][y] = String.valueOf(tiles[x][y].getColor().getIdentifier());
+                    stringBoard[x][y] = String.valueOf(board.getTileAt(x, y).getColor().getIdentifier());
                 }
             }
         }
@@ -107,7 +103,7 @@ public class Terminal implements PropertyChangeListener {
         System.out.println("\n--|------------------------------");
         for (int y = 0; y < stringBoard[0].length; y++) {
             System.out.print(y + 1 + " | ");
-            for (String[] strings : stringBoard) {
+            for (final String[] strings : stringBoard) {
                 System.out.print(strings[y] + EMPTY);
             }
             System.out.print(BREAK);
@@ -115,12 +111,12 @@ public class Terminal implements PropertyChangeListener {
         System.out.print(BREAK);
     }
 
-    private void crossTiles(List<String> coordinates) throws UnknownCommandException {
+    private void crossTiles(final List<String> coordinates) throws UnknownCommandException {
         final List<Position> positions = new ArrayList<>(coordinates.size());
         int posX;
         int posY;
-        for (String coordinate : coordinates) {
-            posX = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase());
+        for (final String coordinate : coordinates) {
+            posX = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase(Locale.ROOT));
             if (coordinate.length() == 2 && Character.isDigit(coordinate.charAt(1)) && posX != -1) {
                 posY = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
                 positions.add(new Position(posX, posY));
@@ -133,13 +129,13 @@ public class Terminal implements PropertyChangeListener {
         }
     }
 
-    private void printDiceResult(DiceResult diceResult) {
-        List<Color> colors = diceResult.getRolledColors();
-        List<Integer> numbers = diceResult.getRolledNumbers();
-        StringBuilder stringBuilder = new StringBuilder();
+    private void printDiceResult(final DiceResult diceResult) {
+        final List<Color> colors = diceResult.getRolledColors();
+        final List<Integer> numbers = diceResult.getRolledNumbers();
+        final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\nColors: ");
         for (int i = 0; i < colors.size(); i++) {
-            Color color = colors.get(i);
+            final Color color = colors.get(i);
             stringBuilder.append(color.name());
             if (i + 1 < colors.size()) {
                 stringBuilder.append(SEPARATE);
@@ -147,7 +143,7 @@ public class Terminal implements PropertyChangeListener {
         }
         stringBuilder.append("\nNumbers: ");
         for (int i = 0; i < numbers.size(); i++) {
-            int number = numbers.get(i);
+            final int number = numbers.get(i);
             stringBuilder.append(number);
             if (i + 1 < numbers.size()) {
                 stringBuilder.append(SEPARATE);
@@ -156,13 +152,13 @@ public class Terminal implements PropertyChangeListener {
         System.out.println(stringBuilder.toString() + BREAK);
     }
 
-    private void printPoints(int points) {
+    private void printPoints(final int points) {
         System.out.println("Game won points: " + points);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void propertyChange(PropertyChangeEvent event) {
+    public void propertyChange(final PropertyChangeEvent event) {
         switch (event.getPropertyName()) {
             case "START":
                 this.initBoard((Board) event.getNewValue());
@@ -173,7 +169,7 @@ public class Terminal implements PropertyChangeListener {
                 break;
             case "CROSS_POSITIONS":
                 final List<Position> positions = (List<Position>) event.getNewValue();
-                for (Position position : positions) {
+                for (final Position position : positions) {
                     this.stringBoard[position.getPosX()][position.getPosY()] = CROSS;
                 }
                 break;

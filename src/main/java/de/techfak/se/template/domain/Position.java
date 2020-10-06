@@ -4,16 +4,16 @@ public class Position {
     private int posX;
     private int posY;
 
-    public Position(int posX, int posY) {
+    public Position(final int posX, final int posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
-    public Position add(Position position) {
+    public Position add(final Position position) {
         return add(position.getPosX(), position.getPosY());
     }
 
-    public Position add(int posX, int posY) {
+    public Position add(final int posX, final int posY) {
         return new Position(this.posX + posX, this.posY + posY);
     }
 
@@ -21,7 +21,7 @@ public class Position {
         return posX;
     }
 
-    public void setPosX(int posX) {
+    public void setPosX(final int posX) {
         this.posX = posX;
     }
 
@@ -29,7 +29,7 @@ public class Position {
         return posY;
     }
 
-    public void setPosY(int posY) {
+    public void setPosY(final int posY) {
         this.posY = posY;
     }
 
@@ -39,9 +39,9 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof Position) {
-            Position position = (Position) obj;
+            final Position position = (Position) obj;
             return posX == position.posX && posY == position.posY;
         } else {
             return false;

@@ -18,7 +18,7 @@ public class DiceResult {
         return rolledNumbers;
     }
 
-    public void setRolledNumbers(List<Integer> rolledNumbers) {
+    public void setRolledNumbers(final List<Integer> rolledNumbers) {
         this.rolledNumbers = rolledNumbers;
     }
 
@@ -26,7 +26,7 @@ public class DiceResult {
         return rolledColors;
     }
 
-    public void setRolledColors(List<Color> rolledColors) {
+    public void setRolledColors(final List<Color> rolledColors) {
         this.rolledColors = rolledColors;
     }
 }

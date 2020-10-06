@@ -4,7 +4,7 @@ public class Tile {
     private final Color color;
     private boolean crossed;
 
-    public Tile(Color color) {
+    public Tile(final Color color) {
         this.color = color;
     }
 

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class GseAgainTest {
 
     @Test
-    void test() {
+    public void test() {
         Assertions.assertThat(true).isTrue();
     }
 

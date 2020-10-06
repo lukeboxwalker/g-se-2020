@@ -11,10 +11,10 @@ public class Dice<T> {
         this.faces = faces;
     }
 
-    public List<T> rollDice(int times) {
+    public List<T> rollDice(final int times) {
         final List<T> result = new ArrayList<>();
         for (int i = 0; i < times; i++) {
-            int randomIndex = (int) (Math.random() * faces.size());
+            final int randomIndex = (int) (Math.random() * faces.size());
             result.add(faces.get(randomIndex));
         }
         return result;

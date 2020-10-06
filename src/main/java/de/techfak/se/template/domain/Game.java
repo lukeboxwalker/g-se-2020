@@ -31,7 +31,7 @@ public class Game implements Observable {
     }
 
     public void start() {
-        PropertyChangeEvent startEvent = new PropertyChangeEvent(this, "START", null, board);
+        final PropertyChangeEvent startEvent = new PropertyChangeEvent(this, "START", null, board);
         this.observers.forEach(observer -> observer.propertyChange(startEvent));
         rollDice();
     }
@@ -42,12 +42,12 @@ public class Game implements Observable {
         }
 
         if (board.cross(positions, diceResult.getRolledColors())) {
-            PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
+            final PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
             this.observers.forEach(observer -> observer.propertyChange(crossEvent));
 
             if (isGameFinished()) {
-                int points = calculatePoints();
-                PropertyChangeEvent endEvent = new PropertyChangeEvent(this, "END", null, points);
+                final int points = calculatePoints();
+                final PropertyChangeEvent endEvent = new PropertyChangeEvent(this, "END", null, points);
                 this.observers.forEach(observer -> observer.propertyChange(endEvent));
             } else {
                 rollDice();
@@ -61,7 +61,7 @@ public class Game implements Observable {
     public void rollDice() {
         diceResult.setRolledColors(colorDice.rollDice(3));
         diceResult.setRolledNumbers(numberDice.rollDice(3));
-        PropertyChangeEvent diceEvent = new PropertyChangeEvent(this, "DICE_RESULT", null, diceResult);
+        final PropertyChangeEvent diceEvent = new PropertyChangeEvent(this, "DICE_RESULT", null, diceResult);
         this.observers.forEach(observer -> observer.propertyChange(diceEvent));
     }
 
@@ -77,14 +77,14 @@ public class Game implements Observable {
 
     private boolean isGameFinished() {
         fullColors.replaceAll((key, value) -> true);
-        for (Tile tile : board) {
+        for (final Tile tile : board) {
             if (!tile.isCrossed()) {
                 fullColors.put(tile.getColor(), false);
             }
         }
         int fullColorsCount = 0;
-        for (Map.Entry<Color, Boolean> entry : fullColors.entrySet()) {
-            Boolean value = entry.getValue();
+        for (final Map.Entry<Color, Boolean> entry : fullColors.entrySet()) {
+            final Boolean value = entry.getValue();
             if (value) {
                 fullColorsCount++;
             }
@@ -95,12 +95,12 @@ public class Game implements Observable {
 
 
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener observer) {
+    public void addPropertyChangeListener(final PropertyChangeListener observer) {
         observers.add(observer);
     }
 
     @Override
-    public void removePropertyChangeListener(PropertyChangeListener observer) {
+    public void removePropertyChangeListener(final PropertyChangeListener observer) {
         observers.remove(observer);
     }
 }

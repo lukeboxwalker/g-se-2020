@@ -4,11 +4,11 @@ public abstract class AbstractExitCodeException extends Exception {
 
     public static final long serialVersionUID = 42L;
 
-    public AbstractExitCodeException(String message) {
+    public AbstractExitCodeException(final String message) {
         super(message);
     }
 
-    public AbstractExitCodeException(String message, Throwable cause) {
+    public AbstractExitCodeException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
