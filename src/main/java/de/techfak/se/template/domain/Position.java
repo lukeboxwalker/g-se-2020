@@ -1,48 +1,48 @@
 package de.techfak.se.template.domain;
 
 public class Position {
-    private int x;
-    private int y;
+    private int posX;
+    private int posY;
 
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Position(int posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public Position add(Position position) {
-        return add(position.getX(), position.getY());
+        return add(position.getPosX(), position.getPosY());
     }
 
-    public Position add(int x, int y) {
-        return new Position(this.x + x, this.y + y);
+    public Position add(int posX, int posY) {
+        return new Position(this.posX + posX, this.posY + posY);
     }
 
-    public int getX() {
-        return x;
+    public int getPosX() {
+        return posX;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setPosX(int posX) {
+        this.posX = posX;
     }
 
-    public int getY() {
-        return y;
+    public int getPosY() {
+        return posY;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(x) * Integer.hashCode(y);
+        return Integer.hashCode(posX) * Integer.hashCode(posY);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Position) {
             Position position = (Position) obj;
-            return x == position.x && y == position.y;
+            return posX == position.posX && posY == position.posY;
         } else {
             return false;
         }
@@ -51,8 +51,8 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + posX +
+                ", y=" + posY +
                 '}';
     }
 }

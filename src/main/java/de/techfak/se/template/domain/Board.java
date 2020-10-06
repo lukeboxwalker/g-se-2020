@@ -5,12 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Board implements Iterable<Tile> {
+    private static final int DEFAULT_START_COL = 7;
+
     private final Tile[][] tiles;
-    private int startColumn;
+    private final int startColumn;
 
     public Board(final Tile[][] tiles) {
         this.tiles = tiles;
-        startColumn = 7;
+        startColumn = DEFAULT_START_COL;
     }
 
     public int getLengthX() {
@@ -26,17 +28,19 @@ public class Board implements Iterable<Tile> {
     }
 
     private Color getColorAt(Position position) {
-        return tiles[position.getX()][position.getY()].getColor();
+        return tiles[position.getPosX()][position.getPosY()].getColor();
     }
 
     private Tile getTile(Position position) {
-        return tiles[position.getX()][position.getY()];
+        return tiles[position.getPosX()][position.getPosY()];
     }
 
     private boolean checkBounds(Position position) {
-        if (position.getX() >= tiles.length || position.getX() < 0) {
+        if (position.getPosX() >= tiles.length || position.getPosX() < 0) {
             return false;
-        } else return position.getY() < tiles[0].length && position.getY() >= 0;
+        } else {
+            return position.getPosY() < tiles[0].length && position.getPosY() >= 0;
+        }
     }
 
     private boolean checkBounds(List<Position> positions) {
@@ -59,8 +63,8 @@ public class Board implements Iterable<Tile> {
         for (Position root : positions) {
             hasNeighbor = false;
             for (Position position : positions) {
-                if (root.add(-1, 0).equals(position) || root.add(1, 0).equals(position) ||
-                        root.add(0, -1).equals(position) || root.add(0, 1).equals(position)) {
+                if (root.add(-1, 0).equals(position) || root.add(1, 0).equals(position)
+                        || root.add(0, -1).equals(position) || root.add(0, 1).equals(position)) {
                     hasNeighbor = true;
                     break;
                 }
@@ -75,7 +79,7 @@ public class Board implements Iterable<Tile> {
     private boolean hasNeighborOrStartColumn(List<Position> positions) {
         boolean validGroup = false;
         for (Position position : positions) {
-            if (position.getX() == startColumn) {
+            if (position.getPosX() == startColumn) {
                 validGroup = true;
                 break;
             }
@@ -111,7 +115,7 @@ public class Board implements Iterable<Tile> {
                 if (!possibleColors.contains(color)) {
                     return false;
                 }
-            } else if (color != getColorAt(position)){
+            } else if (color != getColorAt(position)) {
                 return false;
             }
         }
@@ -129,11 +133,11 @@ public class Board implements Iterable<Tile> {
         return false;
     }
 
-    public boolean isColumnFull(int x) {
-        if (x >= 0 && x < tiles.length) {
+    public boolean isColumnFull(int col) {
+        if (col >= 0 && col < tiles.length) {
             boolean isFull = true;
-            for (int y = 0; y < tiles[0].length; y++) {
-                if (!tiles[x][y].isCrossed()) {
+            for (int row = 0; row < tiles[0].length; row++) {
+                if (!tiles[col][row].isCrossed()) {
                     isFull = false;
                     break;
                 }

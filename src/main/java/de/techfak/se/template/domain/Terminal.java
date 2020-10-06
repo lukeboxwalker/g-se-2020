@@ -12,6 +12,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Terminal implements PropertyChangeListener {
+
+    private static final String EMPTY = " ";
+    private static final String SEPARATE = ", ";
+    private static final String BREAK = "\n";
+    private static final String CROSS = "X";
     private static final String EXIT = "exit";
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -86,7 +91,7 @@ public class Terminal implements PropertyChangeListener {
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
                 if (tiles[x][y].isCrossed()) {
-                    stringBoard[x][y] = "X";
+                    stringBoard[x][y] = CROSS;
                 } else {
                     stringBoard[x][y] = String.valueOf(tiles[x][y].getColor().getIdentifier());
                 }
@@ -97,28 +102,28 @@ public class Terminal implements PropertyChangeListener {
     private void printBoard() {
         System.out.print("  | ");
         for (int x = 0; x < stringBoard.length; x++) {
-            System.out.print(ALPHABET.charAt(x) + " ");
+            System.out.print(ALPHABET.charAt(x) + EMPTY);
         }
         System.out.println("\n--|------------------------------");
         for (int y = 0; y < stringBoard[0].length; y++) {
             System.out.print(y + 1 + " | ");
             for (String[] strings : stringBoard) {
-                System.out.print(strings[y] + " ");
+                System.out.print(strings[y] + EMPTY);
             }
-            System.out.print("\n");
+            System.out.print(BREAK);
         }
-        System.out.print("\n");
+        System.out.print(BREAK);
     }
 
     private void crossTiles(List<String> coordinates) throws UnknownCommandException {
         final List<Position> positions = new ArrayList<>(coordinates.size());
-        int x;
-        int y;
+        int posX;
+        int posY;
         for (String coordinate : coordinates) {
-            if (coordinate.length() == 2 && Character.isDigit(coordinate.charAt(1))
-                    && (x = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase())) != -1) {
-                y = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
-                positions.add(new Position(x, y));
+            posX = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase());
+            if (coordinate.length() == 2 && Character.isDigit(coordinate.charAt(1)) && posX != -1) {
+                posY = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
+                positions.add(new Position(posX, posY));
             } else {
                 throw new UnknownCommandException("Wrong coordinate format!");
             }
@@ -137,7 +142,7 @@ public class Terminal implements PropertyChangeListener {
             Color color = colors.get(i);
             stringBuilder.append(color.name());
             if (i + 1 < colors.size()) {
-                stringBuilder.append(", ");
+                stringBuilder.append(SEPARATE);
             }
         }
         stringBuilder.append("\nNumbers: ");
@@ -145,10 +150,10 @@ public class Terminal implements PropertyChangeListener {
             int number = numbers.get(i);
             stringBuilder.append(number);
             if (i + 1 < numbers.size()) {
-                stringBuilder.append(", ");
+                stringBuilder.append(SEPARATE);
             }
         }
-        System.out.println(stringBuilder.toString() + "\n");
+        System.out.println(stringBuilder.toString() + BREAK);
     }
 
     private void printPoints(int points) {
@@ -169,7 +174,7 @@ public class Terminal implements PropertyChangeListener {
             case "CROSS_POSITIONS":
                 final List<Position> positions = (List<Position>) event.getNewValue();
                 for (Position position : positions) {
-                    this.stringBoard[position.getX()][position.getY()] = "X";
+                    this.stringBoard[position.getPosX()][position.getPosY()] = CROSS;
                 }
                 break;
             case "END":

@@ -1,15 +1,14 @@
 package de.techfak.se.template;
 
-import de.techfak.se.template.domain.BoardCreationException;
+import de.techfak.se.template.domain.BoardCreationExceptionAbstract;
 import de.techfak.se.template.domain.BoardFactory;
-import de.techfak.se.template.domain.ExitCodeException;
+import de.techfak.se.template.domain.AbstractExitCodeException;
 import de.techfak.se.template.domain.Game;
 import de.techfak.se.template.domain.Terminal;
 
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -34,27 +33,27 @@ public final class GseAgain {
                     try {
                         game = loadGame(new File(defaultURL.toURI()));
                     } catch (URISyntaxException e) {
-                        throw new BoardCreationException(e);
+                        throw new BoardCreationExceptionAbstract(e);
                     }
                 } else {
-                    throw new BoardCreationException("File " + DEFAULT_BOARD_CONFIG + "did not exist!");
+                    throw new BoardCreationExceptionAbstract("File " + DEFAULT_BOARD_CONFIG + "did not exist!");
                 }
             }
             Terminal terminal = new Terminal(game);
             terminal.listenForInstructions();
-        } catch (ExitCodeException e) {
+        } catch (AbstractExitCodeException e) {
             System.err.println(e.getMessage());
             System.exit(e.getExitCode());
         }
     }
 
-    private Game loadGame(final File file) throws BoardCreationException {
+    private Game loadGame(final File file) throws BoardCreationExceptionAbstract {
         final Game game;
         try {
             final BoardFactory factory = new BoardFactory(file);
             game = new Game(factory.createBoard());
         } catch (IOException e) {
-            throw new BoardCreationException(e);
+            throw new BoardCreationExceptionAbstract(e);
         }
         return game;
     }

@@ -22,16 +22,17 @@ public class BoardFactory {
         Arrays.stream(Color.values()).forEach(color -> colorMap.put(color.getIdentifier(), color));
     }
 
-    public Board createBoard() throws IOException, BoardCreationException {
+    public Board createBoard() throws IOException, BoardCreationExceptionAbstract {
         final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         final Tile[][] tiles = new Tile[BOARD_SIZE_X][BOARD_SIZE_Y];
         String line;
         char colorIdentifier;
         for (int y = 0; y < BOARD_SIZE_Y; y++) {
-            if ((line = bufferedReader.readLine()) != null) {
+            line = bufferedReader.readLine();
+            if (line != null) {
                 line = line.replace("\n", "");
                 if (line.length() != BOARD_SIZE_X) {
-                    throw new BoardCreationException("Wrong board size x value!");
+                    throw new BoardCreationExceptionAbstract("Wrong board size x value!");
                 }
                 for (int x = 0; x < line.length(); x++) {
                     colorIdentifier = line.charAt(x);
@@ -42,11 +43,11 @@ public class BoardFactory {
                         tile.cross();
                         tiles[x][y] = tile;
                     } else {
-                        throw new BoardCreationException("Unknown color: " + colorIdentifier + " !");
+                        throw new BoardCreationExceptionAbstract("Unknown color: " + colorIdentifier + " !");
                     }
                 }
             } else {
-                throw new BoardCreationException("Wrong board size y value!");
+                throw new BoardCreationExceptionAbstract("Wrong board size y value!");
             }
         }
         return new Board(tiles);
