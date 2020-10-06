@@ -1,5 +1,8 @@
 package de.techfak.se.lwalkenhorst.domain;
 
+import de.techfak.se.lwalkenhorst.domain.validation.ColorValidator;
+import de.techfak.se.lwalkenhorst.domain.validation.NumberValidator;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ public class Game implements Observable {
 
     private final Dice<Color> colorDice;
     private final Dice<Integer> numberDice;
+    private final ColorValidator colorValidator;
+    private final NumberValidator numberValidator;
     private final Map<Color, Boolean> fullColors;
     private final DiceResult diceResult;
 
@@ -27,6 +32,8 @@ public class Game implements Observable {
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.diceResult = new DiceResult();
         this.fullColors = new HashMap<>();
+        this.colorValidator = new ColorValidator(this.board);
+        this.numberValidator = new NumberValidator();
         Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
     }
 
@@ -37,11 +44,12 @@ public class Game implements Observable {
     }
 
     public boolean crossTiles(final List<Position> positions) {
-        if (!diceResult.getRolledNumbers().contains(positions.size())) {
+        if (!numberValidator.validate(positions, diceResult.getRolledNumbers())
+                || !colorValidator.validate(positions, diceResult.getRolledColors())) {
             return false;
         }
 
-        if (board.cross(positions, diceResult.getRolledColors())) {
+        if (board.cross(positions)) {
             final PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
             this.observers.forEach(observer -> observer.propertyChange(crossEvent));
 

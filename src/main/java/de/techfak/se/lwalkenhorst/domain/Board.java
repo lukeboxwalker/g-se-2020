@@ -1,20 +1,30 @@
 package de.techfak.se.lwalkenhorst.domain;
 
+import de.techfak.se.lwalkenhorst.domain.validation.NotCrossedValidator;
+import de.techfak.se.lwalkenhorst.domain.validation.GroupValidator;
+import de.techfak.se.lwalkenhorst.domain.validation.HasNeighborValidator;
+import de.techfak.se.lwalkenhorst.domain.validation.BoardValidator;
+
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class Board implements Iterable<Tile> {
     private static final int DEFAULT_START_COL = 7;
 
+    private final List<BoardValidator> validators;
     private final Tile[][] tiles;
     private final int startColumn;
 
     public Board(final Tile[][] tiles) {
         this.tiles = tiles;
-        startColumn = DEFAULT_START_COL;
+        this.validators = new ArrayList<>();
+        this.startColumn = DEFAULT_START_COL;
+
+        validators.add(new NotCrossedValidator(this));
+        validators.add(new GroupValidator());
+        validators.add(new HasNeighborValidator(this));
     }
 
     public int getLengthX() {
@@ -32,8 +42,12 @@ public class Board implements Iterable<Tile> {
         return startColumn;
     }
 
-    private Color getColorAt(final Position position) {
-        return tiles[position.getPosX()][position.getPosY()].getColor();
+    public boolean inBounds(final Position position) {
+        if (position.getPosX() >= getLengthX() || position.getPosX() < 0) {
+            return false;
+        } else {
+            return position.getPosY() < getLengthY() && position.getPosY() >= 0;
+        }
     }
 
     public Tile getTileAt(final int posX, final int posY) {
@@ -44,111 +58,16 @@ public class Board implements Iterable<Tile> {
         return getTileAt(position.getPosX(), position.getPosY());
     }
 
-    private boolean checkBounds(final Position position) {
-        if (position.getPosX() >= tiles.length || position.getPosX() < 0) {
-            return false;
-        } else {
-            return position.getPosY() < tiles[0].length && position.getPosY() >= 0;
+    public boolean cross(final List<Position> positions) {
+        for (final BoardValidator validator : validators) {
+            if (!validator.validate(positions)) {
+                return false;
+            }
         }
-    }
-
-    private boolean checkBounds(final List<Position> positions) {
         for (final Position position : positions) {
-            if (!checkBounds(position)) {
-                return false;
-            }
-            if (getTileAt(position).isCrossed()) {
-                return false;
-            }
+            getTileAt(position).cross();
         }
         return true;
-    }
-
-    private boolean isGroup(final List<Position> positions) {
-        if (positions.size() <= 0) {
-            return true;
-        }
-        final Set<Position> positionSet = new HashSet<>(positions);
-        return isGroup(positionSet, positions.get(0)) && positionSet.isEmpty();
-    }
-
-    private boolean isGroup(final Set<Position> positions, final Position root) {
-        positions.remove(root);
-        Position position = root.add(-1, 0);
-        boolean isGroup = true;
-        if (positions.contains(position)) {
-            isGroup = isGroup(positions, position);
-        }
-        position = root.add(1, 0);
-        if (positions.contains(position)) {
-            isGroup &= isGroup(positions, position);
-        }
-        position = root.add(0, -1);
-        if (positions.contains(position)) {
-            isGroup &= isGroup(positions, position);
-        }
-        position = root.add(0, 1);
-        if (positions.contains(position)) {
-            isGroup &= isGroup(positions, position);
-        }
-        return isGroup;
-    }
-
-    private boolean hasNeighborOrStartColumn(final List<Position> positions) {
-        boolean validGroup = false;
-        for (final Position position : positions) {
-            if (position.getPosX() == startColumn) {
-                validGroup = true;
-                break;
-            }
-            Position neighbor = position.add(-1, 0);
-            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-            neighbor = position.add(1, 0);
-            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-            neighbor = position.add(0, -1);
-            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-            neighbor = position.add(0, 1);
-            if (checkBounds(neighbor) && getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-        }
-        return validGroup;
-    }
-
-    private boolean isColorValid(final List<Position> positions, final List<Color> possibleColors) {
-        Color color = null;
-        for (final Position position : positions) {
-            if (color == null) {
-                color = getColorAt(position);
-                if (!possibleColors.contains(color)) {
-                    return false;
-                }
-            } else if (color != getColorAt(position)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean cross(final List<Position> positions, final List<Color> possibleColors) {
-        if (checkBounds(positions) && isColorValid(positions, possibleColors)
-                && isGroup(positions) && hasNeighborOrStartColumn(positions)) {
-            for (final Position position : positions) {
-                getTileAt(position).cross();
-            }
-            return true;
-        }
-        return false;
     }
 
     public boolean isColumnFull(final int col) {
