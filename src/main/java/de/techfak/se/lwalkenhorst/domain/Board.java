@@ -1,8 +1,10 @@
 package de.techfak.se.lwalkenhorst.domain;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class Board implements Iterable<Tile> {
     private static final int DEFAULT_START_COL = 7;
@@ -63,24 +65,33 @@ public class Board implements Iterable<Tile> {
     }
 
     private boolean isGroup(final List<Position> positions) {
-        if (positions.size() <= 1) {
+        if (positions.size() <= 0) {
             return true;
         }
-        boolean hasNeighbor;
-        for (final Position root : positions) {
-            hasNeighbor = false;
-            for (final Position position : positions) {
-                if (root.add(-1, 0).equals(position) || root.add(1, 0).equals(position)
-                        || root.add(0, -1).equals(position) || root.add(0, 1).equals(position)) {
-                    hasNeighbor = true;
-                    break;
-                }
-            }
-            if (!hasNeighbor) {
-                return false;
-            }
+        final Set<Position> positionSet = new HashSet<>(positions);
+        return isGroup(positionSet, positions.get(0)) && positionSet.isEmpty();
+    }
+
+    private boolean isGroup(final Set<Position> positions, final Position root) {
+        positions.remove(root);
+        Position position = root.add(-1, 0);
+        boolean isGroup = true;
+        if (positions.contains(position)) {
+            isGroup = isGroup(positions, position);
         }
-        return true;
+        position = root.add(1, 0);
+        if (positions.contains(position)) {
+            isGroup &= isGroup(positions, position);
+        }
+        position = root.add(0, -1);
+        if (positions.contains(position)) {
+            isGroup &= isGroup(positions, position);
+        }
+        position = root.add(0, 1);
+        if (positions.contains(position)) {
+            isGroup &= isGroup(positions, position);
+        }
+        return isGroup;
     }
 
     private boolean hasNeighborOrStartColumn(final List<Position> positions) {
