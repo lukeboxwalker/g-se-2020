@@ -1,4 +1,11 @@
-package de.techfak.se.lwalkenhorst.domain;
+package de.techfak.se.lwalkenhorst.domain.cli;
+
+import de.techfak.se.lwalkenhorst.domain.Board;
+import de.techfak.se.lwalkenhorst.domain.Color;
+import de.techfak.se.lwalkenhorst.domain.DiceResult;
+import de.techfak.se.lwalkenhorst.domain.Game;
+import de.techfak.se.lwalkenhorst.domain.Position;
+import de.techfak.se.lwalkenhorst.domain.exception.UnknownCommandException;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -132,7 +139,7 @@ public class Terminal implements PropertyChangeListener {
     private void printDiceResult(final DiceResult diceResult) {
         final List<Color> colors = diceResult.getRolledColors();
         final List<Integer> numbers = diceResult.getRolledNumbers();
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder(21);
         stringBuilder.append("\nColors: ");
         for (int i = 0; i < colors.size(); i++) {
             final Color color = colors.get(i);

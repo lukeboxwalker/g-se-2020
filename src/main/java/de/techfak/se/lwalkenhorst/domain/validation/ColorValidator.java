@@ -15,7 +15,7 @@ public class ColorValidator implements DiceValidator<Color> {
     }
 
     @Override
-    public boolean validate(List<Position> positions, List<Color> possiblePicks) {
+    public boolean validate(final List<Position> positions, final List<Color> possiblePicks) {
         Color color = null;
         for (final Position position : positions) {
             if (!board.inBounds(position)) {

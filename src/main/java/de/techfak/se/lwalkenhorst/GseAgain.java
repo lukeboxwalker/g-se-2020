@@ -1,17 +1,16 @@
 package de.techfak.se.lwalkenhorst;
 
 import de.techfak.se.lwalkenhorst.domain.Board;
-import de.techfak.se.lwalkenhorst.domain.BoardCreationException;
+import de.techfak.se.lwalkenhorst.domain.exception.BoardCreationException;
 import de.techfak.se.lwalkenhorst.domain.BoardFactory;
-import de.techfak.se.lwalkenhorst.domain.AbstractExitCodeException;
+import de.techfak.se.lwalkenhorst.domain.exception.AbstractExitCodeException;
 import de.techfak.se.lwalkenhorst.domain.Game;
-import de.techfak.se.lwalkenhorst.domain.Terminal;
+import de.techfak.se.lwalkenhorst.domain.cli.Terminal;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 
 /**
  * The main class, contains just the main method to start the application.

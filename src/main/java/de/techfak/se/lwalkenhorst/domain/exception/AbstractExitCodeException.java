@@ -1,4 +1,4 @@
-package de.techfak.se.lwalkenhorst.domain;
+package de.techfak.se.lwalkenhorst.domain.exception;
 
 public abstract class AbstractExitCodeException extends Exception {
 

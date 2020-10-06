@@ -13,6 +13,10 @@ public class HasNeighborValidator implements BoardValidator {
         this.board = board;
     }
 
+    private boolean isNeighborCrossed(final Position position) {
+        return board.inBounds(position) && board.getTileAt(position).isCrossed();
+    }
+
     @Override
     public boolean validate(final List<Position> positions) {
         boolean validGroup = false;
@@ -21,23 +25,10 @@ public class HasNeighborValidator implements BoardValidator {
                 validGroup = true;
                 break;
             }
-            Position neighbor = position.add(-1, 0);
-            if (board.inBounds(neighbor) && board.getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-            neighbor = position.add(1, 0);
-            if (board.inBounds(neighbor) && board.getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-            neighbor = position.add(0, -1);
-            if (board.inBounds(neighbor) && board.getTileAt(neighbor).isCrossed()) {
-                validGroup = true;
-                break;
-            }
-            neighbor = position.add(0, 1);
-            if (board.inBounds(neighbor) && board.getTileAt(neighbor).isCrossed()) {
+            if (isNeighborCrossed(position.add(-1, 0))
+                    || isNeighborCrossed(position.add(1, 0))
+                    || isNeighborCrossed(position.add(0, -1))
+                    || isNeighborCrossed(position.add(0, 1))) {
                 validGroup = true;
                 break;
             }
