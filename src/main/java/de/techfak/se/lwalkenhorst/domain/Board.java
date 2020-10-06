@@ -72,7 +72,7 @@ public class Board implements Iterable<Tile> {
     public boolean cross(final List<Position> positions) {
         Position root = null;
         for (final Position position : positions) {
-            if (root == null && position.getPosX() == startColumn || hasCrossedNeighbor(position)) {
+            if (root == null && (position.getPosX() == startColumn || hasCrossedNeighbor(position))) {
                 root = position;
             } else if (position.add(-1, 0).equals(root)
                     || position.add(1, 0).equals(root)
