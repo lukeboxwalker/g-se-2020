@@ -58,31 +58,7 @@ public class Board implements Iterable<Tile> {
         return getTileAt(position.getPosX(), position.getPosY());
     }
 
-//    private boolean isNeighborCrossed(final Position position) {
-//        return inBounds(position) && getTileAt(position).isCrossed();
-//    }
-//
-//    private boolean hasCrossedNeighbor(final Position position) {
-//        return isNeighborCrossed(position.add(-1, 0))
-//                || isNeighborCrossed(position.add(1, 0))
-//                || isNeighborCrossed(position.add(0, -1))
-//                || isNeighborCrossed(position.add(0, 1));
-//    }
-
     public boolean cross(final List<Position> positions) {
-//        Position root = null;
-//        for (final Position position : positions) {
-//            if (root == null && (position.getPosX() == startColumn || hasCrossedNeighbor(position))) {
-//                root = position;
-//            } else if (position.add(-1, 0).equals(root)
-//                    || position.add(1, 0).equals(root)
-//                    || position.add(0, -1).equals(root)
-//                    || position.add(0, 1).equals(root)) {
-//                root = position;
-//            } else {
-//                return false;
-//            }
-//        }
         for (final BoardValidator validator : validators) {
             if (!validator.validate(positions)) {
                 return false;

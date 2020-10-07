@@ -12,6 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,6 @@ public class Terminal implements PropertyChangeListener {
     private static final String EXIT = "exit";
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private final BufferedReader bufferedReader;
     private final Game game;
     private final AtomicBoolean running;
     private String[][] stringBoard;
@@ -35,7 +35,6 @@ public class Terminal implements PropertyChangeListener {
     public Terminal(final Game game) {
         this.game = game;
         this.game.addPropertyChangeListener(this);
-        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         this.running = new AtomicBoolean(false);
         this.game.start();
     }
@@ -48,10 +47,10 @@ public class Terminal implements PropertyChangeListener {
     }
 
     private void startListener() {
-        new Thread(() -> {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
             while (running.get()) {
                 try {
-                    final String cmd = requestInput();
+                    final String cmd = reader.readLine();
                     if (cmd != null) {
                         switch (cmd) {
                             case "":
@@ -73,14 +72,9 @@ public class Terminal implements PropertyChangeListener {
                     this.kill();
                 }
             }
-        }).start();
-    }
-
-    private String requestInput() throws IOException {
-        if (!running.get()) {
-            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return bufferedReader.readLine();
     }
 
     public void kill() {
