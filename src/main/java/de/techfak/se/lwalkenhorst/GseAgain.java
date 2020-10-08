@@ -5,8 +5,6 @@ import de.techfak.se.lwalkenhorst.domain.exception.BoardCreationException;
 import de.techfak.se.lwalkenhorst.domain.BoardFactory;
 import de.techfak.se.lwalkenhorst.domain.exception.AbstractExitCodeException;
 import de.techfak.se.lwalkenhorst.domain.Game;
-import de.techfak.se.lwalkenhorst.domain.cli.Terminal;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -40,8 +38,9 @@ public final class GseAgain {
                     throw new BoardCreationException(e);
                 }
             }
-            final Terminal terminal = new Terminal(game);
-            terminal.listenForInstructions();
+          Application.start(game);
+//            final Terminal terminal = new Terminal(game);
+//            terminal.listenForInstructions();
         } catch (AbstractExitCodeException e) {
             System.err.println(e.getMessage());
             System.exit(e.getExitCode());

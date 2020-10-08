@@ -41,13 +41,14 @@ public class Game implements Observable {
     }
 
     public boolean crossTiles(final List<Position> positions) {
-        if (!numberValidator.validate(positions, diceResult.getRolledNumbers())
-                || !colorValidator.validate(positions, diceResult.getRolledColors())) {
+        final List<Position> clone = new ArrayList<>(positions);
+        if (!numberValidator.validate(clone, diceResult.getRolledNumbers())
+                || !colorValidator.validate(clone, diceResult.getRolledColors())) {
             return false;
         }
 
-        if (board.cross(positions)) {
-            this.gameObservers.forEach(gameObserver -> gameObserver.onTilesCross(positions));
+        if (board.cross(clone)) {
+            this.gameObservers.forEach(gameObserver -> gameObserver.onTilesCross(clone));
 
             if (isGameFinished()) {
                 final int points = calculatePoints();

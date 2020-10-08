@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.techfak.se.lwalkenhorst.domain.controller.GameController">
+    <children>
+      <VBox prefHeight="750.0" prefWidth="1600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="20.0" prefWidth="1600.0">
+               <children>
+                  <Label fx:id="statusLabel" text="Status:" />
+                  <Label fx:id="pointsLabel" text="Points:" translateX="50.0" />
+               </children>
+            </HBox>
+              <HBox fx:id="box">
+                  <children>
+                      <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="1002.0" prefWidth="1447.0">
+                          <HBox.hgrow>
+                        <Priority fx:value="ALWAYS" />
+                     </HBox.hgrow>
+                      </GridPane>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                      <HBox.hgrow>
+                        <Priority fx:value="ALWAYS" />
+                     </HBox.hgrow>
+                     <children>
+                        <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                              <Text fx:id="dice1" text="NaN" />
+                           </children>
+                        </StackPane>
+                         <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                             <children>
+                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                 <Text fx:id="dice2" text="NaN" />
+                             </children>
+                         </StackPane>
+                         <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                             <children>
+                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                 <Text fx:id="dice3" text="NaN" />
+                             </children>
+                         </StackPane>
+                         <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                             <children>
+                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                 <Text fx:id="dice4" text="NaN" />
+                             </children>
+                         </StackPane>
+                         <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                             <children>
+                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                 <Text fx:id="dice5" text="NaN" />
+                             </children>
+                         </StackPane>
+                         <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                             <children>
+                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                                 <Text fx:id="dice6" text="NaN" />
+                             </children>
+                         </StackPane>
+                        <Button fx:id="passButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Pass" />
+                         <Button fx:id="confirmButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Confirm" />
+                     </children>
+                  </VBox>
+                  </children>
+              </HBox>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>
