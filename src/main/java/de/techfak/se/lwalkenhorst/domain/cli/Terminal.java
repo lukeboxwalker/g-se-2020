@@ -6,7 +6,6 @@ import de.techfak.se.lwalkenhorst.domain.DiceResult;
 import de.techfak.se.lwalkenhorst.domain.Game;
 import de.techfak.se.lwalkenhorst.domain.GameObserver;
 import de.techfak.se.lwalkenhorst.domain.Position;
-import de.techfak.se.lwalkenhorst.domain.exception.UnknownCommandException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,11 +58,7 @@ public class Terminal implements GameObserver {
                                 this.kill();
                                 break;
                             default:
-                                try {
-                                    crossTiles(Arrays.asList(cmd.split(",")));
-                                } catch (UnknownCommandException e) {
-                                    System.out.println(e.getMessage());
-                                }
+                                this.crossTiles(Arrays.asList(cmd.split(",")));
                                 break;
                         }
                     }
@@ -111,7 +106,7 @@ public class Terminal implements GameObserver {
         System.out.print(BREAK);
     }
 
-    private void crossTiles(final List<String> coordinates) throws UnknownCommandException {
+    private void crossTiles(final List<String> coordinates) {
         final List<Position> positions = new ArrayList<>(coordinates.size());
         int posX;
         int posY;
@@ -121,7 +116,8 @@ public class Terminal implements GameObserver {
                 posY = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
                 positions.add(new Position(posX, posY));
             } else {
-                throw new UnknownCommandException("Wrong coordinate format!");
+                System.out.println("Wrong coordinate format!");
+                return;
             }
         }
         if (!game.crossTiles(positions)) {
