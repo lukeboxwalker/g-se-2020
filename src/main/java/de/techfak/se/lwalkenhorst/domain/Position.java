@@ -9,6 +9,22 @@ public class Position {
         this.posY = posY;
     }
 
+    public Position up() {
+        return add(0, -1);
+    }
+
+    public Position down() {
+        return add(0, 1);
+    }
+
+    public Position left() {
+        return add(-1, 0);
+    }
+
+    public Position right() {
+        return add(1, 0);
+    }
+
     public Position add(final Position position) {
         return add(position.getPosX(), position.getPosY());
     }

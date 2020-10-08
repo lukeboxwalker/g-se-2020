@@ -13,30 +13,28 @@ public class GroupValidator implements BoardValidator {
         if (positions.isEmpty()) {
             return true;
         }
-        final Set<Position> positionSet = new HashSet<>(positions);
-        return isGroup(positionSet, positions.get(0)) && positionSet.isEmpty();
+        return isGroup(new HashSet<>(positions), positions.get(0)).isEmpty();
     }
 
-    private boolean isGroup(final Set<Position> positions, final Position root) {
+    private Set<Position> isGroup(final Set<Position> positions, final Position root) {
         positions.remove(root);
-        Position position = root.add(-1, 0);
-        boolean isGroup = true;
+        Position position = root.left();
         if (positions.contains(position)) {
-            isGroup = isGroup(positions, position);
+            isGroup(positions, position);
         }
-        position = root.add(1, 0);
+        position = root.right();
         if (positions.contains(position)) {
-            isGroup &= isGroup(positions, position);
+            isGroup(positions, position);
         }
-        position = root.add(0, -1);
+        position = root.up();
         if (positions.contains(position)) {
-            isGroup &= isGroup(positions, position);
+            isGroup(positions, position);
         }
-        position = root.add(0, 1);
+        position = root.down();
         if (positions.contains(position)) {
-            isGroup &= isGroup(positions, position);
+            isGroup(positions, position);
         }
-        return isGroup;
+        return positions;
     }
 
 }

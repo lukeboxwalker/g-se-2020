@@ -25,10 +25,8 @@ public class HasNeighborValidator implements BoardValidator {
                 validGroup = true;
                 break;
             }
-            if (isNeighborCrossed(position.add(-1, 0))
-                    || isNeighborCrossed(position.add(1, 0))
-                    || isNeighborCrossed(position.add(0, -1))
-                    || isNeighborCrossed(position.add(0, 1))) {
+            if (isNeighborCrossed(position.left()) || isNeighborCrossed(position.right())
+                    || isNeighborCrossed(position.up()) || isNeighborCrossed(position.down())) {
                 validGroup = true;
                 break;
             }
