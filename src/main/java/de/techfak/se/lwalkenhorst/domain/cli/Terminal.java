@@ -4,11 +4,10 @@ import de.techfak.se.lwalkenhorst.domain.Board;
 import de.techfak.se.lwalkenhorst.domain.Color;
 import de.techfak.se.lwalkenhorst.domain.DiceResult;
 import de.techfak.se.lwalkenhorst.domain.Game;
+import de.techfak.se.lwalkenhorst.domain.GameObserver;
 import de.techfak.se.lwalkenhorst.domain.Position;
 import de.techfak.se.lwalkenhorst.domain.exception.UnknownCommandException;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Terminal implements PropertyChangeListener {
+public class Terminal implements GameObserver {
 
     private static final String EMPTY = " ";
     private static final String SEPARATE = ", ";
@@ -34,7 +33,7 @@ public class Terminal implements PropertyChangeListener {
 
     public Terminal(final Game game) {
         this.game = game;
-        this.game.addPropertyChangeListener(this);
+        this.game.addListener(this);
         this.running = new AtomicBoolean(false);
         this.game.start();
     }
@@ -157,29 +156,27 @@ public class Terminal implements PropertyChangeListener {
         System.out.println("Game won points: " + points);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void propertyChange(final PropertyChangeEvent event) {
-        switch (event.getPropertyName()) {
-            case "START":
-                this.initBoard((Board) event.getNewValue());
-                break;
-            case "DICE_RESULT":
-                this.printDiceResult((DiceResult) event.getNewValue());
-                this.printBoard();
-                break;
-            case "CROSS_POSITIONS":
-                final List<Position> positions = (List<Position>) event.getNewValue();
-                for (final Position position : positions) {
-                    this.stringBoard[position.getPosX()][position.getPosY()] = CROSS;
-                }
-                break;
-            case "END":
-                this.printPoints((int) event.getNewValue());
-                this.kill();
-                break;
-            default:
-                break;
+    public void onGameStart(final Board board) {
+        this.initBoard(board);
+    }
+
+    @Override
+    public void onDiceRoll(final DiceResult diceResult) {
+        this.printDiceResult(diceResult);
+        this.printBoard();
+    }
+
+    @Override
+    public void onTilesCross(final List<Position> positions) {
+        for (final Position position : positions) {
+            this.stringBoard[position.getPosX()][position.getPosY()] = CROSS;
         }
+    }
+
+    @Override
+    public void onGameEnd(final int points) {
+        this.printPoints(points);
+        this.kill();
     }
 }

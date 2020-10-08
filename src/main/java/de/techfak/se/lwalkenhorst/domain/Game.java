@@ -3,8 +3,6 @@ package de.techfak.se.lwalkenhorst.domain;
 import de.techfak.se.lwalkenhorst.domain.validation.ColorValidator;
 import de.techfak.se.lwalkenhorst.domain.validation.NumberValidator;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,7 +12,7 @@ import java.util.Map;
 public class Game implements Observable {
 
     private final Board board;
-    private final List<PropertyChangeListener> observers;
+    private final List<GameObserver> gameObservers;
     private final int[] pointsPerCol;
 
     private final Dice<Color> colorDice;
@@ -26,7 +24,7 @@ public class Game implements Observable {
 
     public Game(final Board board) {
         this.board = board;
-        this.observers = new ArrayList<>();
+        this.gameObservers = new ArrayList<>();
         this.pointsPerCol = new int[]{5, 3, 3, 3, 2, 2, 2, 1, 2, 2, 2, 3, 3, 3, 5};
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
@@ -38,8 +36,7 @@ public class Game implements Observable {
     }
 
     public void start() {
-        final PropertyChangeEvent startEvent = new PropertyChangeEvent(this, "START", null, board);
-        this.observers.forEach(observer -> observer.propertyChange(startEvent));
+        this.gameObservers.forEach(gameObserver -> gameObserver.onGameStart(board));
         rollDice();
     }
 
@@ -50,13 +47,11 @@ public class Game implements Observable {
         }
 
         if (board.cross(positions)) {
-            final PropertyChangeEvent crossEvent = new PropertyChangeEvent(this, "CROSS_POSITIONS", null, positions);
-            this.observers.forEach(observer -> observer.propertyChange(crossEvent));
+            this.gameObservers.forEach(gameObserver -> gameObserver.onTilesCross(positions));
 
             if (isGameFinished()) {
                 final int points = calculatePoints();
-                final PropertyChangeEvent endEvent = new PropertyChangeEvent(this, "END", null, points);
-                this.observers.forEach(observer -> observer.propertyChange(endEvent));
+                this.gameObservers.forEach(gameObserver -> gameObserver.onGameEnd(points));
             } else {
                 rollDice();
             }
@@ -69,8 +64,7 @@ public class Game implements Observable {
     public void rollDice() {
         diceResult.setRolledColors(colorDice.rollDice(3));
         diceResult.setRolledNumbers(numberDice.rollDice(3));
-        final PropertyChangeEvent diceEvent = new PropertyChangeEvent(this, "DICE_RESULT", null, diceResult);
-        this.observers.forEach(observer -> observer.propertyChange(diceEvent));
+        this.gameObservers.forEach(gameObserver -> gameObserver.onDiceRoll(diceResult));
     }
 
     private int calculatePoints() {
@@ -103,12 +97,12 @@ public class Game implements Observable {
 
 
     @Override
-    public void addPropertyChangeListener(final PropertyChangeListener observer) {
-        observers.add(observer);
+    public void addListener(final GameObserver gameObserver) {
+        gameObservers.add(gameObserver);
     }
 
     @Override
-    public void removePropertyChangeListener(final PropertyChangeListener observer) {
-        observers.remove(observer);
+    public void removeListener(final GameObserver gameObserver) {
+        gameObservers.remove(gameObserver);
     }
 }

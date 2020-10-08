@@ -19,18 +19,15 @@ public class HasNeighborValidator implements BoardValidator {
 
     @Override
     public boolean validate(final List<Position> positions) {
-        boolean validGroup = false;
-        for (final Position position : positions) {
-            if (position.getPosX() == board.getStartColumn()) {
-                validGroup = true;
-                break;
-            }
-            if (isNeighborCrossed(position.left()) || isNeighborCrossed(position.right())
-                    || isNeighborCrossed(position.up()) || isNeighborCrossed(position.down())) {
-                validGroup = true;
-                break;
-            }
+        if (positions.isEmpty()) {
+            return true;
         }
-        return validGroup;
+        final Position startPosition = positions.get(0);
+        if (startPosition.getPosX() == board.getStartColumn()) {
+            return true;
+
+        }
+        return isNeighborCrossed(startPosition.left()) || isNeighborCrossed(startPosition.right())
+                || isNeighborCrossed(startPosition.up()) || isNeighborCrossed(startPosition.down());
     }
 }

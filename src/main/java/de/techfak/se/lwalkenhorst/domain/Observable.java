@@ -1,10 +1,8 @@
 package de.techfak.se.lwalkenhorst.domain;
 
-import java.beans.PropertyChangeListener;
-
 public interface Observable {
 
-    void addPropertyChangeListener(PropertyChangeListener observer);
+    void addListener(GameObserver gameObserver);
 
-    void removePropertyChangeListener(PropertyChangeListener observer);
+    void removeListener(GameObserver gameObserver);
 }
