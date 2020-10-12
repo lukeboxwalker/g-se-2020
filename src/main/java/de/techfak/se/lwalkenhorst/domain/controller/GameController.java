@@ -16,10 +16,8 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class GameController implements GameObserver {
 
@@ -53,9 +51,6 @@ public class GameController implements GameObserver {
     private Label pointsLabel;
 
     @FXML
-    private Button passButton;
-
-    @FXML
     private Button confirmButton;
 
 
@@ -72,8 +67,10 @@ public class GameController implements GameObserver {
         this.gameModel = gameModel;
         this.gameModel.addListener(this);
         this.box.setFillHeight(true);
-        this.passButton.setOnMouseClicked(event -> gameModel.rollDice());
         this.confirmButton.setOnMouseClicked(event -> {
+            if (crossedPositions.isEmpty()) {
+                gameModel.rollDice();
+            }
             if (!gameModel.crossTiles(crossedPositions)) {
                 crossedPositions.forEach(position ->
                         generator.removeCrossFromPane(tiles[position.getPosX()][position.getPosY()]));

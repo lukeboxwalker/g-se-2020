@@ -27,10 +27,10 @@
                         <Priority fx:value="ALWAYS" />
                      </HBox.hgrow>
                      <children>
-                        <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                        <StackPane fx:id="colorDice1" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                              <Text fx:id="dice1" text="NaN" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" styleClass="text" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                              <Text fx:id="dice1" styleClass="text" text="NaN" />
                            </children>
                         </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
@@ -63,7 +63,6 @@
                                  <Text fx:id="dice6" text="NaN" />
                              </children>
                          </StackPane>
-                        <Button fx:id="passButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Pass" />
                          <Button fx:id="confirmButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Confirm" />
                      </children>
                   </VBox>
