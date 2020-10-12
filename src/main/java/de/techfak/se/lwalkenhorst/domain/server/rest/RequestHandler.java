@@ -35,6 +35,7 @@ public class RequestHandler {
         statusResponse.setGameFinished(server.isGameFinished());
         statusResponse.setPlayers(server.getPlayers());
         statusResponse.setRound(server.getRound());
+        statusResponse.setDiceResult(server.getDiceResult());
         return createResponse(statusResponse);
     }
 

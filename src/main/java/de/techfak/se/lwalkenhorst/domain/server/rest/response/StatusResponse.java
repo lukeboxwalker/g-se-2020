@@ -1,5 +1,6 @@
 package de.techfak.se.lwalkenhorst.domain.server.rest.response;
 
+import de.techfak.se.lwalkenhorst.domain.DiceResult;
 import de.techfak.se.lwalkenhorst.domain.server.Player;
 
 import java.util.Collection;
@@ -9,14 +10,16 @@ public class StatusResponse implements ResponseBody {
     private boolean gameFinished;
     private int round;
     private Collection<Player> players;
+    private DiceResult diceResult;
 
     public StatusResponse() {
     }
 
-    public StatusResponse(boolean gameFinished, int round, List<Player> players) {
+    public StatusResponse(boolean gameFinished, int round, List<Player> players, DiceResult diceResult) {
         this.gameFinished = gameFinished;
         this.round = round;
         this.players = players;
+        this.diceResult = diceResult;
     }
 
     public boolean isGameFinished() {
@@ -41,5 +44,13 @@ public class StatusResponse implements ResponseBody {
 
     public void setPlayers(Collection<Player> players) {
         this.players = players;
+    }
+
+    public DiceResult getDiceResult() {
+        return diceResult;
+    }
+
+    public void setDiceResult(DiceResult diceResult) {
+        this.diceResult = diceResult;
     }
 }

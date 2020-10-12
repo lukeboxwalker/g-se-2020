@@ -1,6 +1,7 @@
 package de.techfak.se.lwalkenhorst.domain.server;
 
 import de.techfak.se.lwalkenhorst.domain.Board;
+import de.techfak.se.lwalkenhorst.domain.DiceResult;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -18,5 +19,7 @@ public interface GameServer {
     int getRound();
 
     Board getBoard();
+
+    DiceResult getDiceResult();
 
 }
