@@ -8,6 +8,9 @@ public class Player {
     private int points;
     private int round;
 
+    public Player() {
+    }
+
     public Player(final String username, final String uuid, int points) {
         this.username = username;
         this.uuid = uuid;
@@ -51,6 +54,6 @@ public class Player {
 
     @JsonIgnore
     public void enterNextRound() {
-        this.round++;
+        this.round += 1;
     }
 }

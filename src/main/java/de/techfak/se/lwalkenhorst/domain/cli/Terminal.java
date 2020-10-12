@@ -52,7 +52,7 @@ public class Terminal implements GameObserver {
                     if (cmd != null) {
                         switch (cmd) {
                             case "":
-                                this.game.rollDice();
+                                this.game.pass();
                                 break;
                             case EXIT:
                                 this.kill();

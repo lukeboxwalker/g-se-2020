@@ -38,7 +38,7 @@ public final class GseAgain {
                     throw new BoardCreationException(e);
                 }
             }
-          Application.start(game);
+            Application.start(game);
 //            final Terminal terminal = new Terminal(game);
 //            terminal.listenForInstructions();
         } catch (AbstractExitCodeException e) {

@@ -42,7 +42,7 @@ public class Server implements GameServer {
     public UUID registerPlayer(String name) {
         if (players.size() < lobbySize) {
             UUID uuid = UUID.randomUUID();
-            Player player = new Player(name, UUID.randomUUID().toString(), 0);
+            Player player = new Player(name, uuid.toString(), 0);
             players.put(player.getUuid(), player);
             return uuid;
         }

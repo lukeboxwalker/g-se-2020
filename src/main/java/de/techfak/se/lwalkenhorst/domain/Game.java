@@ -12,15 +12,19 @@ import java.util.Map;
 public class Game implements Observable {
 
     private final Board board;
-    private final List<GameObserver> gameObservers;
     private final int[] pointsPerCol;
 
-    private final Dice<Color> colorDice;
-    private final Dice<Integer> numberDice;
+    protected final List<GameObserver> gameObservers;
+
     private final ColorValidator colorValidator;
     private final NumberValidator numberValidator;
     private final Map<Color, Boolean> fullColors;
-    private final DiceResult diceResult;
+
+    protected final DiceResult diceResult;
+    protected final Dice<Color> colorDice;
+    protected final Dice<Integer> numberDice;
+
+    protected int round;
 
     public Game(final Board board) {
         this.board = board;
@@ -32,12 +36,17 @@ public class Game implements Observable {
         this.fullColors = new HashMap<>();
         this.colorValidator = new ColorValidator(this.board);
         this.numberValidator = new NumberValidator();
+        this.round = 1;
         Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
     }
 
     public void start() {
         this.gameObservers.forEach(gameObserver -> gameObserver.onGameStart(board));
         rollDice();
+    }
+
+    public void pass() {
+        this.rollDice();
     }
 
     public boolean crossTiles(final List<Position> positions) {
@@ -68,8 +77,8 @@ public class Game implements Observable {
         this.gameObservers.forEach(gameObserver -> gameObserver.onDiceRoll(diceResult));
     }
 
-    private int calculatePoints() {
-        int points = 10;
+    protected int calculatePoints() {
+        int points = countFullColors() * 5;
         for (int x = 0; x < board.getLengthX(); x++) {
             if (board.isColumnFull(x)) {
                 points += this.pointsPerCol[x];
@@ -78,7 +87,13 @@ public class Game implements Observable {
         return points;
     }
 
-    private boolean isGameFinished() {
+    protected boolean isGameFinished() {
+        int fullColorsCount = countFullColors();
+        return fullColorsCount >= 2;
+
+    }
+
+    private int countFullColors() {
         fullColors.replaceAll((key, value) -> true);
         for (final Tile tile : board) {
             if (!tile.isCrossed()) {
@@ -92,10 +107,8 @@ public class Game implements Observable {
                 fullColorsCount++;
             }
         }
-        return fullColorsCount >= 2;
-
+        return fullColorsCount;
     }
-
 
     @Override
     public void addListener(final GameObserver gameObserver) {

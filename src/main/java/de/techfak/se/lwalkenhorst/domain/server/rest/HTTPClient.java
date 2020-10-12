@@ -38,7 +38,7 @@ public class HTTPClient {
         }
     }
 
-    public boolean participateRequest(String username) {
+    public ParticipateResponse participateRequest(String username) {
         try {
             final URI uri = URI.create(baseUri + "/api/participate");
             final String body = parser.toJSON(new ParticipateRequest(username));
@@ -52,10 +52,10 @@ public class HTTPClient {
             if (participateResponse.isSuccess()) {
                 this.uuid = participateResponse.getUuid();
             }
-            return participateResponse.isSuccess();
+            return participateResponse;
         } catch (IOException | InterruptedException | SerialisationException e) {
             e.printStackTrace();
-            return false;
+            return new ParticipateResponse(false, "", "");
         }
     }
 
@@ -75,6 +75,7 @@ public class HTTPClient {
         try {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(baseUri + "/api/status")).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
             return parser.parseJSON(response.body(), StatusResponse.class);
         } catch (IOException | InterruptedException | SerialisationException e) {
             e.printStackTrace();

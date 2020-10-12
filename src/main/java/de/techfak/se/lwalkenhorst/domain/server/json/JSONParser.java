@@ -24,6 +24,7 @@ public class JSONParser {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             throw new SerialisationException("Deserialisation failed");
         }
     }

@@ -69,7 +69,7 @@ public class GameController implements GameObserver {
         this.box.setFillHeight(true);
         this.confirmButton.setOnMouseClicked(event -> {
             if (crossedPositions.isEmpty()) {
-                gameModel.rollDice();
+                gameModel.pass();
             }
             if (!gameModel.crossTiles(crossedPositions)) {
                 crossedPositions.forEach(position ->

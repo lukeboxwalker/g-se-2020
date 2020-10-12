@@ -1,5 +1,6 @@
 package de.techfak.se.lwalkenhorst.domain.server.rest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import de.techfak.se.lwalkenhorst.domain.server.GameServer;
 import de.techfak.se.lwalkenhorst.domain.server.json.JSONParser;
 import de.techfak.se.lwalkenhorst.domain.server.json.SerialisationException;
