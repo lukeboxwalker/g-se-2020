@@ -1,9 +1,12 @@
-package de.techfak.se.lwalkenhorst.domain.server.rest;
+package de.techfak.se.lwalkenhorst.domain.server.rest.response;
 
 public class ParticipateResponse implements ResponseBody {
     private boolean success;
     private String uuid;
     private String board;
+
+    public ParticipateResponse() {
+    }
 
     public ParticipateResponse(boolean success, String uuid, String board) {
         this.success = success;

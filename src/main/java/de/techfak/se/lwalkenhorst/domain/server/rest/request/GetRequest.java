@@ -1,5 +1,6 @@
-package de.techfak.se.lwalkenhorst.domain.server.rest;
+package de.techfak.se.lwalkenhorst.domain.server.rest.request;
 
+import de.techfak.se.lwalkenhorst.domain.server.rest.RequestHandler;
 import fi.iki.elonen.NanoHTTPD;
 
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 public class GetRequest {
 
     public static final GetRequest GSE_REQUEST = new GetRequest("", new GseRequest());
+    public static final GetRequest STATUS_REQUEST = new GetRequest("/api/status", new StatusRequest());
 
     private static final Map<String, GetRequest> REQUEST_MAP = new HashMap<>();
     private final String uri;
@@ -15,6 +17,7 @@ public class GetRequest {
 
     static {
         REQUEST_MAP.put(GSE_REQUEST.getUri(), GSE_REQUEST);
+        REQUEST_MAP.put(STATUS_REQUEST.getUri(), STATUS_REQUEST);
     }
 
     GetRequest(final String uri, final Request request) {

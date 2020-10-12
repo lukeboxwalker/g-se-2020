@@ -3,6 +3,9 @@ package de.techfak.se.lwalkenhorst.domain.server.rest;
 import de.techfak.se.lwalkenhorst.domain.server.GameServer;
 import de.techfak.se.lwalkenhorst.domain.server.json.JSONParser;
 import de.techfak.se.lwalkenhorst.domain.server.json.SerialisationException;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.GetRequest;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.PostRequest;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.Request;
 import fi.iki.elonen.NanoHTTPD;
 
 import java.io.IOException;
@@ -15,7 +18,7 @@ public class HTTPServer extends NanoHTTPD {
 
     public HTTPServer(int port, final GameServer server) {
         super(port);
-        requestHandler = new RequestHandler(server);
+        requestHandler = new RequestHandler(jsonParser, server);
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.techfak.se.lwalkenhorst.domain;
 import de.techfak.se.lwalkenhorst.domain.exception.BoardCreationException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardFactory {
+public class BoardSerializer {
 
     private static final char CROSS = 'X';
     private static final int BOARD_SIZE_X = 15;
@@ -22,14 +23,25 @@ public class BoardFactory {
 
     private final Map<Character, Color> colorMap;
 
-    public BoardFactory() {
+    public BoardSerializer() {
         this.colorMap = new HashMap<>();
         Arrays.stream(Color.values()).forEach(color -> colorMap.put(color.getIdentifier(), color));
     }
 
-    public Board createBoard(final File file) throws BoardCreationException {
+    public String serialize(Board board) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int y = 0; y < board.getLengthY(); y++) {
+            for (int x = 0; x < board.getLengthX(); x++) {
+                stringBuilder.append(board.getTileAt(x,y).getColor().getIdentifier());
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public Board deSerialize(final File file) throws BoardCreationException {
         try {
-            return createBoard(Files.newInputStream(Paths.get(file.getPath())));
+            return deSerialize(Files.newInputStream(Paths.get(file.getPath())));
         } catch (IOException e) {
             throw new BoardCreationException(e);
         }
@@ -51,7 +63,11 @@ public class BoardFactory {
         }
     }
 
-    public Board createBoard(final InputStream inputStream) throws BoardCreationException {
+    public Board deSerialize(final String string) throws BoardCreationException {
+        return deSerialize(new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public Board deSerialize(final InputStream inputStream) throws BoardCreationException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             final Tile[][] tiles = new Tile[BOARD_SIZE_X][BOARD_SIZE_Y];
             String line;
