@@ -9,6 +9,9 @@ public class EndRoundRequest implements Request {
     private int finalPoints;
     private boolean playerFinished;
 
+    public EndRoundRequest() {
+    }
+
     public EndRoundRequest(String uuid, int finalPoints, boolean playerFinished) {
         this.uuid = uuid;
         this.finalPoints = finalPoints;

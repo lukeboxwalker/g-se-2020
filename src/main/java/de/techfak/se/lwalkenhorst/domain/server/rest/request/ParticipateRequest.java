@@ -6,6 +6,9 @@ import fi.iki.elonen.NanoHTTPD;
 public class ParticipateRequest implements Request {
     private String username;
 
+    public ParticipateRequest() {
+    }
+
     public ParticipateRequest(String username) {
         this.username = username;
     }

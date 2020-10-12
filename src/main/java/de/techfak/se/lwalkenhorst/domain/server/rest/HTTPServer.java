@@ -37,11 +37,11 @@ public class HTTPServer extends NanoHTTPD {
     }
 
     private Response handlePostRequest(final IHTTPSession session) {
-        final Map<String, String> files = new HashMap<>();
+        final Map<String, String> data = new HashMap<>();
         try {
-            session.parseBody(files);
+            session.parseBody(data);
             PostRequest postRequest = PostRequest.requestForUri(session.getUri());
-            Request request = jsonParser.parseJSON(session.getQueryParameterString(), postRequest.getClazz());
+            Request request = jsonParser.parseJSON(data.get("postData"), postRequest.getClazz());
             return request.handle(requestHandler);
         } catch (IOException ioe) {
             return NanoHTTPD.newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT,
@@ -49,6 +49,7 @@ public class HTTPServer extends NanoHTTPD {
         } catch (ResponseException re) {
             return NanoHTTPD.newFixedLengthResponse(re.getStatus(), MIME_PLAINTEXT, re.getMessage());
         } catch (SerialisationException se) {
+            se.printStackTrace();
             return NanoHTTPD.newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT,
                     "SERVER INTERNAL ERROR: SerialisationException: " + se.getMessage());
         }

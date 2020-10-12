@@ -35,6 +35,7 @@ public class Server implements GameServer {
         this.round = 1;
         this.gameFinished = false;
         this.playerFinished = false;
+        rollDice();
     }
 
     @Override

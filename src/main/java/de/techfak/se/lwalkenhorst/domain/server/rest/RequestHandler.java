@@ -19,7 +19,7 @@ import static fi.iki.elonen.NanoHTTPD.Response.Status.OK;
 
 public class RequestHandler {
 
-    private static final String MIME_JSON = "application/json";
+    public static final String MIME_JSON = "application/json";
     private final JSONParser jsonParser;
     private final StatusResponse statusResponse = new StatusResponse();
     private final BoardSerializer boardSerializer = new BoardSerializer();
