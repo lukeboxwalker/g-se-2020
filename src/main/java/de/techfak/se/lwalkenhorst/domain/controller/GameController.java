@@ -77,7 +77,7 @@ public class GameController implements GameObserver {
         this.progressIndicator.prefHeightProperty().bind(root.prefHeightProperty());
         this.progressIndicator.prefWidthProperty().bind(root.prefWidthProperty());
         this.progressIndicator.setStyle("-fx-background-color: rgba(64, 64, 64, 0.5)");
-        this. progressIndicator.setAlignment(Pos.CENTER);
+        this.progressIndicator.setAlignment(Pos.CENTER);
         gameModel.addListener(this);
         this.box.setFillHeight(true);
         this.confirmButton.setOnMouseClicked(event -> {
@@ -166,8 +166,8 @@ public class GameController implements GameObserver {
 
     @Override
     public void onGameEnd(final int points) {
+        this.gameOver = true;
         Platform.runLater(() -> {
-            this.gameOver = true;
             final Text text = new Text("Game over Points: " + points);
             text.setFill(WHITE);
             text.setStyle("-fx-font-size: 40");
