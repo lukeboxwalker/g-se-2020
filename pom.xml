@@ -244,6 +244,10 @@
                             <mainClass>de.techfak.se.lwalkenhorst.GseAgain</mainClass>
                             <id>GseAgain</id>
                         </program>
+                        <program>
+                            <mainClass>de.techfak.se.lwalkenhorst.GseServer</mainClass>
+                            <id>GseServer</id>
+                        </program>
                     </programs>
                 </configuration>
                 <executions>
