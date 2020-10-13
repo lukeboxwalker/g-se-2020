@@ -12,19 +12,24 @@ public class MultiplayerGame extends Game implements AutoCloseable {
     private static final int DELAY_MS = 0;
     private static final int PERIOD_MS = 1000;
 
-    private final HTTPClient client;
+    private HTTPClient client;
+    private final Timer startTimer;
     private Timer diceTimer;
-    private Timer startTimer;
     private TimerTask timerTask;
 
-    public MultiplayerGame(final Board board, final HTTPClient client) {
-        super(board);
+    public MultiplayerGame() {
+        super(null);
+        startTimer = new Timer();
+        diceTimer = new Timer();
+    }
+
+    public void init(Board board, HTTPClient client) {
+        this.setBoard(board);
         this.client = client;
     }
 
     @Override
     public void start() {
-        startTimer = new Timer();
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -47,7 +52,6 @@ public class MultiplayerGame extends Game implements AutoCloseable {
     @Override
     public boolean crossTiles(final List<Position> positions) {
         if (super.crossTiles(positions)) {
-            System.out.println(super.isGameFinished());
             client.endRoundRequest(calculatePoints(), super.isGameFinished());
             return true;
         }

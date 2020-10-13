@@ -11,33 +11,39 @@ import java.util.Map;
 
 public class Game implements Observable {
 
-    private final Board board;
+
     private final int[] pointsPerCol;
 
     protected final List<GameObserver> gameObservers;
 
-    private final ColorValidator colorValidator;
-    private final NumberValidator numberValidator;
+    private ColorValidator colorValidator;
+    private NumberValidator numberValidator;
     private final Map<Color, Boolean> fullColors;
 
     protected final DiceResult diceResult;
     protected final Dice<Color> colorDice;
     protected final Dice<Integer> numberDice;
 
+    protected Board board;
     protected int round;
 
-    public Game(final Board board) {
-        this.board = board;
+    public Game(Board board) {
+        this.setBoard(board);
         this.gameObservers = new ArrayList<>();
         this.pointsPerCol = new int[]{5, 3, 3, 3, 2, 2, 2, 1, 2, 2, 2, 3, 3, 3, 5};
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.diceResult = new DiceResult();
         this.fullColors = new HashMap<>();
-        this.colorValidator = new ColorValidator(this.board);
-        this.numberValidator = new NumberValidator();
+
         this.round = 1;
         Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
+    }
+
+    protected void setBoard(Board board) {
+        this.board = board;
+        this.colorValidator = new ColorValidator(this.board);
+        this.numberValidator = new NumberValidator();
     }
 
     public void start() {

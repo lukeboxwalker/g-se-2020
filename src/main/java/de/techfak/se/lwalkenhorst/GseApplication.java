@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Application extends javafx.application.Application {
+public class GseApplication extends javafx.application.Application {
 
     private static Game gameModel;
 
@@ -29,8 +29,6 @@ public class Application extends javafx.application.Application {
         stage.setTitle("GSE Nochmal!");
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     public static void start(Game game) {

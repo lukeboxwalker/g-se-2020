@@ -34,7 +34,7 @@ public class GseServer {
                 }
             }
             HTTPServer server = new HTTPServer(8088, game);
-            System.out.println("Starting server...");
+            System.out.println("Starting server on http://localhost:8088 ...");
             server.start(0, false);
         } catch (AbstractExitCodeException e) {
             System.err.println(e.getMessage());

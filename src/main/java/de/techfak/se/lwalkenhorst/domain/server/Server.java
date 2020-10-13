@@ -33,9 +33,9 @@ public class Server implements GameServer {
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.board = board;
         this.round = 0;
-        this.gameFinished = true;
+        this.gameFinished = false;
         this.playerFinished = false;
-        rollDice();
+        this.rollDice();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Server implements GameServer {
     @Override
     public boolean updatePoints(String uuid, int points, boolean gameFinished) {
         if (players.containsKey(uuid) && players.get(uuid).getRound() == this.round) {
-            this.playerFinished = gameFinished;
+            this.playerFinished = this.playerFinished || gameFinished;
             final Player player = players.get(uuid);
             player.setPoints(points);
             player.enterNextRound();

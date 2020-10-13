@@ -41,6 +41,9 @@ public class RequestHandler {
 
     public NanoHTTPD.Response handle(final EndRoundRequest request) {
         boolean success = server.updatePoints(request.getUuid(), request.getFinalPoints(), request.isPlayerFinished());
+        if (success) {
+            System.out.println("Player with uuid: " + request.getUuid() + " finished there round");
+        }
         return handle(String.valueOf(success));
     }
 
@@ -49,6 +52,7 @@ public class RequestHandler {
         if (uuid == null) {
             return createResponse(new ParticipateResponse(false, "", ""));
         } else {
+            System.out.println("Registered player '" + request.getUsername() + "' with uuid: " + uuid);
             final String board = boardSerializer.serialize(server.getBoard());
             return createResponse(new ParticipateResponse(true, uuid.toString(), board));
         }
