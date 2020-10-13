@@ -5,16 +5,10 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.techfak.se.lwalkenhorst.domain.controller.GameController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.techfak.se.lwalkenhorst.domain.controller.GameController">
     <children>
-      <VBox prefHeight="750.0" prefWidth="1600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="rootBox" prefHeight="750.0" prefWidth="1600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="20.0" prefWidth="1600.0">
-               <children>
-                  <Label fx:id="statusLabel" text="Status:" />
-                  <Label fx:id="pointsLabel" text="Points:" translateX="50.0" />
-               </children>
-            </HBox>
               <HBox fx:id="box">
                   <children>
                       <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="1002.0" prefWidth="1447.0">
@@ -30,19 +24,19 @@
                         <StackPane fx:id="colorDice1" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" styleClass="text" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                              <Text fx:id="dice1" styleClass="text" text="NaN" />
+                              <Circle fx:id="dice1" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
                         </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                                 <Text fx:id="dice2" text="NaN" />
+                              <Circle fx:id="dice2" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
                              </children>
                          </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                                 <Text fx:id="dice3" text="NaN" />
+                              <Circle fx:id="dice3" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
                              </children>
                          </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">

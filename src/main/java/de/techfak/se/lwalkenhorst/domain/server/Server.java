@@ -32,8 +32,8 @@ public class Server implements GameServer {
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.board = board;
-        this.round = 1;
-        this.gameFinished = false;
+        this.round = 0;
+        this.gameFinished = true;
         this.playerFinished = false;
         rollDice();
     }
@@ -44,6 +44,9 @@ public class Server implements GameServer {
             UUID uuid = UUID.randomUUID();
             Player player = new Player(name, uuid.toString(), 0);
             players.put(player.getUuid(), player);
+            if (players.size() == lobbySize) {
+                this.round = 1;
+            }
             return uuid;
         }
         return null;
@@ -61,11 +64,15 @@ public class Server implements GameServer {
                     this.gameFinished = true;
                 }
                 this.rollDice();
-                this.round++;
+                nextRound();
             }
             return true;
         }
         return false;
+    }
+
+    public void nextRound() {
+        round++;
     }
 
     @Override

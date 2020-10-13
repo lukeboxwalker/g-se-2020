@@ -6,12 +6,17 @@ import de.techfak.se.lwalkenhorst.domain.DiceResult;
 import de.techfak.se.lwalkenhorst.domain.Game;
 import de.techfak.se.lwalkenhorst.domain.GameObserver;
 import de.techfak.se.lwalkenhorst.domain.Position;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -19,9 +24,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static javafx.scene.paint.Color.WHITE;
+
 public class GameController implements GameObserver {
 
     private static final int PANE_SIZE = 100;
+
+    @FXML
+    private AnchorPane root;
+
+    @FXML
+    private VBox rootBox;
 
     @FXML
     private GridPane gridPane;
@@ -30,13 +43,13 @@ public class GameController implements GameObserver {
     private HBox box;
 
     @FXML
-    private Text dice1;
+    private Circle dice1;
 
     @FXML
-    private Text dice2;
+    private Circle dice2;
 
     @FXML
-    private Text dice3;
+    private Circle dice3;
 
     @FXML
     private Text dice4;
@@ -48,30 +61,39 @@ public class GameController implements GameObserver {
     private Text dice6;
 
     @FXML
-    private Label pointsLabel;
-
-    @FXML
     private Button confirmButton;
 
-
-    private final Map<Text, Color> colorDice = new HashMap<>();
+    private final Map<Circle, Color> colorDice = new HashMap<>();
     private final Map<Text, Integer> numberDice = new HashMap<>();
     private final View generator = new View();
+    private final VBox progressIndicator = new VBox(new ProgressIndicator());
+    private boolean gameOver = false;
 
-    private Game gameModel;
     private StackPane[][] tiles;
     private List<Position> crossedPositions;
 
     public void init(final Game gameModel) {
         this.crossedPositions = new ArrayList<>();
-        this.gameModel = gameModel;
-        this.gameModel.addListener(this);
+        this.progressIndicator.prefHeightProperty().bind(root.prefHeightProperty());
+        this.progressIndicator.prefWidthProperty().bind(root.prefWidthProperty());
+        this.progressIndicator.setStyle("-fx-background-color: rgba(64, 64, 64, 0.5)");
+        this. progressIndicator.setAlignment(Pos.CENTER);
+        gameModel.addListener(this);
         this.box.setFillHeight(true);
         this.confirmButton.setOnMouseClicked(event -> {
             if (crossedPositions.isEmpty()) {
                 gameModel.pass();
+                if (!gameOver) {
+                    rootBox.setDisable(true);
+                    root.getChildren().add(progressIndicator);
+                }
             }
-            if (!gameModel.crossTiles(crossedPositions)) {
+            if (gameModel.crossTiles(crossedPositions)) {
+                if (!gameOver) {
+                    rootBox.setDisable(true);
+                    root.getChildren().add(progressIndicator);
+                }
+            } else {
                 crossedPositions.forEach(position ->
                         generator.removeCrossFromPane(tiles[position.getPosX()][position.getPosY()]));
                 crossedPositions.clear();
@@ -79,13 +101,13 @@ public class GameController implements GameObserver {
         });
     }
 
-    private void viewColorDiceResult(List<Color> possiblePicks, Map<Text, Color> map, Text... dice) {
+    private void viewColorDiceResult(List<Color> possiblePicks, Map<Circle, Color> map, Circle... dice) {
         if (possiblePicks.size() == 3 && dice.length == 3) {
-            dice[0].setText(possiblePicks.get(0).name());
+            dice[0].setStyle("-fx-fill: " + possiblePicks.get(0).getFxName());
             map.put(dice[0], possiblePicks.get(0));
-            dice[1].setText(possiblePicks.get(1).name());
+            dice[1].setStyle("-fx-fill: " + possiblePicks.get(1).getFxName());
             map.put(dice[1], possiblePicks.get(1));
-            dice[2].setText(possiblePicks.get(2).name());
+            dice[2].setStyle("-fx-fill: " + possiblePicks.get(2).getFxName());
             map.put(dice[2], possiblePicks.get(2));
         }
     }
@@ -111,32 +133,51 @@ public class GameController implements GameObserver {
 
     @Override
     public void onGameStart(final Board board) {
-        this.tiles = generator.createGrid(board, gridPane, PANE_SIZE, this::clickTile);
-        pointsLabel.setText("Points: 0");
+        Platform.runLater(() -> {
+            this.tiles = generator.createGrid(board, gridPane, PANE_SIZE, this::clickTile);
+        });
     }
 
     @Override
     public void onDiceRoll(final DiceResult diceResult) {
-        viewColorDiceResult(diceResult.getRolledColors(), colorDice, dice1, dice2, dice3);
-        viewNumberDiceResult(diceResult.getRolledNumbers(), numberDice, dice4, dice5, dice6);
+        Platform.runLater(() -> {
+            rootBox.setDisable(false);
+            root.getChildren().remove(progressIndicator);
+            viewColorDiceResult(diceResult.getRolledColors(), colorDice, dice1, dice2, dice3);
+            viewNumberDiceResult(diceResult.getRolledNumbers(), numberDice, dice4, dice5, dice6);
+        });
     }
 
     @Override
     public void onTilesCross(final List<Position> positions) {
-        positions.forEach(position -> {
-            if (!crossedPositions.contains(position)) {
-                generator.addCrossToPane(PANE_SIZE, tiles[position.getPosX()][position.getPosY()]);
-            } else {
-                crossedPositions.remove(position);
-            }
+        Platform.runLater(() -> {
+            positions.forEach(position -> {
+                if (!crossedPositions.contains(position)) {
+                    generator.addCrossToPane(PANE_SIZE, tiles[position.getPosX()][position.getPosY()]);
+                } else {
+                    crossedPositions.remove(position);
+                }
+            });
+            crossedPositions.forEach(position ->
+                    generator.removeCrossFromPane(tiles[position.getPosX()][position.getPosY()]));
+            crossedPositions.clear();
         });
-        crossedPositions.forEach(position ->
-                generator.removeCrossFromPane(tiles[position.getPosX()][position.getPosY()]));
-        crossedPositions.clear();
     }
 
     @Override
     public void onGameEnd(final int points) {
-        pointsLabel.setText("Points: " + points);
+        Platform.runLater(() -> {
+            this.gameOver = true;
+            final Text text = new Text("Game over Points: " + points);
+            text.setFill(WHITE);
+            text.setStyle("-fx-font-size: 40");
+            final VBox gameOverScreen = new VBox(text);
+            gameOverScreen.prefHeightProperty().bind(root.prefHeightProperty());
+            gameOverScreen.prefWidthProperty().bind(root.prefWidthProperty());
+            gameOverScreen.setStyle("-fx-background-color: rgba(64, 64, 64, 0.5)");
+            gameOverScreen.setAlignment(Pos.CENTER);
+            rootBox.setDisable(true);
+            root.getChildren().add(gameOverScreen);
+        });
     }
 }

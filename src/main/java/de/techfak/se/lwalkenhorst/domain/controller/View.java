@@ -48,6 +48,9 @@ public final class View {
                     rowConstraints.setVgrow(Priority.ALWAYS);
                     gridPane.getRowConstraints().add(rowConstraints);
                 }
+                if (board.getTileAt(x, y).isCrossed()) {
+                    addCrossToPane(size, pane);
+                }
             }
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setHgrow(Priority.ALWAYS);
