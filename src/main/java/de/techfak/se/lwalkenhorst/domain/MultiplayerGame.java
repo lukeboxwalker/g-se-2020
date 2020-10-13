@@ -13,14 +13,12 @@ public class MultiplayerGame extends Game implements AutoCloseable {
     private static final int PERIOD_MS = 1000;
 
     private HTTPClient client;
-    private final Timer startTimer;
+    private Timer startTimer;
     private Timer diceTimer;
     private TimerTask timerTask;
 
     public MultiplayerGame() {
         super(null);
-        startTimer = new Timer();
-        diceTimer = new Timer();
     }
 
     public void init(Board board, HTTPClient client) {
@@ -30,6 +28,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
 
     @Override
     public void start() {
+        startTimer = new Timer();
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -87,7 +86,11 @@ public class MultiplayerGame extends Game implements AutoCloseable {
 
     @Override
     public void close() {
-        startTimer.cancel();
-        diceTimer.cancel();
+        if (startTimer != null) {
+            startTimer.cancel();
+        }
+        if (diceTimer != null) {
+            diceTimer.cancel();
+        }
     }
 }
