@@ -55,17 +55,6 @@ public final class GseAgain {
                 try (MultiplayerGame multiplayerGame = new MultiplayerGame()) {
                     ClientApplication.start(multiplayerGame);
                 }
-
-//                HTTPClient client = new HTTPClient("localhost", 8088);
-//                ParticipateResponse response = client.participateRequest(args.length == 1 ? args[0] : "lukas");
-//                if (response.isSuccess()) {
-//                    Board board = boardSerializer.deSerialize(response.getBoard());
-//                    try (MultiplayerGame multiplayerGame = new MultiplayerGame(board, client)) {
-//                        Application.start(multiplayerGame);
-//                    }
-//                } else {
-//                    System.out.println("Cannot play on server. Is the server full?");
-//                }
             } else {
                 final Terminal terminal = new Terminal(game);
                 terminal.listenForInstructions();

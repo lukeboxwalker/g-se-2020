@@ -1,6 +1,4 @@
-package de.techfak.se.lwalkenhorst.domain.server.rest;
-
-import de.techfak.se.lwalkenhorst.domain.exception.AbstractExitCodeException;
+package de.techfak.se.lwalkenhorst.domain.exception;
 
 public class NoConnectionException extends AbstractExitCodeException {
 

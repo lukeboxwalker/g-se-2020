@@ -7,7 +7,7 @@ import de.techfak.se.lwalkenhorst.domain.controller.ClientLoginController;
 import de.techfak.se.lwalkenhorst.domain.controller.GameController;
 import de.techfak.se.lwalkenhorst.domain.exception.BoardCreationException;
 import de.techfak.se.lwalkenhorst.domain.server.rest.HTTPClient;
-import de.techfak.se.lwalkenhorst.domain.server.rest.NoConnectionException;
+import de.techfak.se.lwalkenhorst.domain.exception.NoConnectionException;
 import de.techfak.se.lwalkenhorst.domain.server.rest.response.ParticipateResponse;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

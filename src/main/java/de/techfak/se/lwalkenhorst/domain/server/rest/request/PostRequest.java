@@ -1,36 +1,28 @@
 package de.techfak.se.lwalkenhorst.domain.server.rest.request;
 
-import java.util.HashMap;
-import java.util.Map;
+import de.techfak.se.lwalkenhorst.domain.server.json.JSONParser;
+import de.techfak.se.lwalkenhorst.domain.server.json.SerialisationException;
+import de.techfak.se.lwalkenhorst.domain.server.rest.RequestHandler;
+import fi.iki.elonen.NanoHTTPD;
 
-public class PostRequest {
+import static fi.iki.elonen.NanoHTTPD.MIME_PLAINTEXT;
 
-    public static final PostRequest PARTICIPATE_REQUEST = new PostRequest("/api/participate", ParticipateRequest.class);
-    public static final PostRequest END_ROUND_REQUEST = new PostRequest("/api/end-round", EndRoundRequest.class);
+public abstract class PostRequest<T extends RequestBody> {
 
-    private static final Map<String, PostRequest> REQUEST_MAP = new HashMap<>();
-    private final String uri;
-    private final Class<? extends Request> clazz;
+    private static final JSONParser JSON_PARSER = new JSONParser();
 
-    static {
-        REQUEST_MAP.put(PARTICIPATE_REQUEST.getUri(), PARTICIPATE_REQUEST);
-        REQUEST_MAP.put(END_ROUND_REQUEST.getUri(), END_ROUND_REQUEST);
-    }
+    public abstract Class<T> getBodyClass();
 
-    PostRequest(final String uri, final Class<? extends Request> clazz) {
-        this.uri = uri;
-        this.clazz = clazz;
-    }
+    public abstract NanoHTTPD.Response handle(RequestHandler handler, T requestBody);
 
-    public String getUri() {
-        return uri;
-    }
-
-    public Class<? extends Request> getClazz() {
-        return clazz;
-    }
-
-    public static PostRequest requestForUri(final String uri) {
-        return REQUEST_MAP.get(uri);
+    public NanoHTTPD.Response handle(RequestHandler handler, String data) {
+        try {
+            final T requestBody = JSON_PARSER.parseJSON(data, getBodyClass());
+            return this.handle(handler, requestBody);
+        } catch (SerialisationException se) {
+            se.printStackTrace();
+            return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT,
+                    "SERVER INTERNAL ERROR: SerialisationException: " + se.getMessage());
+        }
     }
 }

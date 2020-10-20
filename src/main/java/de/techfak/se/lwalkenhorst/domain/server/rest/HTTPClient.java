@@ -1,9 +1,10 @@
 package de.techfak.se.lwalkenhorst.domain.server.rest;
 
+import de.techfak.se.lwalkenhorst.domain.exception.NoConnectionException;
 import de.techfak.se.lwalkenhorst.domain.server.json.JSONParser;
 import de.techfak.se.lwalkenhorst.domain.server.json.SerialisationException;
-import de.techfak.se.lwalkenhorst.domain.server.rest.request.EndRoundRequest;
-import de.techfak.se.lwalkenhorst.domain.server.rest.request.ParticipateRequest;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.EndRoundRequestBody;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.ParticipateRequestBody;
 import de.techfak.se.lwalkenhorst.domain.server.rest.response.ParticipateResponse;
 import de.techfak.se.lwalkenhorst.domain.server.rest.response.StatusResponse;
 
@@ -41,7 +42,7 @@ public class HTTPClient {
     public ParticipateResponse participateRequest(String username) {
         try {
             final URI uri = URI.create(baseUri + "/api/participate");
-            final String body = parser.toJSON(new ParticipateRequest(username));
+            final String body = parser.toJSON(new ParticipateRequestBody(username));
             final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(body);
             final HttpRequest request = HttpRequest.newBuilder().uri(uri)
                     .setHeader("content-type", RequestHandler.MIME_JSON).POST(bodyPublisher).build();
@@ -62,7 +63,7 @@ public class HTTPClient {
     public void endRoundRequest(int finalPoints, boolean gameFinished) {
         try {
             final URI uri = URI.create(baseUri + "/api/end-round");
-            final String body = parser.toJSON(new EndRoundRequest(uuid, finalPoints, gameFinished));
+            final String body = parser.toJSON(new EndRoundRequestBody(uuid, finalPoints, gameFinished));
             final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(body);
             final HttpRequest request = HttpRequest.newBuilder().uri(uri).POST(bodyPublisher).build();
             client.send(request, HttpResponse.BodyHandlers.ofString());

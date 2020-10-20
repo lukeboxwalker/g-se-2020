@@ -1,12 +1,13 @@
 package de.techfak.se.lwalkenhorst.domain.server.rest;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import de.techfak.se.lwalkenhorst.domain.server.GameServer;
-import de.techfak.se.lwalkenhorst.domain.server.json.JSONParser;
-import de.techfak.se.lwalkenhorst.domain.server.json.SerialisationException;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.EndRoundRequest;
+
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.GetRequest;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.GseRequest;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.ParticipateRequest;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.PostRequest;
-import de.techfak.se.lwalkenhorst.domain.server.rest.request.Request;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.StatusRequest;
 import fi.iki.elonen.NanoHTTPD;
 
 import java.io.IOException;
@@ -14,12 +15,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HTTPServer extends NanoHTTPD {
+    private static final GetRequest FALLBACK_REQUEST = new GseRequest();
+
     private final RequestHandler requestHandler;
-    private final JSONParser jsonParser = new JSONParser();
+    private final Map<String, PostRequest<?>> postMapping;
+    private final Map<String, GetRequest> getMapping;
 
     public HTTPServer(int port, final GameServer server) {
         super(port);
-        requestHandler = new RequestHandler(jsonParser, server);
+        this.postMapping = Map.of(
+                "/api/participate", new ParticipateRequest(),
+                "/api/end-round", new EndRoundRequest());
+        this.getMapping = Map.of(
+                "", FALLBACK_REQUEST,
+                "/api/status", new StatusRequest());
+        requestHandler = new RequestHandler(server);
     }
 
     @Override
@@ -33,7 +43,7 @@ public class HTTPServer extends NanoHTTPD {
     }
 
     private Response handleGetRequest(final IHTTPSession session) {
-        GetRequest getRequest = GetRequest.requestForUri(session.getUri());
+        GetRequest getRequest = getMapping.getOrDefault(session.getUri(), FALLBACK_REQUEST);
         return getRequest.handle(requestHandler);
     }
 
@@ -41,18 +51,17 @@ public class HTTPServer extends NanoHTTPD {
         final Map<String, String> data = new HashMap<>();
         try {
             session.parseBody(data);
-            PostRequest postRequest = PostRequest.requestForUri(session.getUri());
-            Request request = jsonParser.parseJSON(data.get("postData"), postRequest.getClazz());
-            return request.handle(requestHandler);
+            if (postMapping.containsKey(session.getUri())) {
+                final PostRequest<?> postRequest = postMapping.get(session.getUri());
+                return postRequest.handle(requestHandler, data.get("postData"));
+            } else {
+                return FALLBACK_REQUEST.handle(requestHandler);
+            }
         } catch (IOException ioe) {
             return NanoHTTPD.newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT,
                     "SERVER INTERNAL ERROR: IOException: " + ioe.getMessage());
         } catch (ResponseException re) {
             return NanoHTTPD.newFixedLengthResponse(re.getStatus(), MIME_PLAINTEXT, re.getMessage());
-        } catch (SerialisationException se) {
-            se.printStackTrace();
-            return NanoHTTPD.newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT,
-                    "SERVER INTERNAL ERROR: SerialisationException: " + se.getMessage());
         }
     }
 

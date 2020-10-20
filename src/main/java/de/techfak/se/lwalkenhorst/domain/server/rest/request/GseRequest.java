@@ -4,7 +4,7 @@ package de.techfak.se.lwalkenhorst.domain.server.rest.request;
 import de.techfak.se.lwalkenhorst.domain.server.rest.RequestHandler;
 import fi.iki.elonen.NanoHTTPD;
 
-public class GseRequest implements Request {
+public class GseRequest implements GetRequest {
 
     public GseRequest() {
     }
