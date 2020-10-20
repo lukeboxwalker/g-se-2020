@@ -11,4 +11,6 @@ public interface GameObserver {
     void onTilesCross(final List<Position> positions);
 
     void onGameEnd(final int points);
+
+    void onPointsChange(final int points, final List<Integer> fullColumns);
 }

@@ -153,6 +153,11 @@ public class Terminal implements GameObserver {
     }
 
     @Override
+    public void onPointsChange(int points, List<Integer> fullColumns) {
+
+    }
+
+    @Override
     public void onGameStart(final Board board) {
         this.initBoard(board);
     }

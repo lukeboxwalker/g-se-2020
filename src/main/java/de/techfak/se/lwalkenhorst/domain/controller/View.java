@@ -1,26 +1,27 @@
 package de.techfak.se.lwalkenhorst.domain.controller;
 
 import de.techfak.se.lwalkenhorst.domain.Board;
-import javafx.scene.Group;
+import de.techfak.se.lwalkenhorst.domain.Position;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 
 import java.util.function.BiConsumer;
 
-import static javafx.scene.paint.Color.BLACK;
-import static javafx.scene.paint.Color.WHITE;
+import static javafx.scene.paint.Color.*;
 
 public final class View {
 
-    public StackPane[][] createGrid(Board board, GridPane gridPane, int size, BiConsumer<Integer, Integer> consumer) {
+    public FxBoard createGrid(Board board, GridPane gridPane, int size, BiConsumer<Integer, Integer> consumer) {
         int lengthX = board.getLengthX();
         int lengthY = board.getLengthY();
         final StackPane[][] panes = new StackPane[lengthX][lengthY];
+        final StackPane[] pointPanes = new StackPane[lengthX];
+        final FxBoard fxBoard = new FxBoard(panes, pointPanes, size);
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
                 final StackPane pane = new StackPane();
@@ -49,7 +50,7 @@ public final class View {
                     gridPane.getRowConstraints().add(rowConstraints);
                 }
                 if (board.getTileAt(x, y).isCrossed()) {
-                    addCrossToPane(size, pane);
+                    fxBoard.addCrossToTile(new Position(x, y));
                 }
             }
             ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -57,30 +58,21 @@ public final class View {
             columnConstraints.setFillWidth(true);
             gridPane.getColumnConstraints().add(columnConstraints);
         }
-        return panes;
-    }
-
-    public void removeCrossFromPane(StackPane pane) {
-        if (!pane.getChildren().isEmpty()) {
-            pane.getChildren().remove(pane.getChildren().size() - 1);
+        for (int x = 0; x < lengthX; x++) {
+            final StackPane pane = new StackPane();
+            pane.setPrefHeight(size);
+            pane.setPrefWidth(size);
+            final Text text = new Text(String.valueOf(board.getPointsForCol(x)));
+            pane.getChildren().add(text);
+            pointPanes[x] = pane;
+            if (board.isColumnFull(x)) {
+                fxBoard.markPointsInCol(x);
+            }
+            gridPane.add(pane, x, lengthY + 1);
         }
-    }
-
-    public void addCrossToPane(int size, StackPane pane) {
-        Line line1 = new Line(-size / 2.5, 0, size / 2.5, 0);
-        line1.setStrokeWidth(4);
-        line1.setRotate(45);
-        line1.endXProperty().bind(pane.heightProperty().divide(2.5));
-        line1.startXProperty().bind(pane.heightProperty().divide(-2.5));
-
-        Line line2 = new Line(0, -size / 2.5, 0, size / 2.5);
-        line2.setStrokeWidth(4);
-        line2.setRotate(45);
-        line2.endYProperty().bind(pane.heightProperty().divide(2.5));
-        line2.startYProperty().bind(pane.heightProperty().divide(-2.5));
-
-        Group cross =  new Group(line1, line2);
-        cross.setStyle("-fx-background-color: black");
-        pane.getChildren().add(cross);
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.ALWAYS);
+        gridPane.getRowConstraints().add(rowConstraints);
+        return fxBoard;
     }
 }

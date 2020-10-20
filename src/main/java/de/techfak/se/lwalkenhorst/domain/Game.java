@@ -12,7 +12,7 @@ import java.util.Map;
 public class Game implements Observable {
 
 
-    private final int[] pointsPerCol;
+
 
     protected final List<GameObserver> gameObservers;
 
@@ -30,7 +30,7 @@ public class Game implements Observable {
     public Game(Board board) {
         this.setBoard(board);
         this.gameObservers = new ArrayList<>();
-        this.pointsPerCol = new int[]{5, 3, 3, 3, 2, 2, 2, 1, 2, 2, 2, 3, 3, 3, 5};
+
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
         this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
         this.diceResult = new DiceResult();
@@ -64,9 +64,8 @@ public class Game implements Observable {
 
         if (board.cross(clone)) {
             this.gameObservers.forEach(gameObserver -> gameObserver.onTilesCross(clone));
-
+            final int points = calculatePoints();
             if (isGameFinished()) {
-                final int points = calculatePoints();
                 this.gameObservers.forEach(gameObserver -> gameObserver.onGameEnd(points));
             } else {
                 rollDice();
@@ -85,11 +84,15 @@ public class Game implements Observable {
 
     protected int calculatePoints() {
         int points = countFullColors() * 5;
+        final List<Integer> fullCols = new ArrayList<>();
         for (int x = 0; x < board.getLengthX(); x++) {
             if (board.isColumnFull(x)) {
-                points += this.pointsPerCol[x];
+                fullCols.add(x);
+                points += board.getPointsForCol(x);
             }
         }
+        int finalPoints = points;
+        this.gameObservers.forEach(gameObserver -> gameObserver.onPointsChange(finalPoints, fullCols));
         return points;
     }
 

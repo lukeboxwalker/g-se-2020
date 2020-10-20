@@ -9,8 +9,10 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +22,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +72,7 @@ public class GameController implements GameObserver {
     private final VBox progressIndicator = new VBox(new ProgressIndicator());
     private boolean gameOver = false;
 
-    private StackPane[][] tiles;
+    private FxBoard fxBoard;
     private List<Position> crossedPositions;
 
     public void init(final Game gameModel) {
@@ -87,16 +90,19 @@ public class GameController implements GameObserver {
                     rootBox.setDisable(true);
                     root.getChildren().add(progressIndicator);
                 }
-            }
-            if (gameModel.crossTiles(crossedPositions)) {
+            } else if (gameModel.crossTiles(crossedPositions)) {
                 if (!gameOver) {
                     rootBox.setDisable(true);
                     root.getChildren().add(progressIndicator);
                 }
             } else {
-                crossedPositions.forEach(position ->
-                        generator.removeCrossFromPane(tiles[position.getPosX()][position.getPosY()]));
+                crossedPositions.forEach(fxBoard::removeCrossFromTile);
                 crossedPositions.clear();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText("Rule violation.");
+                alert.setContentText("Could not cross these tile(s). Stick to the rules!");
+                alert.showAndWait();
             }
         });
     }
@@ -127,14 +133,14 @@ public class GameController implements GameObserver {
         final Position position = new Position(x, y);
         if (!crossedPositions.contains(position)) {
             crossedPositions.add(position);
-            generator.addCrossToPane(PANE_SIZE, tiles[x][y]);
+            fxBoard.addCrossToTile(position);
         }
     }
 
     @Override
     public void onGameStart(final Board board) {
         Platform.runLater(() -> {
-            this.tiles = generator.createGrid(board, gridPane, PANE_SIZE, this::clickTile);
+            this.fxBoard = generator.createGrid(board, gridPane, PANE_SIZE, this::clickTile);
         });
     }
 
@@ -155,12 +161,18 @@ public class GameController implements GameObserver {
                 if (crossedPositions.contains(position)) {
                     crossedPositions.remove(position);
                 } else {
-                    generator.addCrossToPane(PANE_SIZE, tiles[position.getPosX()][position.getPosY()]);
+                    fxBoard.addCrossToTile(position);
                 }
             });
-            crossedPositions.forEach(position ->
-                    generator.removeCrossFromPane(tiles[position.getPosX()][position.getPosY()]));
+            crossedPositions.forEach(fxBoard::removeCrossFromTile);
             crossedPositions.clear();
+        });
+    }
+
+    @Override
+    public void onPointsChange(int points, List<Integer> fullColumns) {
+        Platform.runLater(() -> {
+            fullColumns.forEach(fxBoard::markPointsInCol);
         });
     }
 
