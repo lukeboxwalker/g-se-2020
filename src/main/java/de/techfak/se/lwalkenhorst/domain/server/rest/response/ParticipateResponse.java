@@ -8,7 +8,7 @@ public class ParticipateResponse implements ResponseBody {
     public ParticipateResponse() {
     }
 
-    public ParticipateResponse(boolean success, String uuid, String board) {
+    public ParticipateResponse(final boolean success, final String uuid, final String board) {
         this.success = success;
         this.uuid = uuid;
         this.board = board;
@@ -18,7 +18,7 @@ public class ParticipateResponse implements ResponseBody {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public void setSuccess(final boolean success) {
         this.success = success;
     }
 
@@ -26,7 +26,7 @@ public class ParticipateResponse implements ResponseBody {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(final String uuid) {
         this.uuid = uuid;
     }
 
@@ -34,7 +34,7 @@ public class ParticipateResponse implements ResponseBody {
         return board;
     }
 
-    public void setBoard(String board) {
+    public void setBoard(final String board) {
         this.board = board;
     }
 }

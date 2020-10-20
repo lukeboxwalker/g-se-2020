@@ -8,7 +8,7 @@ import fi.iki.elonen.NanoHTTPD;
 public class GseRequest implements GetRequest {
 
     @Override
-    public NanoHTTPD.Response handle(GameServer server) {
+    public NanoHTTPD.Response handle(final GameServer server) {
         return ResponseUtils.createResponse("GSE NochMal");
     }
 }

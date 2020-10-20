@@ -14,36 +14,36 @@ class ArgumentBuilder implements CommandLineArgument.OptionalsBuilder, CommandLi
     private Pattern valuePatternMatcher;
     private String defaultValue;
 
-    ArgumentBuilder() {
+    public ArgumentBuilder() {
         this.isRequired = true;
     }
 
     @Override
-    public CommandLineArgument.OptionalsBuilder withName(String argumentName) {
+    public CommandLineArgument.OptionalsBuilder withName(final String argumentName) {
         this.argumentName = argumentName;
         return this;
     }
 
     @Override
-    public CommandLineArgument.OptionalsBuilder isRequired(boolean isRequired) {
-        this.isRequired = isRequired;
+    public CommandLineArgument.OptionalsBuilder isRequired(final boolean required) {
+        this.isRequired = required;
         return this;
     }
 
     @Override
-    public CommandLineArgument.OptionalsBuilder withValueSeparator(String separator) {
+    public CommandLineArgument.OptionalsBuilder withValueSeparator(final String separator) {
         this.valueSeparator = separator;
         return this;
     }
 
     @Override
-    public CommandLineArgument.OptionalsBuilder withPatternMatcher(Pattern valuePatternMatcher) {
+    public CommandLineArgument.OptionalsBuilder withPatternMatcher(final Pattern valuePatternMatcher) {
         this.valuePatternMatcher = valuePatternMatcher;
         return this;
     }
 
     @Override
-    public CommandLineArgument.OptionalsBuilder withDefaultValue(String defaultValue) {
+    public CommandLineArgument.OptionalsBuilder withDefaultValue(final String defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }
@@ -53,7 +53,7 @@ class ArgumentBuilder implements CommandLineArgument.OptionalsBuilder, CommandLi
         if (argumentName == null || argumentName.isEmpty()) {
             throw new IllegalArgumentException("Argument must declare a name");
         } else {
-            CommandLineArgument commandLineArgument = new CommandLineArgument(argumentName);
+            final CommandLineArgument commandLineArgument = new CommandLineArgument(argumentName);
             commandLineArgument.setRequired(isRequired);
             commandLineArgument.setDefaultValue(defaultValue);
             commandLineArgument.setValueMatcher(valuePatternMatcher);

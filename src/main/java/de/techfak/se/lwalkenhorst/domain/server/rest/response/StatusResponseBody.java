@@ -4,7 +4,6 @@ import de.techfak.se.lwalkenhorst.domain.DiceResult;
 import de.techfak.se.lwalkenhorst.domain.server.Player;
 
 import java.util.Collection;
-import java.util.List;
 
 public class StatusResponseBody implements ResponseBody {
     private boolean gameFinished;
@@ -12,21 +11,11 @@ public class StatusResponseBody implements ResponseBody {
     private Collection<Player> players;
     private DiceResult diceResult;
 
-    public StatusResponseBody() {
-    }
-
-    public StatusResponseBody(boolean gameFinished, int round, List<Player> players, DiceResult diceResult) {
-        this.gameFinished = gameFinished;
-        this.round = round;
-        this.players = players;
-        this.diceResult = diceResult;
-    }
-
     public boolean isGameFinished() {
         return gameFinished;
     }
 
-    public void setGameFinished(boolean gameFinished) {
+    public void setGameFinished(final boolean gameFinished) {
         this.gameFinished = gameFinished;
     }
 
@@ -34,7 +23,7 @@ public class StatusResponseBody implements ResponseBody {
         return round;
     }
 
-    public void setRound(int round) {
+    public void setRound(final int round) {
         this.round = round;
     }
 
@@ -42,7 +31,7 @@ public class StatusResponseBody implements ResponseBody {
         return players;
     }
 
-    public void setPlayers(Collection<Player> players) {
+    public void setPlayers(final Collection<Player> players) {
         this.players = players;
     }
 
@@ -50,7 +39,7 @@ public class StatusResponseBody implements ResponseBody {
         return diceResult;
     }
 
-    public void setDiceResult(DiceResult diceResult) {
+    public void setDiceResult(final DiceResult diceResult) {
         this.diceResult = diceResult;
     }
 }

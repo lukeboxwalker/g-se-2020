@@ -21,7 +21,7 @@ public class HTTPServer extends NanoHTTPD {
     private final Map<String, GetRequest> getMapping;
     private final GameServer gameServer;
 
-    public HTTPServer(int port, final GameServer server) {
+    public HTTPServer(final int port, final GameServer server) {
         super(port);
         this.gameServer = server;
         this.postMapping = Map.of(
@@ -43,7 +43,7 @@ public class HTTPServer extends NanoHTTPD {
     }
 
     private Response handleGetRequest(final IHTTPSession session) {
-        GetRequest getRequest = getMapping.getOrDefault(session.getUri(), FALLBACK_REQUEST);
+        final GetRequest getRequest = getMapping.getOrDefault(session.getUri(), FALLBACK_REQUEST);
         return getRequest.handle(gameServer);
     }
 

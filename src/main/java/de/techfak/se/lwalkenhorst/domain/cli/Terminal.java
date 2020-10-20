@@ -154,7 +154,7 @@ public class Terminal implements GameObserver {
     }
 
     @Override
-    public void onPointsChange(int points, List<Integer> fullColumns) {
+    public void onPointsChange(final int points, final List<Integer> fullColumns) {
         this.points = points;
     }
 

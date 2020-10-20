@@ -12,7 +12,7 @@ public class EndRoundRequest extends PostRequest<EndRoundRequestBody> {
     }
 
     @Override
-    public NanoHTTPD.Response handle(GameServer server, EndRoundRequestBody requestBody) {
+    public NanoHTTPD.Response handle(final GameServer server, final EndRoundRequestBody requestBody) {
         final String uuid = requestBody.getUuid();
         final int points = requestBody.getFinalPoints();
         final boolean playerFinished = requestBody.isPlayerFinished();

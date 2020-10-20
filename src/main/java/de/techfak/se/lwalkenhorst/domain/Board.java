@@ -56,7 +56,7 @@ public class Board extends AbstractBoard<Tile> {
         return false;
     }
 
-    public int getPointsForCol(int col) {
+    public int getPointsForCol(final int col) {
         if (inBounds(new Position(col ,0))) {
             return pointsPerCol[col];
         } else {

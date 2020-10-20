@@ -16,7 +16,7 @@ public class CommandLineArgument implements Argument {
     private Pattern valuePatternMatcher;
     private String defaultValue;
 
-    CommandLineArgument(final String argumentPrefix) {
+    public CommandLineArgument(final String argumentPrefix) {
         this.argumentPrefix = argumentPrefix;
         this.isRequired = true;
     }
@@ -31,7 +31,7 @@ public class CommandLineArgument implements Argument {
         return this.defaultValue != null;
     }
 
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(final String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -40,7 +40,7 @@ public class CommandLineArgument implements Argument {
         return argumentPrefix;
     }
 
-    public void setValueMatcher(Pattern valuePatternMatcher) {
+    public void setValueMatcher(final Pattern valuePatternMatcher) {
         this.valuePatternMatcher = valuePatternMatcher;
     }
 
@@ -55,7 +55,7 @@ public class CommandLineArgument implements Argument {
 
     }
 
-    public void setValueSeparator(String valueSeparator) {
+    public void setValueSeparator(final String valueSeparator) {
         this.valueSeparator = valueSeparator;
     }
 
@@ -64,7 +64,7 @@ public class CommandLineArgument implements Argument {
         return isRequired;
     }
 
-    public void setRequired(boolean isRequired) {
+    public void setRequired(final boolean isRequired) {
         this.isRequired = isRequired;
     }
 
@@ -97,10 +97,10 @@ public class CommandLineArgument implements Argument {
          * Prepares isRequired for argument.
          * Default is true
          *
-         * @param isRequired to set
+         * @param required to set
          * @return builder
          */
-        OptionalsBuilder isRequired(boolean isRequired);
+        OptionalsBuilder isRequired(boolean required);
 
         /**
          * Prepares valueSeparator for argument.

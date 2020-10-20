@@ -9,7 +9,7 @@ public class EndRoundRequestBody implements RequestBody {
     public EndRoundRequestBody() {
     }
 
-    public EndRoundRequestBody(String uuid, int finalPoints, boolean playerFinished) {
+    public EndRoundRequestBody(final String uuid, final int finalPoints, final boolean playerFinished) {
         this.uuid = uuid;
         this.finalPoints = finalPoints;
         this.playerFinished = playerFinished;
@@ -19,7 +19,7 @@ public class EndRoundRequestBody implements RequestBody {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(final String uuid) {
         this.uuid = uuid;
     }
 
@@ -27,7 +27,7 @@ public class EndRoundRequestBody implements RequestBody {
         return finalPoints;
     }
 
-    public void setFinalPoints(int finalPoints) {
+    public void setFinalPoints(final int finalPoints) {
         this.finalPoints = finalPoints;
     }
 
@@ -35,7 +35,7 @@ public class EndRoundRequestBody implements RequestBody {
         return playerFinished;
     }
 
-    public void setPlayerFinished(boolean playerFinished) {
+    public void setPlayerFinished(final boolean playerFinished) {
         this.playerFinished = playerFinished;
     }
 }

@@ -13,9 +13,9 @@ public abstract class PostRequest<T extends RequestBody> {
 
     public abstract Class<T> getBodyClass();
 
-    public abstract NanoHTTPD.Response handle(GameServer server, T requestBody);
+    public abstract NanoHTTPD.Response handle(final GameServer server, final T requestBody);
 
-    public NanoHTTPD.Response handle(GameServer server, String data) {
+    public NanoHTTPD.Response handle(final GameServer server, final String data) {
         try {
             final T requestBody = JSON_PARSER.parseJSON(data, getBodyClass());
             return this.handle(server, requestBody);

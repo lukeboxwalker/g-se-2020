@@ -21,7 +21,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
         super(null);
     }
 
-    public void init(Board board, HTTPClient client) {
+    public void init(final Board board, final HTTPClient client) {
         this.setBoard(board);
         this.client = client;
     }
@@ -32,7 +32,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
-                StatusResponseBody response = client.statusRequest();
+                final StatusResponseBody response = client.statusRequest();
                 if (response.getRound() == 1) {
                     MultiplayerGame.super.start();
                     startTimer.cancel();
@@ -68,7 +68,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
-                StatusResponseBody response = client.statusRequest();
+                final StatusResponseBody response = client.statusRequest();
                 if (response.getRound() == round) {
                     if (isGameFinished()) {
                         gameObservers.forEach(gameObserver -> gameObserver.onGameEnd(calculatePoints()));

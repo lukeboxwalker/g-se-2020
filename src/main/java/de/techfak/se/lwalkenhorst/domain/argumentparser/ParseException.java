@@ -5,7 +5,7 @@ package de.techfak.se.lwalkenhorst.domain.argumentparser;
  */
 public class ParseException extends Exception {
 
-    static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 42L;
 
     public ParseException(final String message) {
         super(message);

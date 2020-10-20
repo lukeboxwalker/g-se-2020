@@ -13,25 +13,25 @@ class OptionBuilder implements CommandLineOption.NameBuilder, CommandLineOption.
     private List<Argument> requiredArguments;
     private String optionName;
 
-    OptionBuilder() {
+    public OptionBuilder() {
         this.conflictingOptions = new ArrayList<>();
         this.requiredArguments = new ArrayList<>();
     }
 
     @Override
-    public CommandLineOption.OptionalsBuilder withArgument(Argument argument) {
+    public CommandLineOption.OptionalsBuilder withArgument(final Argument argument) {
         this.requiredArguments.add(argument);
         return this;
     }
 
     @Override
-    public CommandLineOption.OptionalsBuilder conflictsOptions(String... option) {
+    public CommandLineOption.OptionalsBuilder conflictsOptions(final String... option) {
         this.conflictingOptions.addAll(Arrays.asList(option));
         return this;
     }
 
     @Override
-    public CommandLineOption.OptionalsBuilder withName(String optionName) {
+    public CommandLineOption.OptionalsBuilder withName(final String optionName) {
         if (optionName.isEmpty()) {
             throw new IllegalArgumentException("Option must declare a name");
         }

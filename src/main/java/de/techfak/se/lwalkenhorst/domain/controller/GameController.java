@@ -98,7 +98,7 @@ public class GameController implements GameObserver {
             } else {
                 crossedPositions.forEach(fxBoard::removeCrossFromTile);
                 crossedPositions.clear();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                final Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Rule violation.");
                 alert.setContentText("Could not cross these tile(s). Stick to the rules!");
@@ -107,30 +107,30 @@ public class GameController implements GameObserver {
         });
     }
 
-    private void viewColorDiceResult(List<Color> possiblePicks, Map<Circle, Color> map, Circle... dice) {
-        if (possiblePicks.size() == 3 && dice.length == 3) {
-            dice[0].setStyle("-fx-fill: " + possiblePicks.get(0).getFxName());
-            map.put(dice[0], possiblePicks.get(0));
-            dice[1].setStyle("-fx-fill: " + possiblePicks.get(1).getFxName());
-            map.put(dice[1], possiblePicks.get(1));
-            dice[2].setStyle("-fx-fill: " + possiblePicks.get(2).getFxName());
-            map.put(dice[2], possiblePicks.get(2));
+    private void viewColorDiceResult(final List<Color> list, final Map<Circle, Color> map, final Circle... dice) {
+        if (list.size() == 3 && dice.length == 3) {
+            dice[0].setStyle("-fx-fill: " + list.get(0).getFxName());
+            map.put(dice[0], list.get(0));
+            dice[1].setStyle("-fx-fill: " + list.get(1).getFxName());
+            map.put(dice[1], list.get(1));
+            dice[2].setStyle("-fx-fill: " + list.get(2).getFxName());
+            map.put(dice[2], list.get(2));
         }
     }
 
-    private void viewNumberDiceResult(List<Integer> possiblePicks, Map<Text, Integer> map, Text... dice) {
-        if (possiblePicks.size() == 3 && dice.length == 3) {
-            dice[0].setText(String.valueOf(possiblePicks.get(0)));
-            map.put(dice[0], possiblePicks.get(0));
-            dice[1].setText(String.valueOf(possiblePicks.get(1)));
-            map.put(dice[1], possiblePicks.get(1));
-            dice[2].setText(String.valueOf(possiblePicks.get(2)));
-            map.put(dice[2], possiblePicks.get(2));
+    private void viewNumberDiceResult(final List<Integer> list, final Map<Text, Integer> map, final Text... dice) {
+        if (list.size() == 3 && dice.length == 3) {
+            dice[0].setText(String.valueOf(list.get(0)));
+            map.put(dice[0], list.get(0));
+            dice[1].setText(String.valueOf(list.get(1)));
+            map.put(dice[1], list.get(1));
+            dice[2].setText(String.valueOf(list.get(2)));
+            map.put(dice[2], list.get(2));
         }
     }
 
-    private void clickTile(int x, int y) {
-        final Position position = new Position(x, y);
+    private void clickTile(final int posX, final int posY) {
+        final Position position = new Position(posX, posY);
         if (!crossedPositions.contains(position)) {
             crossedPositions.add(position);
             fxBoard.addCrossToTile(position);
@@ -170,7 +170,7 @@ public class GameController implements GameObserver {
     }
 
     @Override
-    public void onPointsChange(int points, List<Integer> fullColumns) {
+    public void onPointsChange(final int points, final List<Integer> fullColumns) {
         Platform.runLater(() -> {
             this.points.setText("Points: " + points);
             fullColumns.forEach(fxBoard::markPointsInCol);

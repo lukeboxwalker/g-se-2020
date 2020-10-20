@@ -68,8 +68,8 @@ public final class GseAgain {
     }
 
     private List<Option> createOptions() {
-        Option guiOption = CommandLineOption.builder().withName(GUI).conflictsOptions(CLIENT).build();
-        Option clientOption = CommandLineOption.builder().withName(CLIENT).conflictsOptions(GUI).build();
+        final Option guiOption = CommandLineOption.builder().withName(GUI).conflictsOptions(CLIENT).build();
+        final Option clientOption = CommandLineOption.builder().withName(CLIENT).conflictsOptions(GUI).build();
         return Arrays.asList(guiOption, clientOption);
     }
 

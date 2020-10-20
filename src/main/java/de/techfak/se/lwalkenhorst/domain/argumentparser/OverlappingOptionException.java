@@ -9,7 +9,7 @@ import de.techfak.se.lwalkenhorst.domain.exception.AbstractExitCodeException;
  */
 public class OverlappingOptionException extends AbstractExitCodeException {
 
-    static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 42L;
     private static final int EXIT_CODE = 103;
 
     public OverlappingOptionException(final String message) {

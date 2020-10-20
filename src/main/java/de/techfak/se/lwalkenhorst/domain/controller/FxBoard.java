@@ -16,7 +16,7 @@ public class FxBoard extends AbstractBoard<StackPane> {
     private final int tileSize;
     private final StackPane[] pointTiles;
 
-    public FxBoard(StackPane[][] tiles, StackPane[] pointTiles, int tileSize) {
+    public FxBoard(final StackPane[][] tiles, final StackPane[] pointTiles, final int tileSize) {
         super(tiles);
         this.pointTiles = pointTiles;
         this.tileSize = tileSize;
@@ -31,7 +31,7 @@ public class FxBoard extends AbstractBoard<StackPane> {
         }
     }
 
-    public void markPointsInCol(int col) {
+    public void markPointsInCol(final int col) {
         if (inBounds(col, 0)) {
             final StackPane pane = pointTiles[col];
             if (pane.getChildren().size() > 1) {
@@ -51,7 +51,7 @@ public class FxBoard extends AbstractBoard<StackPane> {
         pane.getChildren().add(new Group(createLine(2.5, true, pane), createLine(2.5, false, pane)));
     }
 
-    public Line createLine(double size, boolean horizontal, StackPane pane) {
+    public Line createLine(final double size, final boolean horizontal, final StackPane pane) {
         final Line line;
         if (horizontal) {
             line = new Line(-tileSize / size, 0, tileSize / size, 0);
@@ -64,7 +64,7 @@ public class FxBoard extends AbstractBoard<StackPane> {
         }
         line.setStrokeWidth(4);
         line.setRotate(45);
-        line.setFill(Color.BLACK);
+        line.setFill(BLACK);
         return line;
     }
 }

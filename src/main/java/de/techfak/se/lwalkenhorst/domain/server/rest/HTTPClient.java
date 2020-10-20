@@ -31,7 +31,7 @@ public class HTTPClient {
         try {
             final HttpRequest request = HttpRequest.newBuilder().uri(URI.create(baseUri)).build();
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() != OK || !response.body().equals("GSE NochMal")) {
+            if (response.statusCode() != OK || !"GSE NochMal".equals(response.body())) {
                 throw new NoConnectionException(message);
             }
         } catch (IOException | InterruptedException e) {
@@ -39,7 +39,7 @@ public class HTTPClient {
         }
     }
 
-    public ParticipateResponse participateRequest(String username) {
+    public ParticipateResponse participateRequest(final String username) {
         try {
             final URI uri = URI.create(baseUri + "/api/participate");
             final String body = parser.toJSON(new ParticipateRequestBody(username));
@@ -49,7 +49,7 @@ public class HTTPClient {
 
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
-            ParticipateResponse participateResponse = parser.parseJSON(response.body(), ParticipateResponse.class);
+            final ParticipateResponse participateResponse = parser.parseJSON(response.body(), ParticipateResponse.class);
             if (participateResponse.isSuccess()) {
                 this.uuid = participateResponse.getUuid();
             }
@@ -60,7 +60,7 @@ public class HTTPClient {
         }
     }
 
-    public void endRoundRequest(int finalPoints, boolean gameFinished) {
+    public void endRoundRequest(final int finalPoints, final boolean gameFinished) {
         try {
             final URI uri = URI.create(baseUri + "/api/end-round");
             final String body = parser.toJSON(new EndRoundRequestBody(uuid, finalPoints, gameFinished));
@@ -74,8 +74,8 @@ public class HTTPClient {
 
     public StatusResponseBody statusRequest() {
         try {
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(baseUri + "/api/status")).build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final HttpRequest request = HttpRequest.newBuilder().uri(URI.create(baseUri + "/api/status")).build();
+            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
             return parser.parseJSON(response.body(), StatusResponseBody.class);
         } catch (IOException | InterruptedException | SerialisationException e) {

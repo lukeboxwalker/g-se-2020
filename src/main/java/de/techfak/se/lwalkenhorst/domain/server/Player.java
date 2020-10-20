@@ -11,7 +11,7 @@ public class Player {
     public Player() {
     }
 
-    public Player(final String username, final String uuid, int points) {
+    public Player(final String username, final String uuid, final int points) {
         this.username = username;
         this.uuid = uuid;
         this.points = points;
@@ -22,7 +22,7 @@ public class Player {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
@@ -32,7 +32,7 @@ public class Player {
     }
 
     @JsonIgnore
-    public void setUuid(String uuid) {
+    public void setUuid(final String uuid) {
         this.uuid = uuid;
     }
 
@@ -40,7 +40,7 @@ public class Player {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(final int points) {
         this.points = points;
     }
 
@@ -48,7 +48,7 @@ public class Player {
         return round;
     }
 
-    public void setRound(int round) {
+    public void setRound(final int round) {
         this.round = round;
     }
 

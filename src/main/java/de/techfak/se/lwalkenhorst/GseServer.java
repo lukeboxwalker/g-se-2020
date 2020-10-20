@@ -15,7 +15,7 @@ public class GseServer {
 
     private static final String DEFAULT_BOARD_CONFIG = "default.txt";
 
-    public static void main(String... args) {
+    public static void main(final String... args) {
         try {
             final GameServer game;
             final BoardSerializer boardSerializer = new BoardSerializer();
@@ -33,7 +33,7 @@ public class GseServer {
                     throw new BoardCreationException(e);
                 }
             }
-            HTTPServer server = new HTTPServer(8088, game);
+            final HTTPServer server = new HTTPServer(8088, game);
             System.out.println("Starting server on http://localhost:8088 ...");
             server.start(0, false);
         } catch (AbstractExitCodeException e) {

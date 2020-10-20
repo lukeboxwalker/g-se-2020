@@ -25,7 +25,7 @@ public class ParsedCommandLine implements CommandLine {
      * @param argument the argument
      * @throws ParseException if there is more than one argument
      */
-    public void setArgument(String argument) throws ParseException {
+    public void setArgument(final String argument) throws ParseException {
         if (this.argument == null) {
             this.argument = argument;
         } else {
@@ -41,13 +41,13 @@ public class ParsedCommandLine implements CommandLine {
      * @param argKey the argument prefix
      * @param argValue the argument value
      */
-    public void addOptionArgument(Option option, String argKey, String argValue) {
+    public void addOptionArgument(final Option option, final String argKey, final String argValue) {
         final String optionName = option.getName();
         if (optionArguments.containsKey(optionName)) {
-            Map<String, String> arguments = optionArguments.get(optionName);
+            final Map<String, String> arguments = optionArguments.get(optionName);
             arguments.put(argKey, argValue);
         } else {
-            Map<String, String> arguments = new HashMap<>();
+            final Map<String, String> arguments = new HashMap<>();
             arguments.put(argKey, argValue);
             optionArguments.put(optionName, arguments);
         }
@@ -60,7 +60,7 @@ public class ParsedCommandLine implements CommandLine {
      * @throws OverlappingOptionException if option would overlap an existing option
      */
     public void addOption(Option option) throws OverlappingOptionException, ParseException {
-        for (String optionName : option.getConflictingOptions()) {
+        for (final String optionName : option.getConflictingOptions()) {
             if (options.containsKey(optionName)) {
                 throw new OverlappingOptionException("The arguments have overlapping semantics");
             }
@@ -82,13 +82,13 @@ public class ParsedCommandLine implements CommandLine {
     }
 
     @Override
-    public String getOptionArg(String opt, String arg) {
+    public String getOptionArg(final String opt, final String arg) {
         return hasOptionArg(opt, arg) ? optionArguments.get(opt).get(arg) : "";
     }
 
     @Override
-    public boolean hasOptionArg(String opt, String arg) {
-        return (optionArguments.containsKey(opt) && optionArguments.get(opt).containsKey(arg));
+    public boolean hasOptionArg(final String opt, final String arg) {
+        return optionArguments.containsKey(opt) && optionArguments.get(opt).containsKey(arg);
     }
 
     @Override
@@ -102,12 +102,12 @@ public class ParsedCommandLine implements CommandLine {
     }
 
     @Override
-    public Option getOption(String opt) {
+    public Option getOption(final String opt) {
         return hasOption(opt) ? options.get(opt) : null;
     }
 
     @Override
-    public boolean hasOption(String opt) {
+    public boolean hasOption(final String opt) {
         return options.containsKey(opt);
     }
 }

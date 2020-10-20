@@ -18,7 +18,7 @@ public class ParticipateRequest extends PostRequest<ParticipateRequestBody> {
     }
 
     @Override
-    public NanoHTTPD.Response handle(GameServer server, ParticipateRequestBody requestBody) {
+    public NanoHTTPD.Response handle(final GameServer server, final ParticipateRequestBody requestBody) {
         final UUID uuid = server.registerPlayer(requestBody.getUsername());
         if (uuid == null) {
             return ResponseUtils.createResponse(new ParticipateResponse(false, "", ""));

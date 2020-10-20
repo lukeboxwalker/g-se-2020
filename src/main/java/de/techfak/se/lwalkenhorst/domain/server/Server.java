@@ -39,10 +39,10 @@ public class Server implements GameServer {
     }
 
     @Override
-    public UUID registerPlayer(String name) {
+    public UUID registerPlayer(final String name) {
         if (players.size() < lobbySize) {
-            UUID uuid = UUID.randomUUID();
-            Player player = new Player(name, uuid.toString(), 0);
+            final UUID uuid = UUID.randomUUID();
+            final Player player = new Player(name, uuid.toString(), 0);
             players.put(player.getUuid(), player);
             if (players.size() == lobbySize) {
                 this.round = 1;
@@ -53,16 +53,14 @@ public class Server implements GameServer {
     }
 
     @Override
-    public boolean updatePoints(String uuid, int points, boolean gameFinished) {
+    public boolean updatePoints(final String uuid, final int points, final boolean gameFinished) {
         if (players.containsKey(uuid) && players.get(uuid).getRound() == this.round) {
             this.playerFinished = this.playerFinished || gameFinished;
             final Player player = players.get(uuid);
             player.setPoints(points);
             player.enterNextRound();
             if (canEnterNextRound()) {
-                if (playerFinished) {
-                    this.gameFinished = true;
-                }
+                this.gameFinished = playerFinished || gameFinished;
                 this.rollDice();
                 nextRound();
             }
@@ -106,7 +104,7 @@ public class Server implements GameServer {
     }
 
     private boolean canEnterNextRound() {
-        for (Player player : players.values()) {
+        for (final Player player : players.values()) {
             if (player.getRound() == this.round) {
                 return false;
             }

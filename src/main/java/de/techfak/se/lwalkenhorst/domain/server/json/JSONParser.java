@@ -12,7 +12,7 @@ public class JSONParser {
         this.objectMapper = new ObjectMapper().findAndRegisterModules();
     }
 
-    public String toJSON(Object object) throws SerialisationException {
+    public String toJSON(final Object object) throws SerialisationException {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
@@ -20,7 +20,7 @@ public class JSONParser {
         }
     }
 
-    public <T> T parseJSON(String json, Class<T> clazz) throws SerialisationException {
+    public <T> T parseJSON(final String json, final Class<T> clazz) throws SerialisationException {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {

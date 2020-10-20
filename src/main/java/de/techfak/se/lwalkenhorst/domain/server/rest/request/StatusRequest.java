@@ -10,7 +10,7 @@ public class StatusRequest implements GetRequest {
     private final StatusResponseBody statusResponseBody = new StatusResponseBody();
 
     @Override
-    public NanoHTTPD.Response handle(GameServer server) {
+    public NanoHTTPD.Response handle(final GameServer server) {
         statusResponseBody.setGameFinished(server.isGameFinished());
         statusResponseBody.setPlayers(server.getPlayers());
         statusResponseBody.setRound(server.getRound());

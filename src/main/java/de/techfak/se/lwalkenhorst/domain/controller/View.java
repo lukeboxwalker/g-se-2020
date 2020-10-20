@@ -16,9 +16,10 @@ import static javafx.scene.paint.Color.*;
 
 public final class View {
 
-    public FxBoard createGrid(Board board, GridPane gridPane, int size, BiConsumer<Integer, Integer> consumer) {
-        int lengthX = board.getLengthX();
-        int lengthY = board.getLengthY();
+    public FxBoard createGrid(final Board board, final GridPane gridPane,
+                              final int size, final BiConsumer<Integer, Integer> consumer) {
+        final int lengthX = board.getLengthX();
+        final int lengthY = board.getLengthY();
         final StackPane[][] panes = new StackPane[lengthX][lengthY];
         final StackPane[] pointPanes = new StackPane[lengthX];
         final FxBoard fxBoard = new FxBoard(panes, pointPanes, size);
@@ -30,7 +31,7 @@ public final class View {
                 pane.setStyle("-fx-background-color: " + board.getTileAt(x, y).getColor().getFxName());
 
                 if (x == board.getStartColumn()) {
-                    InnerShadow shadow = new InnerShadow(5, WHITE);
+                    final InnerShadow shadow = new InnerShadow(5, WHITE);
                     shadow.setWidth(size / 2.0);
                     shadow.setHeight(size / 2.0);
                     pane.setEffect(shadow);
@@ -38,14 +39,14 @@ public final class View {
                     pane.setEffect(new InnerShadow(5, BLACK));
                 }
 
-                int finalX = x;
-                int finalY = y;
+                final int finalX = x;
+                final int finalY = y;
                 pane.setOnMouseClicked((event) -> consumer.accept(finalX, finalY));
 
                 panes[x][y] = pane;
                 gridPane.add(pane, x, y);
                 if (x == 0) {
-                    RowConstraints rowConstraints = new RowConstraints();
+                    final RowConstraints rowConstraints = new RowConstraints();
                     rowConstraints.setVgrow(Priority.ALWAYS);
                     gridPane.getRowConstraints().add(rowConstraints);
                 }
@@ -53,7 +54,7 @@ public final class View {
                     fxBoard.addCrossToTile(new Position(x, y));
                 }
             }
-            ColumnConstraints columnConstraints = new ColumnConstraints();
+            final ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setHgrow(Priority.ALWAYS);
             columnConstraints.setFillWidth(true);
             gridPane.getColumnConstraints().add(columnConstraints);
@@ -70,7 +71,7 @@ public final class View {
             }
             gridPane.add(pane, x, lengthY + 1);
         }
-        RowConstraints rowConstraints = new RowConstraints();
+        final RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setVgrow(Priority.ALWAYS);
         gridPane.getRowConstraints().add(rowConstraints);
         return fxBoard;

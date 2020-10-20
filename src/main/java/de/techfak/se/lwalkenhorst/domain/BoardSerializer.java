@@ -27,7 +27,7 @@ public class BoardSerializer {
         Arrays.stream(Color.values()).forEach(color -> colorMap.put(color.getIdentifier(), color));
     }
 
-    public String serialize(Board board) {
+    public String serialize(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (int y = 0; y < board.getLengthY(); y++) {
             for (int x = 0; x < board.getLengthX(); x++) {

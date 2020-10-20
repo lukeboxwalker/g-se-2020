@@ -2,13 +2,13 @@ package de.techfak.se.lwalkenhorst.domain.server.json;
 
 public class SerialisationException extends Exception {
 
-    static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 42L;
 
     public SerialisationException(final String message) {
         super(message);
     }
 
-    public SerialisationException(final String message, Throwable cause) {
+    public SerialisationException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

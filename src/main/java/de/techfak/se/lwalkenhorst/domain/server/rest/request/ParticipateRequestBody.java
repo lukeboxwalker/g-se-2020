@@ -6,7 +6,7 @@ public class ParticipateRequestBody implements RequestBody {
     public ParticipateRequestBody() {
     }
 
-    public ParticipateRequestBody(String username) {
+    public ParticipateRequestBody(final String username) {
         this.username = username;
     }
 
@@ -14,7 +14,7 @@ public class ParticipateRequestBody implements RequestBody {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 }

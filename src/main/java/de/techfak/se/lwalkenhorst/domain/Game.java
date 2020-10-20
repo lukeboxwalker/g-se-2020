@@ -27,7 +27,7 @@ public class Game implements Observable {
     protected Board board;
     protected int round;
 
-    public Game(Board board) {
+    public Game(final Board board) {
         this.setBoard(board);
         this.gameObservers = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class Game implements Observable {
         Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
     }
 
-    protected final void setBoard(Board board) {
+    protected final void setBoard(final Board board) {
         this.board = board;
         this.colorValidator = new ColorValidator(this.board);
         this.numberValidator = new NumberValidator();
@@ -91,13 +91,13 @@ public class Game implements Observable {
                 points += board.getPointsForCol(x);
             }
         }
-        int finalPoints = points;
+        final int finalPoints = points;
         this.gameObservers.forEach(gameObserver -> gameObserver.onPointsChange(finalPoints, fullCols));
         return points;
     }
 
     protected boolean isGameFinished() {
-        int fullColorsCount = countFullColors();
+        final int fullColorsCount = countFullColors();
         return fullColorsCount >= 2;
 
     }

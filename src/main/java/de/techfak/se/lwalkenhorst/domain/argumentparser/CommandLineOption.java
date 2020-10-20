@@ -20,18 +20,18 @@ public class CommandLineOption implements Option {
      *
      * @param optionName to set name of option
      */
-    CommandLineOption(final String optionName) {
+    public CommandLineOption(final String optionName) {
         this.optionName = optionName;
         this.shortName = optionName.substring(0, 1);
         this.conflictingOptions = new ArrayList<>();
         this.requiredArguments = new ArrayList<>();
     }
 
-    public void setConflictingOptions(List<String> conflictingOptions) {
+    public void setConflictingOptions(final List<String> conflictingOptions) {
         this.conflictingOptions = conflictingOptions;
     }
 
-    public void setRequiredArguments(List<Argument> requiredArguments) {
+    public void setRequiredArguments(final List<Argument> requiredArguments) {
         this.requiredArguments = requiredArguments;
     }
 
@@ -46,7 +46,7 @@ public class CommandLineOption implements Option {
     }
 
     @Override
-    public void addRequiredArguments(Argument argument) {
+    public void addRequiredArguments(final Argument argument) {
         requiredArguments.add(argument);
     }
 
@@ -56,7 +56,7 @@ public class CommandLineOption implements Option {
     }
 
     @Override
-    public void addConflictingOption(String option) {
+    public void addConflictingOption(final String option) {
         conflictingOptions.add(option);
     }
 

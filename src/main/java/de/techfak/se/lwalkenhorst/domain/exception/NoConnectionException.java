@@ -2,7 +2,7 @@ package de.techfak.se.lwalkenhorst.domain.exception;
 
 public class NoConnectionException extends AbstractExitCodeException {
 
-    static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 42L;
     private static final int EXIT_CODE = 101;
 
     public NoConnectionException(final String message) {

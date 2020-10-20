@@ -30,14 +30,14 @@ public class ClientApplication extends Application {
         final Pane root = fxmlLoader.load();
         final GameController gameController = fxmlLoader.getController();
 
-        Scene scene = new Scene(root);
+        final Scene scene = new Scene(root);
         stage.setTitle("GSE Nochmal!");
         stage.setScene(scene);
         stage.show();
 
-        fxmlLoader = load(getClass().getClassLoader().getResource("view/ClientLogin.fxml"));
-        Pane loginRoot = fxmlLoader.load();
-        ClientLoginController loginController = fxmlLoader.getController();
+        fxmlLoader = load(Thread.currentThread().getContextClassLoader().getResource("view/ClientLogin.fxml"));
+        final Pane loginRoot = fxmlLoader.load();
+        final ClientLoginController loginController = fxmlLoader.getController();
 
         final Stage connectionWindow = new Stage();
         connectionWindow.initModality(Modality.APPLICATION_MODAL);
@@ -46,10 +46,10 @@ public class ClientApplication extends Application {
         final BoardSerializer serializer = new BoardSerializer();
         loginController.onAction((host, port, username) -> {
             try {
-                HTTPClient client = new HTTPClient(host, port);
-                ParticipateResponse response = client.participateRequest(username);
+                final HTTPClient client = new HTTPClient(host, port);
+                final ParticipateResponse response = client.participateRequest(username);
                 if (response.isSuccess()) {
-                    Board board = serializer.deSerialize(response.getBoard());
+                    final Board board = serializer.deSerialize(response.getBoard());
                     game.init(board, client);
                     gameController.init(game);
                     game.start();
@@ -62,21 +62,21 @@ public class ClientApplication extends Application {
             }
 
         });
-        Scene scene2 = new Scene(loginRoot);
+        final Scene scene2 = new Scene(loginRoot);
         connectionWindow.setScene(scene2);
         connectionWindow.showAndWait();
     }
 
-    public static void start(MultiplayerGame multiplayerGame) {
+    public static void start(final MultiplayerGame multiplayerGame) {
         game = multiplayerGame;
         main();
     }
 
-    public static void main(String... args) {
+    public static void main(final String... args) {
         launch(args);
     }
 
-    private FXMLLoader load(URL url) {
+    private FXMLLoader load(final URL url) {
         return new FXMLLoader(url);
     }
 }
