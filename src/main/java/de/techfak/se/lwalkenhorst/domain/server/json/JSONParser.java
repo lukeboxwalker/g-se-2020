@@ -16,7 +16,7 @@ public class JSONParser {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new SerialisationException("Serialisation failed");
+            throw new SerialisationException("Serialisation failed", e);
         }
     }
 
@@ -24,8 +24,7 @@ public class JSONParser {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new SerialisationException("Deserialisation failed");
+            throw new SerialisationException("Deserialisation failed", e);
         }
     }
 }

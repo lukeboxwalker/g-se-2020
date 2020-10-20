@@ -5,9 +5,6 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class StatusRequest implements GetRequest {
 
-    public StatusRequest() {
-    }
-
     @Override
     public NanoHTTPD.Response handle(RequestHandler handler) {
         return handler.handleStatusRequest();

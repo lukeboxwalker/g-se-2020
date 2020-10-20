@@ -40,7 +40,7 @@ public class Game implements Observable {
         Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
     }
 
-    protected void setBoard(Board board) {
+    protected final void setBoard(Board board) {
         this.board = board;
         this.colorValidator = new ColorValidator(this.board);
         this.numberValidator = new NumberValidator();

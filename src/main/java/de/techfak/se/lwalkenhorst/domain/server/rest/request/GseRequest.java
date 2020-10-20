@@ -6,9 +6,6 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class GseRequest implements GetRequest {
 
-    public GseRequest() {
-    }
-
     @Override
     public NanoHTTPD.Response handle(RequestHandler handler) {
         return handler.handle("GSE NochMal");

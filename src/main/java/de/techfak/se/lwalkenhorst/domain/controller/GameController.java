@@ -152,10 +152,10 @@ public class GameController implements GameObserver {
     public void onTilesCross(final List<Position> positions) {
         Platform.runLater(() -> {
             positions.forEach(position -> {
-                if (!crossedPositions.contains(position)) {
-                    generator.addCrossToPane(PANE_SIZE, tiles[position.getPosX()][position.getPosY()]);
-                } else {
+                if (crossedPositions.contains(position)) {
                     crossedPositions.remove(position);
+                } else {
+                    generator.addCrossToPane(PANE_SIZE, tiles[position.getPosX()][position.getPosY()]);
                 }
             });
             crossedPositions.forEach(position ->
