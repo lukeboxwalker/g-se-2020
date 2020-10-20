@@ -17,19 +17,19 @@ import java.util.Map;
 public class HTTPServer extends NanoHTTPD {
     private static final GetRequest FALLBACK_REQUEST = new GseRequest();
 
-    private final RequestHandler requestHandler;
     private final Map<String, PostRequest<?>> postMapping;
     private final Map<String, GetRequest> getMapping;
+    private final GameServer gameServer;
 
     public HTTPServer(int port, final GameServer server) {
         super(port);
+        this.gameServer = server;
         this.postMapping = Map.of(
                 "/api/participate", new ParticipateRequest(),
                 "/api/end-round", new EndRoundRequest());
         this.getMapping = Map.of(
                 "", FALLBACK_REQUEST,
                 "/api/status", new StatusRequest());
-        requestHandler = new RequestHandler(server);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class HTTPServer extends NanoHTTPD {
 
     private Response handleGetRequest(final IHTTPSession session) {
         GetRequest getRequest = getMapping.getOrDefault(session.getUri(), FALLBACK_REQUEST);
-        return getRequest.handle(requestHandler);
+        return getRequest.handle(gameServer);
     }
 
     private Response handlePostRequest(final IHTTPSession session) {
@@ -53,9 +53,9 @@ public class HTTPServer extends NanoHTTPD {
             session.parseBody(data);
             if (postMapping.containsKey(session.getUri())) {
                 final PostRequest<?> postRequest = postMapping.get(session.getUri());
-                return postRequest.handle(requestHandler, data.get("postData"));
+                return postRequest.handle(gameServer, data.get("postData"));
             } else {
-                return FALLBACK_REQUEST.handle(requestHandler);
+                return FALLBACK_REQUEST.handle(gameServer);
             }
         } catch (IOException ioe) {
             return NanoHTTPD.newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT,

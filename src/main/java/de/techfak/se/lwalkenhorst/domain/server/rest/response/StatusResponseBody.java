@@ -6,16 +6,16 @@ import de.techfak.se.lwalkenhorst.domain.server.Player;
 import java.util.Collection;
 import java.util.List;
 
-public class StatusResponse implements ResponseBody {
+public class StatusResponseBody implements ResponseBody {
     private boolean gameFinished;
     private int round;
     private Collection<Player> players;
     private DiceResult diceResult;
 
-    public StatusResponse() {
+    public StatusResponseBody() {
     }
 
-    public StatusResponse(boolean gameFinished, int round, List<Player> players, DiceResult diceResult) {
+    public StatusResponseBody(boolean gameFinished, int round, List<Player> players, DiceResult diceResult) {
         this.gameFinished = gameFinished;
         this.round = round;
         this.players = players;

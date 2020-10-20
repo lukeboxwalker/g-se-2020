@@ -6,7 +6,7 @@ import de.techfak.se.lwalkenhorst.domain.server.json.SerialisationException;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.EndRoundRequestBody;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.ParticipateRequestBody;
 import de.techfak.se.lwalkenhorst.domain.server.rest.response.ParticipateResponse;
-import de.techfak.se.lwalkenhorst.domain.server.rest.response.StatusResponse;
+import de.techfak.se.lwalkenhorst.domain.server.rest.response.StatusResponseBody;
 
 import java.io.IOException;
 import java.net.URI;
@@ -72,15 +72,15 @@ public class HTTPClient {
         }
     }
 
-    public StatusResponse statusRequest() {
+    public StatusResponseBody statusRequest() {
         try {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(baseUri + "/api/status")).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
-            return parser.parseJSON(response.body(), StatusResponse.class);
+            return parser.parseJSON(response.body(), StatusResponseBody.class);
         } catch (IOException | InterruptedException | SerialisationException e) {
             e.printStackTrace();
-            return new StatusResponse();
+            return new StatusResponseBody();
         }
     }
 }

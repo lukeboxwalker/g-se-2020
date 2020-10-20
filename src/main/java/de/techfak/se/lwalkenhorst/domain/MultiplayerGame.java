@@ -1,7 +1,7 @@
 package de.techfak.se.lwalkenhorst.domain;
 
 import de.techfak.se.lwalkenhorst.domain.server.rest.HTTPClient;
-import de.techfak.se.lwalkenhorst.domain.server.rest.response.StatusResponse;
+import de.techfak.se.lwalkenhorst.domain.server.rest.response.StatusResponseBody;
 
 import java.util.List;
 import java.util.Timer;
@@ -32,7 +32,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
-                StatusResponse response = client.statusRequest();
+                StatusResponseBody response = client.statusRequest();
                 if (response.getRound() == 1) {
                     MultiplayerGame.super.start();
                     startTimer.cancel();
@@ -68,7 +68,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
-                StatusResponse response = client.statusRequest();
+                StatusResponseBody response = client.statusRequest();
                 if (response.getRound() == round) {
                     if (isGameFinished()) {
                         gameObservers.forEach(gameObserver -> gameObserver.onGameEnd(calculatePoints()));
