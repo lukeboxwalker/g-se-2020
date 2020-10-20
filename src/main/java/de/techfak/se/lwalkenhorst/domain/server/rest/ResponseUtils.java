@@ -9,7 +9,7 @@ import static fi.iki.elonen.NanoHTTPD.MIME_PLAINTEXT;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.INTERNAL_ERROR;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.OK;
 
-public class ResponseUtils {
+public final class ResponseUtils {
 
     public static final String MIME_JSON = "application/json";
 

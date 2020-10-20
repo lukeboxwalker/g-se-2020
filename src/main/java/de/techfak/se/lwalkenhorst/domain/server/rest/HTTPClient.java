@@ -45,7 +45,7 @@ public class HTTPClient {
             final String body = parser.toJSON(new ParticipateRequestBody(username));
             final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(body);
             final HttpRequest request = HttpRequest.newBuilder().uri(uri)
-                    .setHeader("content-type", RequestHandler.MIME_JSON).POST(bodyPublisher).build();
+                    .setHeader("content-type", ResponseUtils.MIME_JSON).POST(bodyPublisher).build();
 
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
