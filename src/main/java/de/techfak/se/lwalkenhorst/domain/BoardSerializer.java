@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class BoardSerializer {
 
-    private static final char CROSS = 'X';
     private static final int BOARD_SIZE_X = 15;
     private static final int BOARD_SIZE_Y = 7;
 
@@ -51,12 +50,11 @@ public class BoardSerializer {
         char colorIdentifier;
         for (int x = 0; x < line.length(); x++) {
             colorIdentifier = line.charAt(x);
-            if (colorMap.containsKey(colorIdentifier)) {
+            if (colorMap.containsKey(Character.toLowerCase(colorIdentifier))) {
                 tiles[x][col] = new Tile(colorMap.get(colorIdentifier));
-            } else if (colorIdentifier == CROSS) {
-                final Tile tile = new Tile(Color.GREEN);
-                tile.cross();
-                tiles[x][col] = tile;
+                if (Character.isUpperCase(colorIdentifier)) {
+                    tiles[x][col].cross();
+                }
             } else {
                 throw new BoardCreationException("Unknown color: " + colorIdentifier + " !");
             }
