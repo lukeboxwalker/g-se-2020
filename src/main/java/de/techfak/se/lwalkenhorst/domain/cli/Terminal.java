@@ -29,6 +29,7 @@ public class Terminal implements GameObserver {
     private final Game game;
     private final AtomicBoolean running;
     private String[][] stringBoard;
+    private int points;
 
     public Terminal(final Game game) {
         this.game = game;
@@ -154,7 +155,7 @@ public class Terminal implements GameObserver {
 
     @Override
     public void onPointsChange(int points, List<Integer> fullColumns) {
-
+        this.points = points;
     }
 
     @Override
@@ -165,6 +166,7 @@ public class Terminal implements GameObserver {
     @Override
     public void onDiceRoll(final DiceResult diceResult) {
         this.printDiceResult(diceResult);
+        System.out.println("Points: " + points);
         this.printBoard();
     }
 

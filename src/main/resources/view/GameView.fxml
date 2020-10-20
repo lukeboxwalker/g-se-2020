@@ -20,7 +20,9 @@
                       <HBox.hgrow>
                         <Priority fx:value="ALWAYS" />
                      </HBox.hgrow>
+
                      <children>
+                         <Text fx:id="points" text="Points: 0" />
                         <StackPane fx:id="colorDice1" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" styleClass="text" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />

@@ -12,17 +12,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +29,9 @@ import static javafx.scene.paint.Color.WHITE;
 public class GameController implements GameObserver {
 
     private static final int PANE_SIZE = 100;
+
+    @FXML
+    public Text points;
 
     @FXML
     private AnchorPane root;
@@ -172,6 +172,7 @@ public class GameController implements GameObserver {
     @Override
     public void onPointsChange(int points, List<Integer> fullColumns) {
         Platform.runLater(() -> {
+            this.points.setText("Points: " + points);
             fullColumns.forEach(fxBoard::markPointsInCol);
         });
     }
