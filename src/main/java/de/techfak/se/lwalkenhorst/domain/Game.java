@@ -11,36 +11,35 @@ import java.util.Map;
 
 public class Game implements Observable {
 
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
 
-
-
-    protected final List<GameObserver> gameObservers;
+    private final List<GameObserver> gameObservers;
+    private final Map<Color, Boolean> fullColors;
+    private final DiceResult diceResult;
+    private final Dice<Color> colorDice;
+    private final Dice<Integer> numberDice;
 
     private ColorValidator colorValidator;
     private NumberValidator numberValidator;
-    private final Map<Color, Boolean> fullColors;
-
-    protected final DiceResult diceResult;
-    protected final Dice<Color> colorDice;
-    protected final Dice<Integer> numberDice;
-
-    protected Board board;
-    protected int round;
+    private Board board;
 
     public Game(final Board board) {
         this.setBoard(board);
         this.gameObservers = new ArrayList<>();
 
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
-        this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
+        this.numberDice = new Dice<>(Arrays.asList(ONE, TWO, THREE, FOUR, FIVE));
         this.diceResult = new DiceResult();
         this.fullColors = new HashMap<>();
 
-        this.round = 1;
         Arrays.stream(Color.values()).forEach(color -> fullColors.put(color, true));
     }
 
-    protected final void setBoard(final Board board) {
+    public final void setBoard(final Board board) {
         this.board = board;
         this.colorValidator = new ColorValidator(this.board);
         this.numberValidator = new NumberValidator();
@@ -77,13 +76,13 @@ public class Game implements Observable {
     }
 
     public void rollDice() {
-        diceResult.setRolledColors(colorDice.rollDice(3));
-        diceResult.setRolledNumbers(numberDice.rollDice(3));
+        diceResult.setRolledColors(colorDice.rollDice(THREE));
+        diceResult.setRolledNumbers(numberDice.rollDice(THREE));
         this.gameObservers.forEach(gameObserver -> gameObserver.onDiceRoll(diceResult));
     }
 
-    protected int calculatePoints() {
-        int points = countFullColors() * 5;
+    public int calculatePoints() {
+        int points = countFullColors() * FIVE;
         final List<Integer> fullCols = new ArrayList<>();
         for (int x = 0; x < board.getLengthX(); x++) {
             if (board.isColumnFull(x)) {
@@ -96,7 +95,11 @@ public class Game implements Observable {
         return points;
     }
 
-    protected boolean isGameFinished() {
+    public DiceResult getDiceResult() {
+        return diceResult;
+    }
+
+    public boolean isGameFinished() {
         final int fullColorsCount = countFullColors();
         return fullColorsCount >= 2;
 
@@ -117,6 +120,10 @@ public class Game implements Observable {
             }
         }
         return fullColorsCount;
+    }
+
+    public List<GameObserver> getGameObservers() {
+        return gameObservers;
     }
 
     @Override

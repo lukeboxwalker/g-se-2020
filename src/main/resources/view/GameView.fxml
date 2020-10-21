@@ -26,37 +26,37 @@
                         <StackPane fx:id="colorDice1" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" styleClass="text" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                              <Circle fx:id="dice1" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Circle fx:id="diceOne" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
                         </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                              <Circle fx:id="dice2" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Circle fx:id="diceTwo" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
                              </children>
                          </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                              <Circle fx:id="dice3" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Circle fx:id="diceThree" fill="DODGERBLUE" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
                              </children>
                          </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                                 <Text fx:id="dice4" text="NaN" />
+                                 <Text fx:id="diceFour" text="NaN" />
                              </children>
                          </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                                 <Text fx:id="dice5" text="NaN" />
+                                 <Text fx:id="diceFive" text="NaN" />
                              </children>
                          </StackPane>
                          <StackPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                              <children>
                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" width="62.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                                 <Text fx:id="dice6" text="NaN" />
+                                 <Text fx:id="diceSix" text="NaN" />
                              </children>
                          </StackPane>
                          <Button fx:id="confirmButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Confirm" />

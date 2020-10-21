@@ -16,6 +16,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
     private Timer startTimer;
     private Timer diceTimer;
     private TimerTask timerTask;
+    private int round;
 
     public MultiplayerGame() {
         super(null);
@@ -58,7 +59,7 @@ public class MultiplayerGame extends Game implements AutoCloseable {
     }
 
     @Override
-    protected boolean isGameFinished() {
+    public boolean isGameFinished() {
         return client.statusRequest().isGameFinished();
     }
 
@@ -71,12 +72,12 @@ public class MultiplayerGame extends Game implements AutoCloseable {
                 final StatusResponseBody response = client.statusRequest();
                 if (response.getRound() == round) {
                     if (isGameFinished()) {
-                        gameObservers.forEach(gameObserver -> gameObserver.onGameEnd(calculatePoints()));
+                        getGameObservers().forEach(gameObserver -> gameObserver.onGameEnd(calculatePoints()));
                     }
-                    diceResult.setRolledColors(response.getDiceResult().getRolledColors());
-                    diceResult.setRolledNumbers(response.getDiceResult().getRolledNumbers());
+                    getDiceResult().setRolledColors(response.getDiceResult().getRolledColors());
+                    getDiceResult().setRolledNumbers(response.getDiceResult().getRolledNumbers());
                     round++;
-                    gameObservers.forEach(gameObserver -> gameObserver.onDiceRoll(diceResult));
+                    getGameObservers().forEach(gameObserver -> gameObserver.onDiceRoll(getDiceResult()));
                     diceTimer.cancel();
                 }
             }

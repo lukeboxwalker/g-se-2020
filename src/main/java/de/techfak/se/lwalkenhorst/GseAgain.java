@@ -1,11 +1,5 @@
 package de.techfak.se.lwalkenhorst;
 
-import de.techfak.se.lwalkenhorst.domain.MultiplayerGame;
-import de.techfak.se.lwalkenhorst.domain.argumentparser.ArgumentParser;
-import de.techfak.se.lwalkenhorst.domain.argumentparser.CommandLine;
-import de.techfak.se.lwalkenhorst.domain.argumentparser.CommandLineOption;
-import de.techfak.se.lwalkenhorst.domain.argumentparser.Option;
-import de.techfak.se.lwalkenhorst.domain.argumentparser.ParseException;
 import de.techfak.se.lwalkenhorst.domain.cli.Terminal;
 import de.techfak.se.lwalkenhorst.domain.exception.BoardCreationException;
 import de.techfak.se.lwalkenhorst.domain.BoardSerializer;
@@ -24,19 +18,27 @@ import java.util.List;
 public final class GseAgain {
 
     private static final String DEFAULT_BOARD_CONFIG = "default.txt";
-    private static final String GUI = "gui";
-    private static final String CLIENT = "client";
+    private static final String GUI = "--gui";
+    private static final String GUI_ALIAS = "-g";
+
+    private boolean startGui = false;
+
 
     private GseAgain() {
     }
 
     private void start(final String... args) {
         try {
-            final CommandLine commandLine = new ArgumentParser().parse(createOptions(), args);
             final Game game;
             final BoardSerializer boardSerializer = new BoardSerializer();
-            if (commandLine.hasArgument()) {
-                game = new Game(boardSerializer.deSerialize(new File(commandLine.getArgument())));
+            final List<String> argsList = Arrays.asList(args);
+            if (argsList.contains(GUI) || argsList.contains(GUI_ALIAS)) {
+                argsList.remove(GUI);
+                argsList.remove(GUI_ALIAS);
+                startGui = true;
+            }
+            if (argsList.size() == 1) {
+                game = new Game(boardSerializer.deSerialize(new File(argsList.get(0))));
             } else {
                 try (InputStream inputStream = Thread.currentThread()
                         .getContextClassLoader().getResourceAsStream(DEFAULT_BOARD_CONFIG)) {
@@ -49,12 +51,8 @@ public final class GseAgain {
                     throw new BoardCreationException(e);
                 }
             }
-            if (commandLine.hasOption(GUI)) {
+            if (startGui) {
                 GseApplication.start(game);
-            } else if (commandLine.hasOption(CLIENT)) {
-                try (MultiplayerGame multiplayerGame = new MultiplayerGame()) {
-                    ClientApplication.start(multiplayerGame);
-                }
             } else {
                 final Terminal terminal = new Terminal(game);
                 terminal.listenForInstructions();
@@ -62,15 +60,7 @@ public final class GseAgain {
         } catch (AbstractExitCodeException e) {
             System.err.println(e.getMessage());
             System.exit(e.getExitCode());
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-    }
-
-    private List<Option> createOptions() {
-        final Option guiOption = CommandLineOption.builder().withName(GUI).conflictsOptions(CLIENT).build();
-        final Option clientOption = CommandLineOption.builder().withName(CLIENT).conflictsOptions(GUI).build();
-        return Arrays.asList(guiOption, clientOption);
     }
 
     public static void main(final String... args) {

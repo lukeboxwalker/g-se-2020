@@ -62,8 +62,8 @@ public class ClientApplication extends Application {
             }
 
         });
-        final Scene scene2 = new Scene(loginRoot);
-        connectionWindow.setScene(scene2);
+        final Scene loginScene = new Scene(loginRoot);
+        connectionWindow.setScene(loginScene);
         connectionWindow.showAndWait();
     }
 

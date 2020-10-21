@@ -12,8 +12,10 @@ import static fi.iki.elonen.NanoHTTPD.Response.Status.OK;
 public final class ResponseUtils {
 
     public static final String MIME_JSON = "application/json";
-
     private static final JSONParser JSON_PARSER = new JSONParser();
+
+    private ResponseUtils() {
+    }
 
     public static NanoHTTPD.Response createResponse(final ResponseBody responseBody) {
         try {

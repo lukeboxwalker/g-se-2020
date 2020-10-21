@@ -8,7 +8,7 @@ import fi.iki.elonen.NanoHTTPD;
 
 import java.util.UUID;
 
-public class ParticipateRequest extends PostRequest<ParticipateRequestBody> {
+public class ParticipateRequest extends AbstractPostRequest<ParticipateRequestBody> {
 
     private final BoardSerializer serializer = new BoardSerializer();
 

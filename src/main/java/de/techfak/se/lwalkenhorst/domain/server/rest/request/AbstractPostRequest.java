@@ -7,7 +7,7 @@ import fi.iki.elonen.NanoHTTPD;
 
 import static fi.iki.elonen.NanoHTTPD.MIME_PLAINTEXT;
 
-public abstract class PostRequest<T extends RequestBody> {
+public abstract class AbstractPostRequest<T extends RequestBody> {
 
     private static final JSONParser JSON_PARSER = new JSONParser();
 

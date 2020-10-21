@@ -3,7 +3,7 @@ package de.techfak.se.lwalkenhorst.domain;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class AbstractBoard<T> implements Iterable<T> {
+public abstract class AbstractBoard<T> implements Iterable<T> {
 
     private final T[][] tiles;
 

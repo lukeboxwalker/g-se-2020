@@ -6,7 +6,7 @@ import de.techfak.se.lwalkenhorst.domain.server.rest.request.EndRoundRequest;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.GetRequest;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.GseRequest;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.ParticipateRequest;
-import de.techfak.se.lwalkenhorst.domain.server.rest.request.PostRequest;
+import de.techfak.se.lwalkenhorst.domain.server.rest.request.AbstractPostRequest;
 import de.techfak.se.lwalkenhorst.domain.server.rest.request.StatusRequest;
 import fi.iki.elonen.NanoHTTPD;
 
@@ -17,7 +17,7 @@ import java.util.Map;
 public class HTTPServer extends NanoHTTPD {
     private static final GetRequest FALLBACK_REQUEST = new GseRequest();
 
-    private final Map<String, PostRequest<?>> postMapping;
+    private final Map<String, AbstractPostRequest<?>> postMapping;
     private final Map<String, GetRequest> getMapping;
     private final GameServer gameServer;
 
@@ -52,7 +52,7 @@ public class HTTPServer extends NanoHTTPD {
         try {
             session.parseBody(data);
             if (postMapping.containsKey(session.getUri())) {
-                final PostRequest<?> postRequest = postMapping.get(session.getUri());
+                final AbstractPostRequest<?> postRequest = postMapping.get(session.getUri());
                 return postRequest.handle(gameServer, data.get("postData"));
             } else {
                 return FALLBACK_REQUEST.handle(gameServer);

@@ -29,9 +29,12 @@ import static javafx.scene.paint.Color.WHITE;
 public class GameController implements GameObserver {
 
     private static final int PANE_SIZE = 100;
+    private static final int DICE_COUNT = 3;
+    private static final String LOADING_STYLE = "-fx-background-color: rgba(64, 64, 64, 0.5)";
+    private static final String FX_FILL = "-fx-fill: ";
 
     @FXML
-    public Text points;
+    private Text points;
 
     @FXML
     private AnchorPane root;
@@ -46,22 +49,22 @@ public class GameController implements GameObserver {
     private HBox box;
 
     @FXML
-    private Circle dice1;
+    private Circle diceOne;
 
     @FXML
-    private Circle dice2;
+    private Circle diceTwo;
 
     @FXML
-    private Circle dice3;
+    private Circle diceThree;
 
     @FXML
-    private Text dice4;
+    private Text diceFour;
 
     @FXML
-    private Text dice5;
+    private Text diceFive;
 
     @FXML
-    private Text dice6;
+    private Text diceSix;
 
     @FXML
     private Button confirmButton;
@@ -79,7 +82,7 @@ public class GameController implements GameObserver {
         this.crossedPositions = new ArrayList<>();
         this.progressIndicator.prefHeightProperty().bind(root.prefHeightProperty());
         this.progressIndicator.prefWidthProperty().bind(root.prefWidthProperty());
-        this.progressIndicator.setStyle("-fx-background-color: rgba(64, 64, 64, 0.5)");
+        this.progressIndicator.setStyle(LOADING_STYLE);
         this.progressIndicator.setAlignment(Pos.CENTER);
         gameModel.addListener(this);
         this.box.setFillHeight(true);
@@ -108,18 +111,18 @@ public class GameController implements GameObserver {
     }
 
     private void viewColorDiceResult(final List<Color> list, final Map<Circle, Color> map, final Circle... dice) {
-        if (list.size() == 3 && dice.length == 3) {
-            dice[0].setStyle("-fx-fill: " + list.get(0).getFxName());
+        if (list.size() == DICE_COUNT && dice.length == DICE_COUNT) {
+            dice[0].setStyle(FX_FILL + list.get(0).getFxName());
             map.put(dice[0], list.get(0));
-            dice[1].setStyle("-fx-fill: " + list.get(1).getFxName());
+            dice[1].setStyle(FX_FILL + list.get(1).getFxName());
             map.put(dice[1], list.get(1));
-            dice[2].setStyle("-fx-fill: " + list.get(2).getFxName());
+            dice[2].setStyle(FX_FILL + list.get(2).getFxName());
             map.put(dice[2], list.get(2));
         }
     }
 
     private void viewNumberDiceResult(final List<Integer> list, final Map<Text, Integer> map, final Text... dice) {
-        if (list.size() == 3 && dice.length == 3) {
+        if (list.size() == DICE_COUNT && dice.length == DICE_COUNT) {
             dice[0].setText(String.valueOf(list.get(0)));
             map.put(dice[0], list.get(0));
             dice[1].setText(String.valueOf(list.get(1)));
@@ -149,8 +152,8 @@ public class GameController implements GameObserver {
         Platform.runLater(() -> {
             rootBox.setDisable(false);
             root.getChildren().remove(progressIndicator);
-            viewColorDiceResult(diceResult.getRolledColors(), colorDice, dice1, dice2, dice3);
-            viewNumberDiceResult(diceResult.getRolledNumbers(), numberDice, dice4, dice5, dice6);
+            viewColorDiceResult(diceResult.getRolledColors(), colorDice, diceOne, diceTwo, diceThree);
+            viewNumberDiceResult(diceResult.getRolledNumbers(), numberDice, diceFour, diceFive, diceSix);
         });
     }
 
@@ -187,7 +190,7 @@ public class GameController implements GameObserver {
             final VBox gameOverScreen = new VBox(text);
             gameOverScreen.prefHeightProperty().bind(root.prefHeightProperty());
             gameOverScreen.prefWidthProperty().bind(root.prefWidthProperty());
-            gameOverScreen.setStyle("-fx-background-color: rgba(64, 64, 64, 0.5)");
+            gameOverScreen.setStyle(LOADING_STYLE);
             gameOverScreen.setAlignment(Pos.CENTER);
             rootBox.setDisable(true);
             root.getChildren().add(gameOverScreen);

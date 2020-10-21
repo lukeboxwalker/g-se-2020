@@ -16,6 +16,9 @@ import static javafx.scene.paint.Color.*;
 
 public final class View {
 
+    private static final int SHADOW_WIDTH = 5;
+    private static final double SHADOW_SIZE = 2.0;
+
     public FxBoard createGrid(final Board board, final GridPane gridPane,
                               final int size, final BiConsumer<Integer, Integer> consumer) {
         final int lengthX = board.getLengthX();
@@ -31,12 +34,12 @@ public final class View {
                 pane.setStyle("-fx-background-color: " + board.getTileAt(x, y).getColor().getFxName());
 
                 if (x == board.getStartColumn()) {
-                    final InnerShadow shadow = new InnerShadow(5, WHITE);
-                    shadow.setWidth(size / 2.0);
-                    shadow.setHeight(size / 2.0);
+                    final InnerShadow shadow = new InnerShadow(SHADOW_WIDTH, WHITE);
+                    shadow.setWidth(size / SHADOW_SIZE);
+                    shadow.setHeight(size / SHADOW_SIZE);
                     pane.setEffect(shadow);
                 } else {
-                    pane.setEffect(new InnerShadow(5, BLACK));
+                    pane.setEffect(new InnerShadow(SHADOW_WIDTH, BLACK));
                 }
 
                 final int finalX = x;

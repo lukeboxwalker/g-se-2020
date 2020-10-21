@@ -11,9 +11,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GseServer {
+public final class GseServer {
 
     private static final String DEFAULT_BOARD_CONFIG = "default.txt";
+
+    private GseServer() {
+    }
 
     public static void main(final String... args) {
         try {

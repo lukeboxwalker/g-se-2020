@@ -9,7 +9,7 @@ public class NoConnectionException extends AbstractExitCodeException {
         super(message);
     }
 
-    public NoConnectionException(final String message, Throwable cause) {
+    public NoConnectionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 

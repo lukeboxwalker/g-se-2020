@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class BoardSerializer {
 
+    private static final String BREAK = "\n";
     private static final int BOARD_SIZE_X = 15;
     private static final int BOARD_SIZE_Y = 7;
 
@@ -31,9 +32,9 @@ public class BoardSerializer {
         final StringBuilder stringBuilder = new StringBuilder();
         for (int y = 0; y < board.getLengthY(); y++) {
             for (int x = 0; x < board.getLengthX(); x++) {
-                stringBuilder.append(board.getTileAt(x,y).getColor().getIdentifier());
+                stringBuilder.append(board.getTileAt(x, y).getColor().getIdentifier());
             }
-            stringBuilder.append("\n");
+            stringBuilder.append(BREAK);
         }
         return stringBuilder.toString();
     }
@@ -74,7 +75,7 @@ public class BoardSerializer {
                 if (line == null) {
                     throw new BoardCreationException("Wrong board size y value!");
                 } else {
-                    line = line.replace("\n", "");
+                    line = line.replace(BREAK, "");
                     if (line.length() != BOARD_SIZE_X) {
                         throw new BoardCreationException("Wrong board size x value!");
                     }

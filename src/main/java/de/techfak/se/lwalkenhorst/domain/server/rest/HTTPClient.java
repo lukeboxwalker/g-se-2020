@@ -16,12 +16,12 @@ import java.net.http.HttpResponse;
 
 public class HTTPClient {
 
+    private static final int OK = 200;
+
     private final JSONParser parser;
     private final HttpClient client;
     private final String baseUri;
     private String uuid;
-
-    private static final int OK = 200;
 
     public HTTPClient(final String serverAddress, final int port) throws NoConnectionException {
         this.client = HttpClient.newHttpClient();
@@ -49,11 +49,11 @@ public class HTTPClient {
 
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
-            final ParticipateResponse participateResponse = parser.parseJSON(response.body(), ParticipateResponse.class);
-            if (participateResponse.isSuccess()) {
-                this.uuid = participateResponse.getUuid();
+            final ParticipateResponse responseBody = parser.parseJSON(response.body(), ParticipateResponse.class);
+            if (responseBody.isSuccess()) {
+                this.uuid = responseBody.getUuid();
             }
-            return participateResponse;
+            return responseBody;
         } catch (IOException | InterruptedException | SerialisationException e) {
             e.printStackTrace();
             return new ParticipateResponse(false, "", "");

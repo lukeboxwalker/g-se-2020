@@ -5,7 +5,7 @@ import de.techfak.se.lwalkenhorst.domain.server.GameServer;
 import de.techfak.se.lwalkenhorst.domain.server.rest.ResponseUtils;
 import fi.iki.elonen.NanoHTTPD;
 
-public class EndRoundRequest extends PostRequest<EndRoundRequestBody> {
+public class EndRoundRequest extends AbstractPostRequest<EndRoundRequestBody> {
     @Override
     public Class<EndRoundRequestBody> getBodyClass() {
         return EndRoundRequestBody.class;

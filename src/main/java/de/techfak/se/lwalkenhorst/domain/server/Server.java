@@ -13,6 +13,12 @@ import java.util.UUID;
 
 public class Server implements GameServer {
 
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+
     private final Board board;
     private final int lobbySize;
     private final Map<String, Player> players;
@@ -30,7 +36,7 @@ public class Server implements GameServer {
         this.players = new HashMap<>();
         this.diceResult = new DiceResult();
         this.colorDice = new Dice<>(Arrays.asList(Color.values()));
-        this.numberDice = new Dice<>(Arrays.asList(1, 2, 3, 4, 5));
+        this.numberDice = new Dice<>(Arrays.asList(ONE, TWO, THREE, FOUR, FIVE));
         this.board = board;
         this.round = 0;
         this.gameFinished = false;
@@ -99,8 +105,8 @@ public class Server implements GameServer {
     }
 
     private void rollDice() {
-        diceResult.setRolledColors(colorDice.rollDice(3));
-        diceResult.setRolledNumbers(numberDice.rollDice(3));
+        diceResult.setRolledColors(colorDice.rollDice(THREE));
+        diceResult.setRolledNumbers(numberDice.rollDice(THREE));
     }
 
     private boolean canEnterNextRound() {
