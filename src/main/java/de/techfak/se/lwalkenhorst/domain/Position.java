@@ -1,5 +1,7 @@
 package de.techfak.se.lwalkenhorst.domain;
 
+import java.util.Objects;
+
 public class Position {
     private int posX;
     private int posY;
@@ -51,7 +53,7 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(posX) * Integer.hashCode(posY);
+        return Objects.hash(posX, posY);
     }
 
     @Override
