@@ -2,7 +2,6 @@ package de.techfak.se.lwalkenhorst.domain.cli;
 
 import de.techfak.se.lwalkenhorst.domain.Board;
 import de.techfak.se.lwalkenhorst.domain.Color;
-import de.techfak.se.lwalkenhorst.domain.DiceResult;
 import de.techfak.se.lwalkenhorst.domain.Game;
 import de.techfak.se.lwalkenhorst.domain.GameObserver;
 import de.techfak.se.lwalkenhorst.domain.Position;
@@ -20,10 +19,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Terminal implements GameObserver {
 
     private static final String EMPTY = " ";
-    private static final String SEPARATE = ", ";
     private static final String BREAK = "\n";
     private static final String CROSS = "X";
-    private static final String EXIT = "exit";
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private final Game game;
@@ -51,16 +48,10 @@ public class Terminal implements GameObserver {
                 try {
                     final String cmd = reader.readLine();
                     if (cmd != null) {
-                        switch (cmd) {
-                            case "":
-                                this.game.pass();
-                                break;
-                            case EXIT:
-                                this.kill();
-                                break;
-                            default:
-                                this.crossTiles(Arrays.asList(cmd.split(",")));
-                                break;
+                        if ("".equals(cmd)) {
+                            this.kill();
+                        } else {
+                            this.crossTiles(Arrays.asList(cmd.split(",")));
                         }
                     }
                 } catch (IOException e) {
@@ -92,19 +83,19 @@ public class Terminal implements GameObserver {
     }
 
     private void printBoard() {
-        System.out.print("  | ");
+        System.out.print(EMPTY + EMPTY);
         for (int x = 0; x < stringBoard.length; x++) {
             System.out.print(ALPHABET.charAt(x) + EMPTY);
         }
-        System.out.println("\n--|------------------------------");
+        System.out.print(BREAK);
         for (int y = 0; y < stringBoard[0].length; y++) {
-            System.out.print(y + 1 + " | ");
+            System.out.print(y + 1 + EMPTY);
             for (final String[] strings : stringBoard) {
                 System.out.print(strings[y] + EMPTY);
             }
             System.out.print(BREAK);
         }
-        System.out.print(BREAK);
+        System.out.print("\nEnter your Turn: ");
     }
 
     private void crossTiles(final List<String> coordinates) {
@@ -117,37 +108,17 @@ public class Terminal implements GameObserver {
                 posY = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
                 positions.add(new Position(posX, posY));
             } else {
-                System.out.println("Wrong coordinate format!");
+                System.out.print("Wrong coordinate format!");
+                System.out.print("\nEnter your Turn: ");
                 return;
             }
         }
         if (!game.crossTiles(positions)) {
-            System.out.println("Could not cross these tile(s). Stick to the rules!\n");
+            System.out.print("Could not cross these tile(s). Stick to the rules!\n");
+            System.out.print("\nEnter your Turn: ");
         }
     }
 
-    private void printDiceResult(final DiceResult diceResult) {
-        final List<Color> colors = diceResult.getRolledColors();
-        final List<Integer> numbers = diceResult.getRolledNumbers();
-        final StringBuilder stringBuilder = new StringBuilder(21);
-        stringBuilder.append("\nColors: ");
-        for (int i = 0; i < colors.size(); i++) {
-            final Color color = colors.get(i);
-            stringBuilder.append(color.name());
-            if (i + 1 < colors.size()) {
-                stringBuilder.append(SEPARATE);
-            }
-        }
-        stringBuilder.append("\nNumbers: ");
-        for (int i = 0; i < numbers.size(); i++) {
-            final int number = numbers.get(i);
-            stringBuilder.append(number);
-            if (i + 1 < numbers.size()) {
-                stringBuilder.append(SEPARATE);
-            }
-        }
-        System.out.println(stringBuilder.toString() + BREAK);
-    }
 
     private void printPoints(final int points) {
         System.out.println("Game won points: " + points);
@@ -161,20 +132,17 @@ public class Terminal implements GameObserver {
     @Override
     public void onGameStart(final Board board) {
         this.initBoard(board);
-    }
-
-    @Override
-    public void onDiceRoll(final DiceResult diceResult) {
-        this.printDiceResult(diceResult);
-        System.out.println("Points: " + points);
+        System.out.println("Welcome to Encore!");
         this.printBoard();
     }
+
 
     @Override
     public void onTilesCross(final List<Position> positions) {
         for (final Position position : positions) {
             this.stringBoard[position.getPosX()][position.getPosY()] = CROSS;
         }
+        this.printBoard();
     }
 
     @Override

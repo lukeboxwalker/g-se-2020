@@ -16,6 +16,9 @@ public class NotCrossedValidator implements BoardValidator {
     @Override
     public boolean validate(final List<Position> positions) {
         for (final Position position : positions) {
+            if (!board.inBounds(position)) {
+                return false;
+            }
             if (board.getTileAt(position).isCrossed()) {
                 return false;
             }
