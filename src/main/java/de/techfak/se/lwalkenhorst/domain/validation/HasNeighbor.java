@@ -5,7 +5,7 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public class HasNeighbor implements TrunValidator {
+public class HasNeighbor implements TurnValidator {
 
     private final Board board;
 

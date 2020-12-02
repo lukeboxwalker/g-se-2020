@@ -4,7 +4,7 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public interface TrunValidator {
+public interface TurnValidator {
 
     boolean validate(final List<Position> positions);
 }

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class IsGroup implements TrunValidator {
+public class IsGroup implements TurnValidator {
 
     @Override
     public boolean validate(final List<Position> positions) {

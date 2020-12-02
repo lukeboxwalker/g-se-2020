@@ -5,7 +5,7 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public class InBounds implements TrunValidator {
+public class InBounds implements TurnValidator {
 
     private final Board board;
 

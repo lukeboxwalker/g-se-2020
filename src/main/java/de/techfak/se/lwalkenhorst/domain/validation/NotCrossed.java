@@ -5,7 +5,7 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public class NotCrossed implements TrunValidator {
+public class NotCrossed implements TurnValidator {
 
     private final Board board;
 

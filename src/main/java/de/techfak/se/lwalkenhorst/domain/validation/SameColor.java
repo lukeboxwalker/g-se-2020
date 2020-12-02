@@ -6,7 +6,7 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public class SameColor implements TrunValidator {
+public class SameColor implements TurnValidator {
 
     private final Board board;
 
