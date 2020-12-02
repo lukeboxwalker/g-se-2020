@@ -1,9 +1,11 @@
 package de.techfak.se.lwalkenhorst.domain;
 
-import de.techfak.se.lwalkenhorst.domain.validation.NotCrossedValidator;
-import de.techfak.se.lwalkenhorst.domain.validation.GroupValidator;
-import de.techfak.se.lwalkenhorst.domain.validation.HasNeighborValidator;
-import de.techfak.se.lwalkenhorst.domain.validation.BoardValidator;
+import de.techfak.se.lwalkenhorst.domain.validation.HasNeighbor;
+import de.techfak.se.lwalkenhorst.domain.validation.InBounds;
+import de.techfak.se.lwalkenhorst.domain.validation.IsGroup;
+import de.techfak.se.lwalkenhorst.domain.validation.NotCrossed;
+import de.techfak.se.lwalkenhorst.domain.validation.SameColor;
+import de.techfak.se.lwalkenhorst.domain.validation.TrunValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Board extends AbstractBoard<Tile> {
     private static final int ONE = 1;
 
     private final int[] pointsPerCol;
-    private final List<BoardValidator> validators;
+    private final List<TrunValidator> validators;
     private final int startColumn;
 
     public Board(final Tile[][] tiles) {
@@ -26,9 +28,11 @@ public class Board extends AbstractBoard<Tile> {
         this.pointsPerCol = new int[]{FIVE, THREE, THREE, THREE, TWO, TWO, TWO, ONE,
                 TWO, TWO, TWO, THREE, THREE, THREE, FIVE};
 
-        validators.add(new NotCrossedValidator(this));
-        validators.add(new GroupValidator());
-        validators.add(new HasNeighborValidator(this));
+        validators.add(new InBounds(this));
+        validators.add(new SameColor(this));
+        validators.add(new NotCrossed(this));
+        validators.add(new HasNeighbor(this));
+        validators.add(new IsGroup());
     }
 
     public int getStartColumn() {
@@ -36,7 +40,7 @@ public class Board extends AbstractBoard<Tile> {
     }
 
     public boolean cross(final List<Position> positions) {
-        for (final BoardValidator validator : validators) {
+        for (final TrunValidator validator : validators) {
             if (!validator.validate(positions)) {
                 return false;
             }

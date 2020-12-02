@@ -5,16 +5,16 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public class HasNeighborValidator implements BoardValidator {
+public class HasNeighbor implements TrunValidator {
 
     private final Board board;
 
-    public HasNeighborValidator(final Board board) {
+    public HasNeighbor(final Board board) {
         this.board = board;
     }
 
     private boolean isNeighborCrossed(final Position position) {
-        return board.inBounds(position) && board.getTileAt(position).isCrossed();
+        return board.getTileAt(position).isCrossed();
     }
 
     @Override

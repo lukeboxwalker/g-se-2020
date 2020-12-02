@@ -1,26 +1,21 @@
 package de.techfak.se.lwalkenhorst.domain.cli;
 
 import de.techfak.se.lwalkenhorst.domain.Board;
-import de.techfak.se.lwalkenhorst.domain.Color;
 import de.techfak.se.lwalkenhorst.domain.Game;
 import de.techfak.se.lwalkenhorst.domain.GameObserver;
 import de.techfak.se.lwalkenhorst.domain.Position;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Terminal implements GameObserver {
 
     private static final String EMPTY = " ";
     private static final String BREAK = "\n";
-    private static final String CROSS = "X";
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private final Game game;
@@ -43,23 +38,17 @@ public class Terminal implements GameObserver {
     }
 
     private void startListener() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
+        try (Scanner scanner = new Scanner(System.in)) {
             while (running.get()) {
-                try {
-                    final String cmd = reader.readLine();
-                    if (cmd != null) {
-                        if ("".equals(cmd)) {
-                            this.kill();
-                        } else {
-                            this.crossTiles(Arrays.asList(cmd.split(",")));
-                        }
+                final String cmd = scanner.nextLine();
+                if (cmd != null) {
+                    if ("".equals(cmd)) {
+                        this.kill();
+                    } else {
+                        this.crossTiles(Arrays.asList(cmd.split(",")));
                     }
-                } catch (IOException e) {
-                    this.kill();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -74,7 +63,7 @@ public class Terminal implements GameObserver {
         for (int x = 0; x < lengthX; x++) {
             for (int y = 0; y < lengthY; y++) {
                 if (board.getTileAt(x, y).isCrossed()) {
-                    stringBoard[x][y] = CROSS;
+                    stringBoard[x][y] = String.valueOf(board.getTileAt(x, y).getColor().getIdentifier()).toUpperCase();
                 } else {
                     stringBoard[x][y] = String.valueOf(board.getTileAt(x, y).getColor().getIdentifier());
                 }
@@ -140,7 +129,7 @@ public class Terminal implements GameObserver {
     @Override
     public void onTilesCross(final List<Position> positions) {
         for (final Position position : positions) {
-            this.stringBoard[position.getPosX()][position.getPosY()] = CROSS;
+            this.stringBoard[position.getPosX()][position.getPosY()] = stringBoard[position.getPosX()][position.getPosY()].toUpperCase();
         }
         this.printBoard();
     }

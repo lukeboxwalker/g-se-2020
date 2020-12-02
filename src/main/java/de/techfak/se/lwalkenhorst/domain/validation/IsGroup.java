@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GroupValidator implements BoardValidator {
+public class IsGroup implements TrunValidator {
 
     @Override
     public boolean validate(final List<Position> positions) {

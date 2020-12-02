@@ -5,21 +5,18 @@ import de.techfak.se.lwalkenhorst.domain.Position;
 
 import java.util.List;
 
-public class NotCrossedValidator implements BoardValidator {
+public class InBounds implements TrunValidator {
 
     private final Board board;
 
-    public NotCrossedValidator(final Board board) {
+    public InBounds(final Board board) {
         this.board = board;
     }
 
     @Override
-    public boolean validate(final List<Position> positions) {
+    public boolean validate(List<Position> positions) {
         for (final Position position : positions) {
             if (!board.inBounds(position)) {
-                return false;
-            }
-            if (board.getTileAt(position).isCrossed()) {
                 return false;
             }
         }

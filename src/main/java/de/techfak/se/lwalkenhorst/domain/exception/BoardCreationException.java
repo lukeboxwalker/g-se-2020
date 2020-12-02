@@ -1,9 +1,8 @@
 package de.techfak.se.lwalkenhorst.domain.exception;
 
-public class BoardCreationException extends AbstractExitCodeException {
+public class BoardCreationException extends Exception {
 
     private static final long serialVersionUID = 42L;
-    private static final int EXIT_CODE = 100;
 
     public BoardCreationException(final String message) {
         super(message);
@@ -13,8 +12,4 @@ public class BoardCreationException extends AbstractExitCodeException {
         super(cause);
     }
 
-    @Override
-    public int getExitCode() {
-        return EXIT_CODE;
-    }
 }

@@ -39,12 +39,8 @@ public class BoardSerializer {
         return stringBuilder.toString();
     }
 
-    public Board deSerialize(final File file) throws BoardCreationException {
-        try {
-            return deSerialize(Files.newInputStream(Paths.get(file.getPath())));
-        } catch (IOException e) {
-            throw new BoardCreationException(e);
-        }
+    public Board deSerialize(final File file) throws BoardCreationException, IOException {
+        return deSerialize(Files.newInputStream(Paths.get(file.getPath())));
     }
 
     private void createBoardLine(final String line, final int col, final Tile[][] tiles) throws BoardCreationException {
@@ -81,6 +77,9 @@ public class BoardSerializer {
                     }
                     createBoardLine(line, y, tiles);
                 }
+            }
+            if (reader.readLine() != null) {
+                throw new BoardCreationException("Wrong board size y value!");
             }
             return new Board(tiles);
         } catch (IOException e) {
