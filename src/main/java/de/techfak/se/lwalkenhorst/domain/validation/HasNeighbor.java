@@ -14,7 +14,7 @@ public class HasNeighbor implements TurnValidator {
     }
 
     private boolean isNeighborCrossed(final Position position) {
-        return board.getTileAt(position).isCrossed();
+        return board.inBounds(position) && board.getTileAt(position).isCrossed();
     }
 
     @Override

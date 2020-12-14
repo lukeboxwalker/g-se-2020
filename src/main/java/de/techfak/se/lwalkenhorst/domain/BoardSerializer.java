@@ -48,7 +48,7 @@ public class BoardSerializer {
         for (int x = 0; x < line.length(); x++) {
             colorIdentifier = line.charAt(x);
             if (colorMap.containsKey(Character.toLowerCase(colorIdentifier))) {
-                tiles[x][col] = new Tile(colorMap.get(colorIdentifier));
+                tiles[x][col] = new Tile(colorMap.get(Character.toLowerCase(colorIdentifier)));
                 if (Character.isUpperCase(colorIdentifier)) {
                     tiles[x][col].cross();
                 }

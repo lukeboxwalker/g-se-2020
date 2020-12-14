@@ -45,10 +45,8 @@ public final class GseAgain implements Callable<Integer> {
             final Terminal terminal = new Terminal(game);
             terminal.listenForInstructions();
         } catch (BoardCreationException e) {
-            e.printStackTrace();
             return 101;
         } catch (IOException e) {
-            e.printStackTrace();
             return 100;
         }
         return 0;

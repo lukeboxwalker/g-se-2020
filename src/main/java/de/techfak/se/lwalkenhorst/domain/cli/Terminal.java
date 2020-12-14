@@ -38,15 +38,14 @@ public class Terminal implements GameObserver {
     }
 
     private void startListener() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (running.get()) {
-                final String cmd = scanner.nextLine();
-                if (cmd != null) {
-                    if ("".equals(cmd)) {
-                        this.kill();
-                    } else {
-                        this.crossTiles(Arrays.asList(cmd.split(",")));
-                    }
+        final Scanner scanner = new Scanner(System.in);
+        while (running.get()) {
+            final String cmd = scanner.nextLine();
+            if (cmd != null) {
+                if ("".equals(cmd)) {
+                    this.kill();
+                } else {
+                    this.crossTiles(Arrays.asList(cmd.split(",")));
                 }
             }
         }
