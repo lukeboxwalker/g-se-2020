@@ -13,16 +13,16 @@ import java.util.Map;
 
 public class GameFactory {
 
-    private final Map<Character, Color> colorMap = new HashMap<>();
+    private final Map<Character, TileColor> colorMap = new HashMap<>();
     private final Bounds bounds;
 
     public GameFactory(final int rows, final int columns) {
         this.bounds = new Bounds(rows, columns);
-        this.colorMap.put('r', Color.RED);
-        this.colorMap.put('b', Color.BLUE);
-        this.colorMap.put('g', Color.GREEN);
-        this.colorMap.put('o', Color.ORANGE);
-        this.colorMap.put('y', Color.YELLOW);
+        this.colorMap.put('r', TileColor.RED);
+        this.colorMap.put('b', TileColor.BLUE);
+        this.colorMap.put('g', TileColor.GREEN);
+        this.colorMap.put('o', TileColor.ORANGE);
+        this.colorMap.put('y', TileColor.YELLOW);
     }
 
     public Game createGame(final File file) throws InvalidBoardLayoutException, InvalidFieldException, IOException {

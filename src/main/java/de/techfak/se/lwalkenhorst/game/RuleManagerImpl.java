@@ -21,13 +21,13 @@ public class RuleManagerImpl implements RuleManager {
     private static final Set<Integer> COLUMN_B_C_D_L_M_N = Set.of(1, 2, 3, 11, 12, 13);
     private static final Set<Integer> COLUMN_A_O = Set.of(0, 14);
 
-    private final Map<Color, Boolean> fullColorMap;
+    private final Map<TileColor, Boolean> fullColorMap;
     private final Map<Integer, Boolean> fullColumnMap;
     private final Board board;
 
     public RuleManagerImpl(final Board board) {
         this.board = board;
-        this.fullColorMap = Arrays.stream(Color.values())
+        this.fullColorMap = Arrays.stream(TileColor.values())
             .collect(Collectors.toMap(Function.identity(), color -> false));
 
         fullColumnMap = new HashMap<>();
@@ -70,7 +70,7 @@ public class RuleManagerImpl implements RuleManager {
     }
 
     @Override
-    public List<Color> getFullColors() {
+    public List<TileColor> getFullColors() {
         return fullColorMap.entrySet()
             .stream()
             .filter(Map.Entry::getValue)

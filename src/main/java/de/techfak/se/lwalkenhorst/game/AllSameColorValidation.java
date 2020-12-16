@@ -14,11 +14,11 @@ public class AllSameColorValidation implements TurnValidation {
 
     @Override
     public void validate(final List<CellPosition> cellPositions) throws InvalidTurnException {
-        Color color = null;
+        TileColor tileColor = null;
         for (final CellPosition cellPosition : cellPositions) {
-            if (color == null) {
-                color = board.getTileAt(cellPosition).getColor();
-            } else if (color != board.getTileAt(cellPosition).getColor()) {
+            if (tileColor == null) {
+                tileColor = board.getTileAt(cellPosition).getColor();
+            } else if (tileColor != board.getTileAt(cellPosition).getColor()) {
                 throw new InvalidTurnException("Positions dont match the same color");
             }
         }

@@ -1,6 +1,6 @@
 package de.techfak.se.lwalkenhorst.game;
 
-public enum Color {
+public enum TileColor {
     GREEN,
 
     YELLOW,

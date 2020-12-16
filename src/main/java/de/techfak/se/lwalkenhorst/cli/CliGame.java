@@ -3,9 +3,9 @@ package de.techfak.se.lwalkenhorst.cli;
 import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
 import de.techfak.se.lwalkenhorst.game.Board;
 import de.techfak.se.lwalkenhorst.game.Bounds;
-import de.techfak.se.lwalkenhorst.game.Color;
 import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.Tile;
+import de.techfak.se.lwalkenhorst.game.TileColor;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
 
 import java.util.HashMap;
@@ -15,15 +15,15 @@ import java.util.Scanner;
 public class CliGame {
 
     private final TurnFactory turnFactory = new TurnFactory();
-    private final Map<Color, Character> colorMap = new HashMap<>();
+    private final Map<TileColor, Character> colorMap = new HashMap<>();
     private Game game;
 
     public CliGame() {
-        this.colorMap.put(Color.RED, 'r');
-        this.colorMap.put(Color.BLUE, 'b');
-        this.colorMap.put(Color.GREEN, 'g');
-        this.colorMap.put(Color.ORANGE, 'o');
-        this.colorMap.put(Color.YELLOW, 'y');
+        this.colorMap.put(TileColor.RED, 'r');
+        this.colorMap.put(TileColor.BLUE, 'b');
+        this.colorMap.put(TileColor.GREEN, 'g');
+        this.colorMap.put(TileColor.ORANGE, 'o');
+        this.colorMap.put(TileColor.YELLOW, 'y');
     }
 
     public void play(final Game game) {

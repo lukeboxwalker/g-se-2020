@@ -1,19 +1,19 @@
 package de.techfak.se.lwalkenhorst.game;
 
 public class TileImpl implements Tile {
-    private final Color color;
+    private final TileColor tileColor;
     private boolean crossed;
 
-    public TileImpl(final Color color) {
-        this.color = color;
+    public TileImpl(final TileColor tileColor) {
+        this.tileColor = tileColor;
     }
 
     public void cross() {
         this.crossed = true;
     }
 
-    public Color getColor() {
-        return color;
+    public TileColor getColor() {
+        return tileColor;
     }
 
     public boolean isCrossed() {
@@ -23,7 +23,7 @@ public class TileImpl implements Tile {
     @Override
     public String toString() {
         return "Tile{" +
-                "color=" + color +
+                "color=" + tileColor +
                 ", crossed=" + crossed +
                 '}';
     }

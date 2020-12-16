@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RuleManager {
 
-    List<Color> getFullColors();
+    List<TileColor> getFullColors();
 
     int getPointsForCol(final int column);
 
