@@ -47,7 +47,7 @@ public class GameFactory {
         }
         final TileImpl[] tiles = new TileImpl[bounds.getColumns()];
         for (int column = 0; column < line.length(); column++) {
-            char tile = line.charAt(column);
+            final char tile = line.charAt(column);
             if (colorMap.containsKey(Character.toLowerCase(tile))) {
                 tiles[column] = new TileImpl(colorMap.get(Character.toLowerCase(tile)));
                 if (Character.isUpperCase(tile)) {

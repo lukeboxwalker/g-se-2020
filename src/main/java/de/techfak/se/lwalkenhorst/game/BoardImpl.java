@@ -12,7 +12,7 @@ public class BoardImpl implements Board {
     private final Bounds bounds;
 
     public BoardImpl(final TileImpl[][] tiles, final Bounds bounds) {
-        this.tiles = tiles;
+        this.tiles = tiles.clone();
         this.bounds = bounds;
         this.startColumn = DEFAULT_START_COL;
     }

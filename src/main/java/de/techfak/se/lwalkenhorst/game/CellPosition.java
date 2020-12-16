@@ -6,10 +6,6 @@ public class CellPosition {
     private final int column;
     private final int row;
 
-    public static CellPosition of(final int row, final int column) {
-        return new CellPosition(row, column);
-    }
-
     public CellPosition(final int row, final int column) {
         this.row = row;
         this.column = column;

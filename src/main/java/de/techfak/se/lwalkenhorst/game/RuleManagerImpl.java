@@ -97,7 +97,7 @@ public class RuleManagerImpl implements RuleManager {
 
     @Override
     public boolean isColumnFull(final int column) {
-        if (CellPosition.of(0, column).isInside(board.getBounds())) {
+        if (new CellPosition(0, column).isInside(board.getBounds())) {
             boolean isFull = true;
             for (int row = 0; row < board.getBounds().getRows(); row++) {
                 if (!board.getTileAt(row, column).isCrossed()) {

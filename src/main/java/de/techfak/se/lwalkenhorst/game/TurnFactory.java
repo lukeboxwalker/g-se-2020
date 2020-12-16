@@ -17,9 +17,9 @@ public class TurnFactory {
             final String[] coordinates = input.split(",");
             final List<CellPosition> positions = new ArrayList<>(coordinates.length);
             for (final String coordinate : coordinates) {
-                int column = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase(Locale.ROOT));
-                int row = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
-                positions.add(CellPosition.of(row, column));
+                final int column = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase(Locale.ROOT));
+                final int row = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
+                positions.add(new CellPosition(row, column));
             }
             return new Turn(positions);
         } else {

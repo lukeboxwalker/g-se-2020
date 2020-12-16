@@ -12,10 +12,12 @@ public class TileImpl implements Tile {
         this.crossed = true;
     }
 
+    @Override
     public TileColor getColor() {
         return tileColor;
     }
 
+    @Override
     public boolean isCrossed() {
         return crossed;
     }

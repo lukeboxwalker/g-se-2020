@@ -36,7 +36,7 @@ public class CliGame {
     public void play(final Game game) {
         this.game = game;
         System.out.println("Welcome to Encore!");
-        printBoard();
+        System.out.println(createBoardString());
         final Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Enter your turn: ");
@@ -50,7 +50,7 @@ public class CliGame {
                     return;
                 } else {
                     game.applyTurn(turnFactory.parseTurn(input));
-                    printBoard();
+                    System.out.println(createBoardString());
                     System.out.println("Points: " + game.getPoints());
                 }
             } catch (InvalidTurnException e) {
@@ -59,7 +59,7 @@ public class CliGame {
         }
     }
 
-    private void printBoard() {
+    private String createBoardString() {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("  A B C D E F G H I J K L M N O\n");
         final Board board = game.getBoard();
@@ -67,7 +67,7 @@ public class CliGame {
         for (int row = 0; row < bounds.getRows(); row++) {
             stringBuilder.append(row + 1);
             for (int col = 0; col < bounds.getColumns(); col++) {
-                Tile tile = board.getTileAt(row, col);
+                final Tile tile = board.getTileAt(row, col);
                 stringBuilder.append(" ");
                 if (tile.isCrossed()) {
                     stringBuilder.append(crossedColors.get(tile.getColor()));
@@ -78,6 +78,6 @@ public class CliGame {
             }
             stringBuilder.append("\n");
         }
-        System.out.println(stringBuilder.toString());
+        return stringBuilder.toString();
     }
 }

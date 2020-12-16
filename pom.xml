@@ -110,7 +110,7 @@
                 </dependencies>
                 <configuration>
                     <configLocation>
-                        .codecheck/checkstyle.xml
+                        codecheck/checkstyle.xml
                     </configLocation>
                     <propertyExpansion>config_loc=${project.basedir}${file.separator}.codecheck
                     </propertyExpansion>
