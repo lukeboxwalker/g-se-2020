@@ -1,4 +1,4 @@
-package de.techfak.se.lwalkenhorst.domain.exception;
+package de.techfak.se.lwalkenhorst.exception;
 
 public class InvalidFieldException extends Exception {
 

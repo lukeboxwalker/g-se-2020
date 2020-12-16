@@ -1,4 +1,4 @@
-package de.techfak.se.lwalkenhorst.domain;
+package de.techfak.se.lwalkenhorst.game;
 
 import java.util.Arrays;
 import java.util.Iterator;

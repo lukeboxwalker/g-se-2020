@@ -1,38 +1,33 @@
-package de.techfak.se.lwalkenhorst.domain.cli;
+package de.techfak.se.lwalkenhorst.cli;
 
-import de.techfak.se.lwalkenhorst.domain.Board;
-import de.techfak.se.lwalkenhorst.domain.Bounds;
-import de.techfak.se.lwalkenhorst.domain.Color;
-import de.techfak.se.lwalkenhorst.domain.Game;
-import de.techfak.se.lwalkenhorst.domain.Tile;
-import de.techfak.se.lwalkenhorst.domain.TurnFactory;
-import de.techfak.se.lwalkenhorst.domain.exception.InvalidTurnException;
+import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
+import de.techfak.se.lwalkenhorst.game.Board;
+import de.techfak.se.lwalkenhorst.game.Bounds;
+import de.techfak.se.lwalkenhorst.game.Color;
+import de.techfak.se.lwalkenhorst.game.Game;
+import de.techfak.se.lwalkenhorst.game.Tile;
+import de.techfak.se.lwalkenhorst.game.TurnFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Terminal {
+public class CliGame {
 
     private final TurnFactory turnFactory = new TurnFactory();
     private final Map<Color, Character> colorMap = new HashMap<>();
-    private final Game game;
+    private Game game;
 
-    public static void run(final Game game) {
-        new Terminal(game);
-    }
-
-    public Terminal(final Game game) {
-        this.game = game;
+    public CliGame() {
         this.colorMap.put(Color.RED, 'r');
         this.colorMap.put(Color.BLUE, 'b');
         this.colorMap.put(Color.GREEN, 'g');
         this.colorMap.put(Color.ORANGE, 'o');
         this.colorMap.put(Color.YELLOW, 'y');
-        this.startGameLoop();
     }
 
-    private void startGameLoop() {
+    public void play(final Game game) {
+        this.game = game;
         System.out.println("Welcome to Encore!");
         printBoard();
         final Scanner scanner = new Scanner(System.in);

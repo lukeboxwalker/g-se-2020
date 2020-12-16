@@ -1,4 +1,4 @@
-package de.techfak.se.lwalkenhorst.domain;
+package de.techfak.se.lwalkenhorst.game;
 
 public interface Board extends Iterable<Tile> {
     Bounds getBounds();

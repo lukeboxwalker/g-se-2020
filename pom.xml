@@ -246,7 +246,7 @@
                     <repositoryLayout>flat</repositoryLayout>
                     <programs>
                         <program>
-                            <mainClass>de.techfak.se.lwalkenhorst.GseAgain</mainClass>
+                            <mainClass>de.techfak.se.lwalkenhorst.Encore</mainClass>
                             <id>encore</id>
                         </program>
                     </programs>

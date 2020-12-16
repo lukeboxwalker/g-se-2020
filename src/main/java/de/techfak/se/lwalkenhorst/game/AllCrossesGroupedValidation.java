@@ -1,6 +1,6 @@
-package de.techfak.se.lwalkenhorst.domain;
+package de.techfak.se.lwalkenhorst.game;
 
-import de.techfak.se.lwalkenhorst.domain.exception.InvalidTurnException;
+import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
 
 import java.util.HashSet;
 import java.util.List;

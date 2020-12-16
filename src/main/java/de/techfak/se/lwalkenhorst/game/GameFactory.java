@@ -1,7 +1,7 @@
-package de.techfak.se.lwalkenhorst.domain;
+package de.techfak.se.lwalkenhorst.game;
 
-import de.techfak.se.lwalkenhorst.domain.exception.InvalidBoardLayoutException;
-import de.techfak.se.lwalkenhorst.domain.exception.InvalidFieldException;
+import de.techfak.se.lwalkenhorst.exception.InvalidBoardLayoutException;
+import de.techfak.se.lwalkenhorst.exception.InvalidFieldException;
 
 import java.io.File;
 import java.io.IOException;
