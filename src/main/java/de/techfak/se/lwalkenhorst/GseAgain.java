@@ -1,9 +1,10 @@
 package de.techfak.se.lwalkenhorst;
 
-import de.techfak.se.lwalkenhorst.domain.BoardSerializer;
 import de.techfak.se.lwalkenhorst.domain.Game;
+import de.techfak.se.lwalkenhorst.domain.GameFactory;
 import de.techfak.se.lwalkenhorst.domain.cli.Terminal;
-import de.techfak.se.lwalkenhorst.domain.exception.BoardCreationException;
+import de.techfak.se.lwalkenhorst.domain.exception.InvalidBoardLayoutException;
+import de.techfak.se.lwalkenhorst.domain.exception.InvalidFieldException;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -34,17 +35,15 @@ public final class GseAgain implements Callable<Integer> {
 
     @Override
     public Integer call() {
+        if (file == null) {
+            return 100;
+        }
         try {
-            final Game game;
-            final BoardSerializer boardSerializer = new BoardSerializer();
-            if (file == null) {
-                return 100;
-            } else {
-                game = new Game(boardSerializer.deSerialize(file));
-            }
-            final Terminal terminal = new Terminal(game);
-            terminal.listenForInstructions();
-        } catch (BoardCreationException e) {
+            final GameFactory gameFactory = new GameFactory(7, 15);
+            final Game game = gameFactory.createGame(file);
+            Terminal.run(game);
+        } catch (InvalidFieldException | InvalidBoardLayoutException e) {
+            e.printStackTrace();
             return 101;
         } catch (IOException e) {
             return 100;

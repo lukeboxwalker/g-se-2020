@@ -1,23 +1,14 @@
 package de.techfak.se.lwalkenhorst.domain;
 
 public enum Color {
-    GREEN('g'),
+    GREEN,
 
-    YELLOW('y'),
+    YELLOW,
 
-    RED('r'),
+    RED,
 
-    BLUE('b'),
+    BLUE,
 
-    ORANGE('o');
+    ORANGE;
 
-    private final char identifier;
-
-    Color(final char identifier) {
-        this.identifier = identifier;
-    }
-
-    public char getIdentifier() {
-        return identifier;
-    }
 }

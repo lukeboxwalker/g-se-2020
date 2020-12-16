@@ -1,141 +1,73 @@
 package de.techfak.se.lwalkenhorst.domain.cli;
 
 import de.techfak.se.lwalkenhorst.domain.Board;
+import de.techfak.se.lwalkenhorst.domain.Bounds;
+import de.techfak.se.lwalkenhorst.domain.Color;
 import de.techfak.se.lwalkenhorst.domain.Game;
-import de.techfak.se.lwalkenhorst.domain.GameObserver;
-import de.techfak.se.lwalkenhorst.domain.Position;
+import de.techfak.se.lwalkenhorst.domain.Tile;
+import de.techfak.se.lwalkenhorst.domain.TurnFactory;
+import de.techfak.se.lwalkenhorst.domain.exception.InvalidTurnException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Terminal implements GameObserver {
+public class Terminal {
 
-    private static final String EMPTY = " ";
-    private static final String BREAK = "\n";
-    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+    private final TurnFactory turnFactory = new TurnFactory();
+    private final Map<Color, Character> colorMap = new HashMap<>();
     private final Game game;
-    private final AtomicBoolean running;
-    private String[][] stringBoard;
-    private int points;
+
+    public static void run(final Game game) {
+        new Terminal(game);
+    }
 
     public Terminal(final Game game) {
         this.game = game;
-        this.game.addListener(this);
-        this.running = new AtomicBoolean(false);
-        this.game.start();
+        this.colorMap.put(Color.RED, 'r');
+        this.colorMap.put(Color.BLUE, 'b');
+        this.colorMap.put(Color.GREEN, 'g');
+        this.colorMap.put(Color.ORANGE, 'o');
+        this.colorMap.put(Color.YELLOW, 'y');
+        this.startGameLoop();
     }
 
-    public void listenForInstructions() {
-        if (!running.get()) {
-            running.set(true);
-            startListener();
-        }
-    }
-
-    private void startListener() {
+    private void startGameLoop() {
+        System.out.println("Welcome to Encore!");
+        printBoard();
         final Scanner scanner = new Scanner(System.in);
-        while (running.get()) {
-            final String cmd = scanner.nextLine();
-            if (cmd != null) {
-                if ("".equals(cmd)) {
-                    this.kill();
+        while (true) {
+            try {
+                final String input = scanner.nextLine();
+                if (input.isEmpty() || input.isBlank()) {
+                    return;
                 } else {
-                    this.crossTiles(Arrays.asList(cmd.split(",")));
+                    game.applyTurn(turnFactory.parseTurn(input));
+                    printBoard();
                 }
-            }
-        }
-    }
-
-    public void kill() {
-        running.set(false);
-    }
-
-    private void initBoard(final Board board) {
-        final int lengthX = board.getLengthX();
-        final int lengthY = board.getLengthY();
-        this.stringBoard = new String[lengthX][lengthY];
-        for (int x = 0; x < lengthX; x++) {
-            for (int y = 0; y < lengthY; y++) {
-                if (board.getTileAt(x, y).isCrossed()) {
-                    stringBoard[x][y] = String.valueOf(board.getTileAt(x, y).getColor().getIdentifier()).toUpperCase();
-                } else {
-                    stringBoard[x][y] = String.valueOf(board.getTileAt(x, y).getColor().getIdentifier());
-                }
+            } catch (InvalidTurnException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
 
     private void printBoard() {
-        System.out.print(EMPTY + EMPTY);
-        for (int x = 0; x < stringBoard.length; x++) {
-            System.out.print(ALPHABET.charAt(x) + EMPTY);
-        }
-        System.out.print(BREAK);
-        for (int y = 0; y < stringBoard[0].length; y++) {
-            System.out.print(y + 1 + EMPTY);
-            for (final String[] strings : stringBoard) {
-                System.out.print(strings[y] + EMPTY);
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("  A B C D E F G H I J K L M N O\n");
+        final Board board = game.getBoard();
+        final Bounds bounds = board.getBounds();
+        for (int row = 0; row < bounds.getRows(); row++) {
+            stringBuilder.append(row + 1);
+            for (int col = 0; col < bounds.getColumns(); col++) {
+                Tile tile = board.getTileAt(row, col);
+                char colorChar = colorMap.get(tile.getColor());
+                if (tile.isCrossed()) {
+                    colorChar = Character.toUpperCase(colorChar);
+                }
+                stringBuilder.append(" ").append(colorChar);
             }
-            System.out.print(BREAK);
+            stringBuilder.append("\n");
         }
-        System.out.print("\nEnter your Turn: ");
-    }
-
-    private void crossTiles(final List<String> coordinates) {
-        final List<Position> positions = new ArrayList<>(coordinates.size());
-        int posX;
-        int posY;
-        for (final String coordinate : coordinates) {
-            posX = ALPHABET.indexOf(String.valueOf(coordinate.charAt(0)).toUpperCase(Locale.ROOT));
-            if (coordinate.length() == 2 && Character.isDigit(coordinate.charAt(1)) && posX != -1) {
-                posY = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
-                positions.add(new Position(posX, posY));
-            } else {
-                System.out.print("Wrong coordinate format!");
-                System.out.print("\nEnter your Turn: ");
-                return;
-            }
-        }
-        if (!game.crossTiles(positions)) {
-            System.out.print("Could not cross these tile(s). Stick to the rules!\n");
-            System.out.print("\nEnter your Turn: ");
-        }
-    }
-
-
-    private void printPoints(final int points) {
-        System.out.println("Game won points: " + points);
-    }
-
-    @Override
-    public void onPointsChange(final int points, final List<Integer> fullColumns) {
-        this.points = points;
-    }
-
-    @Override
-    public void onGameStart(final Board board) {
-        this.initBoard(board);
-        System.out.println("Welcome to Encore!");
-        this.printBoard();
-    }
-
-
-    @Override
-    public void onTilesCross(final List<Position> positions) {
-        for (final Position position : positions) {
-            this.stringBoard[position.getPosX()][position.getPosY()] = stringBoard[position.getPosX()][position.getPosY()].toUpperCase();
-        }
-        this.printBoard();
-    }
-
-    @Override
-    public void onGameEnd(final int points) {
-        this.printPoints(points);
-        this.kill();
+        System.out.println(stringBuilder.toString());
     }
 }

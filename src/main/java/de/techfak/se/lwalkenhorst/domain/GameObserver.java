@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface GameObserver {
 
-    void onGameStart(final Board board);
+    void onGameStart(final BoardImpl board);
 
-    void onTilesCross(final List<Position> positions);
+    void onTilesCross(final List<CellPosition> cellPositions);
 
     void onGameEnd(final int points);
 
