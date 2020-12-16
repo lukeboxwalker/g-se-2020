@@ -32,6 +32,11 @@ public class CliGame {
         printBoard();
         final Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println("Enter your turn: ");
+            if (game.getRuleManger().isGameFinished()) {
+                System.out.println("Game over. Your points: " + game.getPoints());
+                return;
+            }
             try {
                 final String input = scanner.nextLine();
                 if (input.isEmpty() || input.isBlank()) {
@@ -39,6 +44,7 @@ public class CliGame {
                 } else {
                     game.applyTurn(turnFactory.parseTurn(input));
                     printBoard();
+                    System.out.println("Points: " + game.getPoints());
                 }
             } catch (InvalidTurnException e) {
                 System.out.println(e.getMessage());

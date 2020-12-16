@@ -36,8 +36,6 @@ public class Points {
 
     @Override
     public String toString() {
-        return "Points{" +
-            "value=" + value +
-            '}';
+        return String.valueOf(value);
     }
 }

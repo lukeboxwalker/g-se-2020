@@ -9,4 +9,6 @@ public interface RuleManager {
     int getPointsForCol(final int column);
 
     boolean isColumnFull(final int column);
+
+    boolean isGameFinished();
 }

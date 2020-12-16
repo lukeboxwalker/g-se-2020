@@ -29,6 +29,11 @@ public class GameImpl implements Game {
     }
 
     @Override
+    public Points getPoints() {
+        return points;
+    }
+
+    @Override
     public Board getBoard() {
         return board;
     }

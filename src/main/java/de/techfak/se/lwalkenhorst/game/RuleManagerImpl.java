@@ -64,6 +64,7 @@ public class RuleManagerImpl implements RuleManager {
         return getFullColors().size() * POINTS_FOR_FULL_COLOR;
     }
 
+    @Override
     public boolean isGameFinished() {
         return getFullColors().size() >= 2;
     }
