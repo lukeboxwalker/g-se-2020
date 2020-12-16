@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class TurnFactory {
 
     private static final String ALPHABET = "ABCDEFGHIJKLMNO";
-    private final Pattern pattern = Pattern.compile("[A-O][1-7]|[A-O][1-7](,[A-O][1-7])?");
+    private final Pattern pattern = Pattern.compile("([A-O][1-7])(,[A-O][1-7])*");
 
     public Turn parseTurn(final String input) throws InvalidTurnException {
         if (pattern.matcher(input).matches()) {

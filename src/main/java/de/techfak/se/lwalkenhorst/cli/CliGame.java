@@ -15,15 +15,22 @@ import java.util.Scanner;
 public class CliGame {
 
     private final TurnFactory turnFactory = new TurnFactory();
-    private final Map<TileColor, Character> colorMap = new HashMap<>();
+    private final Map<TileColor, String> uncrossedColors = new HashMap<>();
+    private final Map<TileColor, String> crossedColors = new HashMap<>();
     private Game game;
 
     public CliGame() {
-        this.colorMap.put(TileColor.RED, 'r');
-        this.colorMap.put(TileColor.BLUE, 'b');
-        this.colorMap.put(TileColor.GREEN, 'g');
-        this.colorMap.put(TileColor.ORANGE, 'o');
-        this.colorMap.put(TileColor.YELLOW, 'y');
+        this.uncrossedColors.put(TileColor.RED, "\033[0;31mr");
+        this.uncrossedColors.put(TileColor.GREEN, "\033[0;32mg");
+        this.uncrossedColors.put(TileColor.YELLOW, "\033[0;33my");
+        this.uncrossedColors.put(TileColor.BLUE, "\033[0;34mb");
+        this.uncrossedColors.put(TileColor.ORANGE, "\033[0;35mo");
+
+        this.crossedColors.put(TileColor.RED, "\033[7m\033[1;31mR");
+        this.crossedColors.put(TileColor.GREEN,"\033[7m\033[1;32mG");
+        this.crossedColors.put(TileColor.YELLOW, "\033[7m\033[1;33mY");
+        this.crossedColors.put(TileColor.BLUE, "\033[7m\033[1;34mB");
+        this.crossedColors.put(TileColor.ORANGE, "\033[7m\033[1;35mO");
     }
 
     public void play(final Game game) {
@@ -61,11 +68,13 @@ public class CliGame {
             stringBuilder.append(row + 1);
             for (int col = 0; col < bounds.getColumns(); col++) {
                 Tile tile = board.getTileAt(row, col);
-                char colorChar = colorMap.get(tile.getColor());
+                stringBuilder.append(" ");
                 if (tile.isCrossed()) {
-                    colorChar = Character.toUpperCase(colorChar);
+                    stringBuilder.append(crossedColors.get(tile.getColor()));
+                } else {
+                    stringBuilder.append(uncrossedColors.get(tile.getColor()));
                 }
-                stringBuilder.append(" ").append(colorChar);
+                stringBuilder.append("\033[0m");
             }
             stringBuilder.append("\n");
         }
