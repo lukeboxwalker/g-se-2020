@@ -21,9 +21,13 @@ public class TurnFactory {
                 final int row = Integer.parseInt(String.valueOf(coordinate.charAt(1))) - 1;
                 positions.add(new CellPosition(row, column));
             }
-            return new Turn(positions);
+            return createTurn(positions);
         } else {
             throw new InvalidTurnException("Format did not match!");
         }
+    }
+
+    public Turn createTurn(final List<CellPosition> crossedPositions) {
+       return new Turn(crossedPositions);
     }
 }

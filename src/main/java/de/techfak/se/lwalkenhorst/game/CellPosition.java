@@ -37,7 +37,7 @@ public class CellPosition {
 
     public boolean isInside(final Bounds bounds) {
         return this.column >= 0 && this.column < bounds.getColumns()
-            && this.row >= 0 && this.row <= bounds.getRows();
+            && this.row >= 0 && this.row < bounds.getRows();
     }
 
     @Override

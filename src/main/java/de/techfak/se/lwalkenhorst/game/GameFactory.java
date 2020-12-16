@@ -30,6 +30,11 @@ public class GameFactory {
         return new GameImpl(board);
     }
 
+    public Game createGame(final List<String> lines) throws InvalidBoardLayoutException, InvalidFieldException {
+        final BoardImpl board = parse(lines);
+        return new GameImpl(board);
+    }
+
     public BoardImpl parse(final List<String> lines) throws InvalidBoardLayoutException, InvalidFieldException {
         if (lines.size() != bounds.getRows()) {
             throw new InvalidBoardLayoutException("Wrong board row value!");
