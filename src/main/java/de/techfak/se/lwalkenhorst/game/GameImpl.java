@@ -7,13 +7,21 @@ public class GameImpl implements Game {
     private final TurnValidator turnValidator;
     private final RuleManagerImpl ruleManager;
     private final BoardImpl board;
+
+    private final GameStrategy gameStrategy;
     private Points points;
 
     public GameImpl(final BoardImpl board) {
         this.board = board;
         this.points = new Points();
+        this.gameStrategy = new SinglePlayerStrategy();
         this.turnValidator = new TurnValidator(board);
         this.ruleManager = new RuleManagerImpl(board);
+    }
+
+    @Override
+    public void play() {
+        gameStrategy.play();
     }
 
     @Override
@@ -21,6 +29,7 @@ public class GameImpl implements Game {
         turnValidator.validateTurn(turn);
         board.cross(turn.getPositionsToCross());
         points = ruleManager.calculatePoints();
+        gameStrategy.rollDice();
     }
 
     @Override
@@ -36,5 +45,10 @@ public class GameImpl implements Game {
     @Override
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public DiceResult getDiceResult() {
+        return gameStrategy.getDiceResult();
     }
 }

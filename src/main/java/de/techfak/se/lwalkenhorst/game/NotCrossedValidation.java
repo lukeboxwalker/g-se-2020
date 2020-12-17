@@ -4,11 +4,11 @@ import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
 
 import java.util.List;
 
-public class NotCrossedBValidation implements TurnValidation {
+public class NotCrossedValidation implements TurnValidation {
 
     private final Board board;
 
-    public NotCrossedBValidation(final Board board) {
+    public NotCrossedValidation(final Board board) {
         this.board = board;
     }
 

@@ -13,7 +13,7 @@ public class TurnValidator {
     public TurnValidator(final Board board) {
         this.board = board;
         turnValidations.add(new AllSameColorValidation(board));
-        turnValidations.add(new NotCrossedBValidation(board));
+        turnValidations.add(new NotCrossedValidation(board));
         turnValidations.add(new CorrectStartCrossValidation(board));
         turnValidations.add(new AllCrossesGroupedValidation());
     }

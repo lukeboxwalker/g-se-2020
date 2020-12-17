@@ -11,4 +11,8 @@ public interface Game {
     Points getPoints();
 
     Board getBoard();
+
+    void play();
+
+    DiceResult getDiceResult();
 }
