@@ -10,6 +10,7 @@ public class GameImpl implements Game {
 
     private final GameStrategy gameStrategy;
     private Points points;
+    private Round round;
 
     public GameImpl(final BoardImpl board) {
         this.board = board;
@@ -21,7 +22,7 @@ public class GameImpl implements Game {
 
     @Override
     public void play() {
-        gameStrategy.play();
+        round = Round.enterFirst(gameStrategy);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class GameImpl implements Game {
         turnValidator.validateTurn(turn);
         board.cross(turn.getPositionsToCross());
         points = ruleManager.calculatePoints();
-        gameStrategy.rollDice();
+        round = round.next(gameStrategy);
     }
 
     @Override
@@ -49,6 +50,6 @@ public class GameImpl implements Game {
 
     @Override
     public DiceResult getDiceResult() {
-        return gameStrategy.getDiceResult();
+        return round.getDiceResult();
     }
 }

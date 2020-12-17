@@ -2,9 +2,7 @@ package de.techfak.se.lwalkenhorst.game;
 
 public interface GameStrategy {
 
-    void play();
+    DiceResult start();
 
-    void rollDice();
-
-    DiceResult getDiceResult();
+    DiceResult rollDice();
 }
