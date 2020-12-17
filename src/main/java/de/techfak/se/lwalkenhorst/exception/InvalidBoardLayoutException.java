@@ -1,6 +1,6 @@
 package de.techfak.se.lwalkenhorst.exception;
 
-public class InvalidBoardLayoutException extends Exception {
+public class InvalidBoardLayoutException extends InvalidBoardException {
 
     private static final long serialVersionUID = 42L;
 
