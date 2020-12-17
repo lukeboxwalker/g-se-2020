@@ -11,7 +11,7 @@ public class BoardView extends GridPane {
         final TileViewFactory tileViewFactory = new TileViewFactory(imageFactory);
         for (int row = 0; row < 7; row++) {
             for (int column = 0; column < 15; column++) {
-                final TileView tileView = tileViewFactory.createTileView(row, column, board.getTileAt(row, column));
+                final TileView tileView = tileViewFactory.createTileView(row, column, board);
                 add(tileView, column, row);
             }
         }

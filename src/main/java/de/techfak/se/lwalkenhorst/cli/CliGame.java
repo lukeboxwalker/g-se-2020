@@ -34,6 +34,7 @@ public class CliGame {
         this.crossedColors.put(TileColor.ORANGE, "\033[7m\033[1;35mO");
     }
 
+    @SuppressWarnings({"PMD.SystemPrintln", "PMD.CloseResource"})
     public void play(final Game game) {
         this.game = game;
         this.game.play();

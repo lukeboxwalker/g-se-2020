@@ -1,4 +1,4 @@
-package de.techfak.se.lwalkenhorst.Conrtoller;
+package de.techfak.se.lwalkenhorst.conrtoller;
 
 import de.techfak.se.lwalkenhorst.game.Board;
 import de.techfak.se.lwalkenhorst.view.BoardView;

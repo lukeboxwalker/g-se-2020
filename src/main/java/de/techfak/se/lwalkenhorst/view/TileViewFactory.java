@@ -1,5 +1,6 @@
 package de.techfak.se.lwalkenhorst.view;
 
+import de.techfak.se.lwalkenhorst.game.Board;
 import de.techfak.se.lwalkenhorst.game.Tile;
 import de.techfak.se.lwalkenhorst.game.TileColor;
 import de.techfak.se.lwalkenhorst.game.TilePosition;
@@ -13,10 +14,14 @@ public class TileViewFactory {
         this.imageFactory = imageFactory;
     }
 
-    public TileView createTileView(final int row, final int column, final Tile tile) {
+    public TileView createTileView(final int row, final int column, final Board board) {
+        final Tile tile = board.getTileAt(row, column);
         final ImageView background = createBackgroundForColor(tile.getColor());
         final ImageView crossImage = imageFactory.createCrossImage();
         final TileView tileView = new TileView(new TilePosition(row, column), background, crossImage);
+        if (board.getStartColumn() == column) {
+            tileView.getChildren().add(imageFactory.createStartColumnImage());
+        }
         tileView.setCrossed(tile.isCrossed());
         return tileView;
     }

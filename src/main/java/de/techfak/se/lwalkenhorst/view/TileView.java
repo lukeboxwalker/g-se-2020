@@ -12,6 +12,7 @@ public class TileView extends StackPane {
     private final TilePosition position;
 
     public TileView(final TilePosition position, final ImageView backgroundImage, final ImageView crossImage) {
+        super();
         this.position = position;
         this.crossImage = crossImage;
         getChildren().add(backgroundImage);

@@ -15,6 +15,7 @@ public class ImageFactory {
     private static final int RED_OFFSET = 135;
     private static final int BLUE_OFFSET = 180;
     private static final int CROSS_OFFSET = 225;
+    private static final int START_COLUMN_OFFSET = 270;
 
     private final PixelReader reader;
 
@@ -44,5 +45,9 @@ public class ImageFactory {
 
     public ImageView createCrossImage() {
         return new ImageView(new WritableImage(reader, CROSS_OFFSET, 0, WIDTH, HEIGHT));
+    }
+
+    public ImageView createStartColumnImage() {
+        return new ImageView(new WritableImage(reader, START_COLUMN_OFFSET, 0, WIDTH, HEIGHT));
     }
 }

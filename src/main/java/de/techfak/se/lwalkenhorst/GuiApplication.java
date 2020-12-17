@@ -1,7 +1,7 @@
 package de.techfak.se.lwalkenhorst;
 
 
-import de.techfak.se.lwalkenhorst.Conrtoller.ViewController;
+import de.techfak.se.lwalkenhorst.conrtoller.ViewController;
 import de.techfak.se.lwalkenhorst.exception.InvalidBoardException;
 import de.techfak.se.lwalkenhorst.exception.InvalidParameterException;
 import de.techfak.se.lwalkenhorst.game.Game;
@@ -35,7 +35,7 @@ public class GuiApplication extends Application {
         controller.initialize(game.getBoard());
 
         final Scene scene = new Scene(root);
-        stage.setTitle("GSE Nochmal!");
+        stage.setTitle("GSE-2020 Encore!");
         stage.setScene(scene);
         stage.show();
     }
