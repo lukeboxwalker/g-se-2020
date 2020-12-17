@@ -34,7 +34,7 @@ class NeighborValidationTest {
     void testStartInColH() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("H6,I6,I7");
         game.applyTurn(turn);
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertTrue(game.getBoard().getTileAt(position).isCrossed());
         }
     }
@@ -43,7 +43,7 @@ class NeighborValidationTest {
     void testStartNextToCrossedTile() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("K2,K1");
         game.applyTurn(turn);
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertTrue(game.getBoard().getTileAt(position).isCrossed());
         }
     }
@@ -52,7 +52,7 @@ class NeighborValidationTest {
     void testInvalidFirstCross() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("B5,C5,D5,E5");
         Assertions.assertThrows(InvalidTurnException.class, () -> game.applyTurn(turn));
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertFalse(game.getBoard().getTileAt(position).isCrossed());
         }
     }

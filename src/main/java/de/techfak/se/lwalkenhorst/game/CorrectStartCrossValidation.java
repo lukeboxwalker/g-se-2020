@@ -12,25 +12,25 @@ public class CorrectStartCrossValidation implements TurnValidation {
         this.board = board;
     }
 
-    private boolean isNeighborCrossed(final CellPosition cellPosition) {
-        return cellPosition.isInside(board.getBounds()) && board.getTileAt(cellPosition).isCrossed();
+    private boolean isNeighborCrossed(final TilePosition tilePosition) {
+        return tilePosition.isInside(board.getBounds()) && board.getTileAt(tilePosition).isCrossed();
     }
 
     @Override
-    public void validate(final List<CellPosition> cellPositions) throws InvalidTurnException {
-        if (cellPositions.isEmpty()) {
+    public void validate(final List<TilePosition> tilePositions) throws InvalidTurnException {
+        if (tilePositions.isEmpty()) {
             return;
         }
-        final CellPosition cellPosition = cellPositions.get(0);
-        if (cellPosition.getColumn() == board.getStartColumn()) {
+        final TilePosition tilePosition = tilePositions.get(0);
+        if (tilePosition.getColumn() == board.getStartColumn()) {
             return;
         }
-        boolean hasCrossedNeighbor = isNeighborCrossed(cellPosition.left());
-        hasCrossedNeighbor |= isNeighborCrossed(cellPosition.right());
-        hasCrossedNeighbor |= isNeighborCrossed(cellPosition.above());
-        hasCrossedNeighbor |= isNeighborCrossed(cellPosition.down());
+        boolean hasCrossedNeighbor = isNeighborCrossed(tilePosition.left());
+        hasCrossedNeighbor |= isNeighborCrossed(tilePosition.right());
+        hasCrossedNeighbor |= isNeighborCrossed(tilePosition.above());
+        hasCrossedNeighbor |= isNeighborCrossed(tilePosition.down());
         if (!hasCrossedNeighbor) {
-            throw new InvalidTurnException("Position: " + cellPosition + " is not in column H or next to a crossed tile");
+            throw new InvalidTurnException("Position: " + tilePosition + " is not in column H or next to a crossed tile");
         }
     }
 }

@@ -13,10 +13,10 @@ public class NotCrossedBValidation implements TurnValidation {
     }
 
     @Override
-    public void validate(final List<CellPosition> cellPositions) throws InvalidTurnException {
-        for (final CellPosition cellPosition : cellPositions) {
-            if (board.getTileAt(cellPosition).isCrossed()) {
-                throw new InvalidTurnException("Position: " + cellPosition + " is already crossed");
+    public void validate(final List<TilePosition> tilePositions) throws InvalidTurnException {
+        for (final TilePosition tilePosition : tilePositions) {
+            if (board.getTileAt(tilePosition).isCrossed()) {
+                throw new InvalidTurnException("Position: " + tilePosition + " is already crossed");
             }
         }
     }

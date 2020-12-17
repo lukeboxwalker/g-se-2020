@@ -2,29 +2,29 @@ package de.techfak.se.lwalkenhorst.game;
 
 import java.util.Objects;
 
-public class CellPosition {
+public class TilePosition {
     private final int column;
     private final int row;
 
-    public CellPosition(final int row, final int column) {
+    public TilePosition(final int row, final int column) {
         this.row = row;
         this.column = column;
     }
 
-    public CellPosition above() {
-        return new CellPosition(this.row - 1, this.column);
+    public TilePosition above() {
+        return new TilePosition(this.row - 1, this.column);
     }
 
-    public CellPosition down() {
-        return new CellPosition(this.row + 1, this.column);
+    public TilePosition down() {
+        return new TilePosition(this.row + 1, this.column);
     }
 
-    public CellPosition left() {
-        return new CellPosition(this.row, this.column - 1);
+    public TilePosition left() {
+        return new TilePosition(this.row, this.column - 1);
     }
 
-    public CellPosition right() {
-        return new CellPosition(this.row, this.column + 1);
+    public TilePosition right() {
+        return new TilePosition(this.row, this.column + 1);
     }
 
     public int getColumn() {
@@ -42,9 +42,9 @@ public class CellPosition {
 
     @Override
     public boolean equals(final Object obj) {
-        if (obj instanceof CellPosition) {
-            final CellPosition cellPosition = (CellPosition) obj;
-            return column == cellPosition.column && row == cellPosition.row;
+        if (obj instanceof TilePosition) {
+            final TilePosition tilePosition = (TilePosition) obj;
+            return column == tilePosition.column && row == tilePosition.row;
         } else {
             return false;
         }

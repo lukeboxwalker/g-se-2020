@@ -28,8 +28,8 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public TileImpl getTileAt(final CellPosition cellPosition) {
-        return getTileAt(cellPosition.getRow(), cellPosition.getColumn());
+    public TileImpl getTileAt(final TilePosition tilePosition) {
+        return getTileAt(tilePosition.getRow(), tilePosition.getColumn());
     }
 
     @Override
@@ -42,8 +42,8 @@ public class BoardImpl implements Board {
         return Arrays.stream((Tile[][]) tiles).flatMap(Arrays::stream).iterator();
     }
 
-    public void cross(final List<CellPosition> cellPositions) {
-        cellPositions.forEach(position -> getTileAt(position).cross());
+    public void cross(final List<TilePosition> tilePositions) {
+        tilePositions.forEach(position -> getTileAt(position).cross());
     }
 
     @Override

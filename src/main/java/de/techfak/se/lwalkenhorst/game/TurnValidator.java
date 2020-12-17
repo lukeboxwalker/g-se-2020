@@ -19,14 +19,14 @@ public class TurnValidator {
     }
 
     public void validateTurn(final Turn turn) throws InvalidTurnException {
-        final List<CellPosition> cellPositions = turn.getPositionsToCross();
-        for (final CellPosition cellPosition : cellPositions) {
-            if (!cellPosition.isInside(board.getBounds())) {
-                throw new InvalidTurnException("Position: " + cellPosition + "is Not Found on the board");
+        final List<TilePosition> tilePositions = turn.getPositionsToCross();
+        for (final TilePosition tilePosition : tilePositions) {
+            if (!tilePosition.isInside(board.getBounds())) {
+                throw new InvalidTurnException("Position: " + tilePosition + "is Not Found on the board");
             }
         }
         for (final TurnValidation turnValidation : turnValidations) {
-            turnValidation.validate(cellPositions);
+            turnValidation.validate(tilePositions);
         }
     }
 }

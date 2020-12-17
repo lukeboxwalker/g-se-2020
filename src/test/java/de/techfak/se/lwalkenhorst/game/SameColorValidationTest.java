@@ -33,7 +33,7 @@ class SameColorValidationTest {
     void testAllSameColor() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("H4,H5,G5,G4");
         game.applyTurn(turn);
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertTrue(game.getBoard().getTileAt(position).isCrossed());
         }
     }
@@ -42,7 +42,7 @@ class SameColorValidationTest {
     void testNotAllSameColor() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("F1,F2,G1,G2");
         Assertions.assertThrows(InvalidTurnException.class, () -> game.applyTurn(turn));
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertFalse(game.getBoard().getTileAt(position).isCrossed());
         }
     }

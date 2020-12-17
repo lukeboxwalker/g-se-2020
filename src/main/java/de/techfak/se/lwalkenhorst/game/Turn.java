@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class Turn {
-    private final List<CellPosition> positionsToCrosses;
+    private final List<TilePosition> positionsToCrosses;
 
-    public Turn(final List<CellPosition> positionsToCrosses) {
+    public Turn(final List<TilePosition> positionsToCrosses) {
         this.positionsToCrosses = positionsToCrosses;
     }
 
-    public List<CellPosition> getPositionsToCross() {
+    public List<TilePosition> getPositionsToCross() {
         return positionsToCrosses;
     }
 

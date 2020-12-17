@@ -33,7 +33,7 @@ class NotCrossedValidationTest {
     void testAllNotCrossed() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("H6,I6,I7");
         game.applyTurn(turn);
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertTrue(game.getBoard().getTileAt(position).isCrossed());
         }
     }

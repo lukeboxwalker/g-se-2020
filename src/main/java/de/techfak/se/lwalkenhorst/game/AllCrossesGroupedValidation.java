@@ -9,33 +9,33 @@ import java.util.Set;
 public class AllCrossesGroupedValidation implements TurnValidation {
 
     @Override
-    public void validate(final List<CellPosition> cellPositions) throws InvalidTurnException {
-        if (cellPositions.isEmpty()) {
+    public void validate(final List<TilePosition> tilePositions) throws InvalidTurnException {
+        if (tilePositions.isEmpty()) {
             return;
         }
-        if (!checkGroup(new HashSet<>(cellPositions), cellPositions.get(0)).isEmpty()) {
+        if (!checkGroup(new HashSet<>(tilePositions), tilePositions.get(0)).isEmpty()) {
             throw new InvalidTurnException("Positions not connect to a group");
         }
     }
 
-    private Set<CellPosition> checkGroup(final Set<CellPosition> cellPositions, final CellPosition root) {
-        cellPositions.remove(root);
-        CellPosition cellPosition = root.left();
-        if (cellPositions.contains(cellPosition)) {
-            checkGroup(cellPositions, cellPosition);
+    private Set<TilePosition> checkGroup(final Set<TilePosition> tilePositions, final TilePosition root) {
+        tilePositions.remove(root);
+        TilePosition tilePosition = root.left();
+        if (tilePositions.contains(tilePosition)) {
+            checkGroup(tilePositions, tilePosition);
         }
-        cellPosition = root.right();
-        if (cellPositions.contains(cellPosition)) {
-            checkGroup(cellPositions, cellPosition);
+        tilePosition = root.right();
+        if (tilePositions.contains(tilePosition)) {
+            checkGroup(tilePositions, tilePosition);
         }
-        cellPosition = root.above();
-        if (cellPositions.contains(cellPosition)) {
-            checkGroup(cellPositions, cellPosition);
+        tilePosition = root.above();
+        if (tilePositions.contains(tilePosition)) {
+            checkGroup(tilePositions, tilePosition);
         }
-        cellPosition = root.down();
-        if (cellPositions.contains(cellPosition)) {
-            checkGroup(cellPositions, cellPosition);
+        tilePosition = root.down();
+        if (tilePositions.contains(tilePosition)) {
+            checkGroup(tilePositions, tilePosition);
         }
-        return cellPositions;
+        return tilePositions;
     }
 }

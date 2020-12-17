@@ -35,7 +35,7 @@ class PositionValidationTest {
     void testPositionsInBounds() throws InvalidTurnException {
         final Turn turn = turnFactory.parseTurn("H6,I6,I7");
         game.applyTurn(turn);
-        for (final CellPosition position : turn.getPositionsToCross()) {
+        for (final TilePosition position : turn.getPositionsToCross()) {
             Assertions.assertTrue(game.getBoard().getTileAt(position).isCrossed());
         }
     }
@@ -43,14 +43,14 @@ class PositionValidationTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, -2, -22, -144, -6205, Integer.MIN_VALUE, 15, 16, 32, 64, 1001, Integer.MAX_VALUE})
     void testPositionXToLarge(final int column) {
-        final Turn turn = turnFactory.createTurn(List.of(new CellPosition(1, column)));
+        final Turn turn = turnFactory.createTurn(List.of(new TilePosition(1, column)));
         Assertions.assertThrows(InvalidTurnException.class, () -> game.applyTurn(turn));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {-1, -2, -22, -144, -6205, Integer.MIN_VALUE, 7, 8, 29, 82, 2587, Integer.MAX_VALUE})
     void testPositionYToLarge(final int row) {
-        final Turn turn = turnFactory.createTurn(List.of(new CellPosition(row, 7)));
+        final Turn turn = turnFactory.createTurn(List.of(new TilePosition(row, 7)));
         Assertions.assertThrows(InvalidTurnException.class, () -> game.applyTurn(turn));
     }
 }

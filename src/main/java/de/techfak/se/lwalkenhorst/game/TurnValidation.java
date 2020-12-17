@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface TurnValidation {
 
-    void validate(final List<CellPosition> cellPositions) throws InvalidTurnException;
+    void validate(final List<TilePosition> tilePositions) throws InvalidTurnException;
 }
