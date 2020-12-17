@@ -8,6 +8,7 @@ import de.techfak.se.lwalkenhorst.game.Tile;
 import de.techfak.se.lwalkenhorst.game.TileColor;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -37,7 +38,7 @@ public class CliGame {
         this.game = game;
         System.out.println("Welcome to Encore!");
         System.out.println(createBoardString());
-        final Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         while (true) {
             System.out.println("Enter your turn: ");
             if (game.getRuleManger().isGameFinished()) {
