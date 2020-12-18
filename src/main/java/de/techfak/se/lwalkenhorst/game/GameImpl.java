@@ -28,7 +28,9 @@ public class GameImpl implements Game {
     @SuppressWarnings("PMD.SystemPrintln")
     public void play() {
         System.out.println("Welcome to Encore!");
+        final Round oldRound = round;
         round = Round.enterFirst(gameStrategy);
+        propertyListenerSupport.firePropertyChange(PropertyChange.ROUND, oldRound, round);
     }
 
     @Override
@@ -40,7 +42,9 @@ public class GameImpl implements Game {
             points = ruleManager.calculatePoints();
             propertyListenerSupport.firePropertyChange(PropertyChange.POINTS, oldPoints, points);
         }
+        final Round oldRound = round;
         round = round.next(gameStrategy);
+        propertyListenerSupport.firePropertyChange(PropertyChange.ROUND, oldRound, round);
     }
 
     @Override

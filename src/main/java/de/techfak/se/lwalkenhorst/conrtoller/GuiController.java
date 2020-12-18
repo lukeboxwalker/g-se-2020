@@ -34,9 +34,14 @@ public class GuiController {
         rootBox.setBackground(new ImageFactory().createBackgroundImage(rootBox.getWidth(), rootBox.getHeight()));
         this.game = game;
         this.game.addPropertyChangeListener(PropertyChange.POINTS, event -> updatePoints());
+        this.game.addPropertyChangeListener(PropertyChange.ROUND, event -> updateDice());
         gameDisplay.init(game);
         gameDisplay.setTileClickHandler(this::clickTile);
         gameDisplay.setSubmitTurnHandler(this::submitTurn);
+    }
+
+    private void updateDice() {
+        gameDisplay.updateDice(game.getDiceResult());
     }
 
     private void updatePoints() {

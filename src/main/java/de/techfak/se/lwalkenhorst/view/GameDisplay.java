@@ -1,5 +1,6 @@
 package de.techfak.se.lwalkenhorst.view;
 
+import de.techfak.se.lwalkenhorst.game.DiceResult;
 import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.Points;
 import de.techfak.se.lwalkenhorst.game.TileColor;
@@ -14,7 +15,8 @@ import javafx.scene.text.FontWeight;
 
 public class GameDisplay extends VBox {
 
-    private static final int SPACING = 45;
+    private static final int SPACING = 20;
+    private static final int HEIGHT = 45;
     private static final int BUTTON_WIDTH = 135;
     private static final int TEXT_FONT = 20;
 
@@ -22,6 +24,7 @@ public class GameDisplay extends VBox {
     private BoardDisplay boardDisplay;
     private ColumnPointsDisplay columnPointsDisplay;
     private ColorPointsDisplay colorPointsDisplay;
+    private DiceDisplay diceDisplay;
     private Label pointsLabel;
 
     public void init(final Game game) {
@@ -29,13 +32,14 @@ public class GameDisplay extends VBox {
         this.pointsLabel = createPointsLabel();
         setPoints(game.getPoints());
         this.submitButton = createSubmitButton();
+        this.diceDisplay = new DiceDisplay(imageFactory);
         this.boardDisplay = new BoardDisplay(game.getBoard(), imageFactory);
         this.columnPointsDisplay = new ColumnPointsDisplay(game.getBoard(), game.getRuleManger(), imageFactory);
         getChildren().add(imageFactory.createBoardHeaderImage());
 
         this.colorPointsDisplay = new ColorPointsDisplay(imageFactory);
-        HBox hBox = new HBox(boardDisplay, colorPointsDisplay);
-        hBox.setSpacing(SPACING);
+        HBox hBox = new HBox(boardDisplay, diceDisplay, colorPointsDisplay);
+        hBox.setSpacing(2 * SPACING);
         getChildren().add(hBox);
 
         hBox = new HBox(columnPointsDisplay, submitButton, pointsLabel);
@@ -45,7 +49,7 @@ public class GameDisplay extends VBox {
 
     private Button createSubmitButton() {
         final Button submitButton = new Button("Submit");
-        submitButton.setPrefHeight(SPACING);
+        submitButton.setPrefHeight(HEIGHT);
         submitButton.setPrefWidth(BUTTON_WIDTH);
         submitButton.setFont(Font.font("arial", FontWeight.BOLD, TEXT_FONT));
         submitButton.setStyle("-fx-base: white; -fx-border-color: black; -fx-focus-color: transparent;");
@@ -53,7 +57,7 @@ public class GameDisplay extends VBox {
     }
     private Label createPointsLabel() {
         final Label label = new Label();
-        label.setPrefHeight(SPACING);
+        label.setPrefHeight(HEIGHT);
         label.setPrefWidth(BUTTON_WIDTH);
         label.setFont(Font.font("arial", FontWeight.BOLD, TEXT_FONT));
         label.setAlignment(Pos.CENTER);
@@ -79,5 +83,9 @@ public class GameDisplay extends VBox {
 
     public void markColumnPoints(final int column) {
         columnPointsDisplay.mark(column);
+    }
+
+    public void updateDice(final DiceResult diceResult) {
+        diceDisplay.updateDice(diceResult);
     }
 }
