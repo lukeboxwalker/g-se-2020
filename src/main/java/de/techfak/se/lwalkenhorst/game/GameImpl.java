@@ -28,9 +28,8 @@ public class GameImpl implements Game {
     @SuppressWarnings("PMD.SystemPrintln")
     public void play() {
         System.out.println("Welcome to Encore!");
-        final Round oldRound = round;
-        round = Round.enterFirst(gameStrategy);
-        propertyListenerSupport.firePropertyChange(PropertyChange.ROUND, oldRound, round);
+        updateScore();
+        enterFirstRound();
     }
 
     @Override
@@ -38,12 +37,22 @@ public class GameImpl implements Game {
         if (!turn.isEmpty()) {
             turnValidator.validateTurn(turn, getDiceResult());
             board.cross(turn.getPositionsToCross());
-            final Score oldScore = score;
-            score = ruleManager.calculatePoints();
-            propertyListenerSupport.firePropertyChange(PropertyChange.FINISHED, false, ruleManager.isGameFinished());
-            propertyListenerSupport.firePropertyChange(PropertyChange.SCORE, oldScore, score);
+            updateScore();
         }
         enterNextRound();
+    }
+
+    private void enterFirstRound() {
+        final Round oldRound = round;
+        round = Round.enterFirst(gameStrategy);
+        propertyListenerSupport.firePropertyChange(PropertyChange.ROUND, oldRound, round);
+    }
+
+    private void updateScore() {
+        final Score oldScore = score;
+        score = ruleManager.calculatePoints();
+        propertyListenerSupport.firePropertyChange(PropertyChange.SCORE, oldScore, score);
+        propertyListenerSupport.firePropertyChange(PropertyChange.FINISHED, false, ruleManager.isGameFinished());
     }
 
     private void enterNextRound() {
