@@ -32,7 +32,7 @@ public class GuiApplication extends Application {
         final Pane root = fxmlLoader.load();
 
         final ViewController controller = fxmlLoader.getController();
-        controller.initialize(game.getBoard());
+        controller.initialize(game);
 
         final Scene scene = new Scene(root);
         stage.setTitle("GSE-2020 Encore!");

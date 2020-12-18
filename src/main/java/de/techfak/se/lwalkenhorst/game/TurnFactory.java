@@ -30,4 +30,8 @@ public class TurnFactory {
     public Turn createTurn(final List<TilePosition> crossedPositions) {
        return new Turn(crossedPositions);
     }
+
+    public Turn createPass() {
+        return new Turn();
+    }
 }

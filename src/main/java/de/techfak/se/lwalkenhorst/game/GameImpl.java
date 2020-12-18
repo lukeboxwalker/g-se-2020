@@ -27,9 +27,11 @@ public class GameImpl implements Game {
 
     @Override
     public void applyTurn(final Turn turn) throws InvalidTurnException {
-        turnValidator.validateTurn(turn);
-        board.cross(turn.getPositionsToCross());
-        points = ruleManager.calculatePoints();
+        if (!turn.isEmpty()) {
+            turnValidator.validateTurn(turn);
+            board.cross(turn.getPositionsToCross());
+            points = ruleManager.calculatePoints();
+        }
         round = round.next(gameStrategy);
     }
 

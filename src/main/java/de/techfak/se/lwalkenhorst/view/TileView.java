@@ -4,19 +4,21 @@ import de.techfak.se.lwalkenhorst.game.TilePosition;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileView extends StackPane {
 
-    private final ImageView crossImage;
     private final TilePosition position;
+    private final ImageView crossImage;
+    private final List<TileClickHandler> clickHandlers = new ArrayList<>();
 
     public TileView(final TilePosition position, final ImageView backgroundImage, final ImageView crossImage) {
         super();
         this.position = position;
         this.crossImage = crossImage;
         getChildren().add(backgroundImage);
-        setOnMouseClicked(event -> setCrossed(!getChildren().contains(crossImage)));
+        setOnMouseClicked(event -> clickHandlers.forEach(clickHandler -> clickHandler.handle(this)));
     }
 
     public void setCrossed(final boolean crossed) {
@@ -27,7 +29,11 @@ public class TileView extends StackPane {
         }
     }
 
-    public void registerClickListener(final Consumer<TilePosition> listener) {
-        this.setOnMouseClicked((event) -> listener.accept(position));
+    public void registerClickHandler(final TileClickHandler clickHandler) {
+        this.clickHandlers.add(clickHandler);
+    }
+
+    public TilePosition getPosition() {
+        return position;
     }
 }

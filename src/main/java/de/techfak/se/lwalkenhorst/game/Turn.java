@@ -10,6 +10,14 @@ public class Turn {
         this.positionsToCrosses = positionsToCrosses;
     }
 
+    public Turn() {
+        this(List.of());
+    }
+
+    public boolean isEmpty() {
+        return positionsToCrosses.isEmpty();
+    }
+
     public List<TilePosition> getPositionsToCross() {
         return positionsToCrosses;
     }
