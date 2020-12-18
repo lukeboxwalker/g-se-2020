@@ -4,6 +4,7 @@ package de.techfak.se.lwalkenhorst;
 import de.techfak.se.lwalkenhorst.conrtoller.GuiController;
 import de.techfak.se.lwalkenhorst.exception.InvalidBoardException;
 import de.techfak.se.lwalkenhorst.exception.InvalidParameterException;
+import de.techfak.se.lwalkenhorst.game.DiceTurnValidator;
 import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.GameFactory;
 import javafx.application.Application;
@@ -23,7 +24,8 @@ public class GuiApplication extends Application {
 
     @Override
     public void init() throws Exception {
-        this.game = new GameInitializer(new GameFactory(ROWS, COLUMNS), getParameters().getRaw()).initGame();
+        final GameFactory factory = new GameFactory(ROWS, COLUMNS, DiceTurnValidator::new);
+        game = new GameInitializer(factory, getParameters().getRaw()).initGame();
     }
 
     @Override

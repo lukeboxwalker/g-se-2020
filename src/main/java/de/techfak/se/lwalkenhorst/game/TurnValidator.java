@@ -8,6 +8,7 @@ import java.util.List;
 public class TurnValidator {
 
     private final List<TurnValidation> turnValidations = new ArrayList<>();
+
     private final Board board;
 
     public TurnValidator(final Board board) {
@@ -18,13 +19,14 @@ public class TurnValidator {
         turnValidations.add(new AllCrossesGroupedValidation());
     }
 
-    public void validateTurn(final Turn turn) throws InvalidTurnException {
+    public void validateTurn(final Turn turn, final DiceResult diceResult) throws InvalidTurnException {
         final List<TilePosition> tilePositions = turn.getPositionsToCross();
         for (final TilePosition tilePosition : tilePositions) {
             if (!tilePosition.isInside(board.getBounds())) {
                 throw new InvalidTurnException("Position: " + tilePosition + "is Not Found on the board");
             }
         }
+
         for (final TurnValidation turnValidation : turnValidations) {
             turnValidation.validate(tilePositions);
         }

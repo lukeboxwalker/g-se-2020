@@ -38,7 +38,6 @@ public class CliGame {
     public void play(final Game game) {
         this.game = game;
         this.game.play();
-        System.out.println("Welcome to Encore!");
         System.out.println(createBoardString());
         final Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         while (true) {

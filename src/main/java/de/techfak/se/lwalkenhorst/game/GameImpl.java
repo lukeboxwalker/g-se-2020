@@ -15,11 +15,11 @@ public class GameImpl implements Game {
     private Points points;
     private Round round;
 
-    public GameImpl(final BoardImpl board) {
+    public GameImpl(final BoardImpl board, final TurnValidator turnValidator) {
         this.board = board;
         this.points = new Points();
         this.gameStrategy = new SinglePlayerStrategy();
-        this.turnValidator = new TurnValidator(board);
+        this.turnValidator = turnValidator;
         this.ruleManager = new RuleManagerImpl(board);
         propertyListenerSupport = new PropertyListenerSupport(this);
     }
@@ -36,7 +36,7 @@ public class GameImpl implements Game {
     @Override
     public void applyTurn(final Turn turn) throws InvalidTurnException {
         if (!turn.isEmpty()) {
-            turnValidator.validateTurn(turn);
+            turnValidator.validateTurn(turn, getDiceResult());
             board.cross(turn.getPositionsToCross());
             final Points oldPoints = points;
             points = ruleManager.calculatePoints();

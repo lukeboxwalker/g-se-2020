@@ -5,6 +5,7 @@ import de.techfak.se.lwalkenhorst.exception.InvalidBoardException;
 import de.techfak.se.lwalkenhorst.exception.InvalidParameterException;
 import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.GameFactory;
+import de.techfak.se.lwalkenhorst.game.TurnValidator;
 
 import java.util.Arrays;
 
@@ -27,7 +28,8 @@ public final class Encore {
 
     private static int run(final String... args) {
         try {
-            final Game game = new GameInitializer(new GameFactory(ROWS, COLUMNS), Arrays.asList(args)).initGame();
+            final GameFactory factory = new GameFactory(ROWS, COLUMNS, TurnValidator::new);
+            final Game game = new GameInitializer(factory, Arrays.asList(args)).initGame();
             final CliGame cliGame = new CliGame();
             cliGame.play(game);
         } catch (InvalidBoardException e) {
