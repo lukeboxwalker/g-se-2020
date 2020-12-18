@@ -29,6 +29,7 @@ class PositionValidationTest {
     void setUp() throws InvalidBoardLayoutException, InvalidFieldException {
         final GameFactory factory = new GameFactory(7, 15, TurnValidator::new);
         game = factory.createGame(TEST_BOARD);
+        game.play();
     }
 
     @Test

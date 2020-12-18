@@ -92,7 +92,7 @@
                     <configLocation>
                         codecheck/checkstyle.xml
                     </configLocation>
-                    <propertyExpansion>config_loc=${project.basedir}${file.separator}.codecheck
+                    <propertyExpansion>config_loc=${project.basedir}${file.separator}codecheck
                     </propertyExpansion>
                     <outputFile>
                         ${project.build.directory}/checkstyle/checkstyle-result.xml
@@ -121,7 +121,7 @@
                 <configuration>
                     <targetJdk>${java.version}</targetJdk>
                     <rulesets>
-                        <ruleset>${project.basedir}/.codecheck/pmd-rules.xml</ruleset>
+                        <ruleset>${project.basedir}/codecheck/pmd-rules.xml</ruleset>
                     </rulesets>
                     <verbose>true</verbose>
                     <failOnViolation>false</failOnViolation>
@@ -175,7 +175,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludeFilterFile>.codecheck/spotbugs-filter.xml</excludeFilterFile>
+                    <excludeFilterFile>codecheck/spotbugs-filter.xml</excludeFilterFile>
                 </configuration>
             </plugin>
 
@@ -228,6 +228,10 @@
                         <program>
                             <mainClass>de.techfak.se.lwalkenhorst.Encore</mainClass>
                             <id>encore</id>
+                        </program>
+                        <program>
+                            <mainClass>de.techfak.se.lwalkenhorst.EncoreGui</mainClass>
+                            <id>encoreGui</id>
                         </program>
                     </programs>
                 </configuration>
