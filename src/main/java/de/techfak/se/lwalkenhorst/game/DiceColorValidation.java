@@ -12,6 +12,7 @@ public class DiceColorValidation implements DiceValidation {
         this.board = board;
     }
 
+    @Override
     public void validate(final List<TilePosition> positions, final DiceResult diceResult) throws InvalidTurnException {
         for (final TilePosition position : positions) {
             final TileColor color = board.getTileAt(position).getColor();

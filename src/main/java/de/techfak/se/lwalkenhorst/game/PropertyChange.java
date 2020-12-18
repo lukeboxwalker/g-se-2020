@@ -3,7 +3,8 @@ package de.techfak.se.lwalkenhorst.game;
 public enum PropertyChange {
 
     POINTS("points"),
-    ROUND("round");
+    ROUND("round"),
+    FINISHED("finished");
 
     private final String propertyName;
 

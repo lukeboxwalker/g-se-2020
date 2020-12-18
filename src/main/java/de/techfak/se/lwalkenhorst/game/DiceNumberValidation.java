@@ -6,6 +6,7 @@ import java.util.List;
 
 public class DiceNumberValidation implements DiceValidation {
 
+    @Override
     public void validate(final List<TilePosition> positions, final DiceResult diceResult) throws InvalidTurnException {
         boolean numberMatched = false;
         final int crossedPositions = positions.size();

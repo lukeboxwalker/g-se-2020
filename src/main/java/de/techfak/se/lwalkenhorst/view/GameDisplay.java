@@ -76,7 +76,7 @@ public class GameDisplay extends VBox {
     }
 
     public void setPoints(final Points points) {
-        pointsLabel.setText("Points: " + points);
+        pointsLabel.setText("Score: " + points);
     }
 
     public void markColorAsFull(final TileColor color) {

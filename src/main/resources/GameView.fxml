@@ -2,12 +2,10 @@
 
 <?import de.techfak.se.lwalkenhorst.view.GameDisplay?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410"
             prefWidth="1000" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="de.techfak.se.lwalkenhorst.conrtoller.GuiController">
-    <VBox fx:id="rootBox" prefHeight="750.0" prefWidth="1600.0" AnchorPane.bottomAnchor="0.0"
-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <GameDisplay fx:id="gameDisplay"/>
-    </VBox>
+            fx:id="root" fx:controller="de.techfak.se.lwalkenhorst.conrtoller.GuiController">
+    <GameDisplay fx:id="gameDisplay" AnchorPane.bottomAnchor="0.0"
+                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+
 </AnchorPane>

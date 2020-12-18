@@ -8,10 +8,11 @@ import de.techfak.se.lwalkenhorst.game.TilePosition;
 import de.techfak.se.lwalkenhorst.game.Turn;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
 import de.techfak.se.lwalkenhorst.view.GameDisplay;
+import de.techfak.se.lwalkenhorst.view.GameOverScreen;
 import de.techfak.se.lwalkenhorst.view.ImageFactory;
 import de.techfak.se.lwalkenhorst.view.TileDisplay;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class GuiController {
 
     @FXML
-    public VBox rootBox;
+    public AnchorPane root;
 
     @FXML
     private GameDisplay gameDisplay;
@@ -32,13 +33,19 @@ public class GuiController {
     private final TurnFactory turnFactory = new TurnFactory();
 
     public void initialize(final Game game) throws IOException {
-        rootBox.setBackground(new ImageFactory().createBackgroundImage(rootBox.getWidth(), rootBox.getHeight()));
+        root.setBackground(new ImageFactory().createBackgroundImage(root.getWidth(), root.getHeight()));
         this.game = game;
         this.game.addPropertyChangeListener(PropertyChange.POINTS, event -> updatePoints());
         this.game.addPropertyChangeListener(PropertyChange.ROUND, event -> updateDice());
+        this.game.addPropertyChangeListener(PropertyChange.FINISHED, event -> displayGameFinished());
         gameDisplay.init(game);
         gameDisplay.setTileClickHandler(this::clickTile);
         gameDisplay.setSubmitTurnHandler(this::submitTurn);
+    }
+
+    private void displayGameFinished() {
+        root.setDisable(true);
+        root.getChildren().add(new GameOverScreen(game.getPoints(), root));
     }
 
     private void updateDice() {

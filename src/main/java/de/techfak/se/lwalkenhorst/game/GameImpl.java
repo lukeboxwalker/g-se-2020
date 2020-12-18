@@ -40,11 +40,18 @@ public class GameImpl implements Game {
             board.cross(turn.getPositionsToCross());
             final Points oldPoints = points;
             points = ruleManager.calculatePoints();
+            propertyListenerSupport.firePropertyChange(PropertyChange.FINISHED, false, ruleManager.isGameFinished());
             propertyListenerSupport.firePropertyChange(PropertyChange.POINTS, oldPoints, points);
         }
-        final Round oldRound = round;
-        round = round.next(gameStrategy);
-        propertyListenerSupport.firePropertyChange(PropertyChange.ROUND, oldRound, round);
+        enterNextRound();
+    }
+
+    private void enterNextRound() {
+        if (!ruleManager.isGameFinished()) {
+            final Round oldRound = round;
+            round = round.next(gameStrategy);
+            propertyListenerSupport.firePropertyChange(PropertyChange.ROUND, oldRound, round);
+        }
     }
 
     @Override
