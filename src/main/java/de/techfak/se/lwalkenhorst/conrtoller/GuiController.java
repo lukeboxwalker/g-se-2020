@@ -40,6 +40,7 @@ public class GuiController {
     }
 
     private void updatePoints() {
+        gameDisplay.setPoints(game.getPoints());
         for (final int column : game.getRuleManger().getFullColumns()) {
             gameDisplay.markColumnPoints(column);
         }
