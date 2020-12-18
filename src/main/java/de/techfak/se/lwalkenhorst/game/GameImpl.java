@@ -41,7 +41,7 @@ public class GameImpl implements Game {
             final Score oldScore = score;
             score = ruleManager.calculatePoints();
             propertyListenerSupport.firePropertyChange(PropertyChange.FINISHED, false, ruleManager.isGameFinished());
-            propertyListenerSupport.firePropertyChange(PropertyChange.POINTS, oldScore, score);
+            propertyListenerSupport.firePropertyChange(PropertyChange.SCORE, oldScore, score);
         }
         enterNextRound();
     }

@@ -2,7 +2,7 @@ package de.techfak.se.lwalkenhorst.game;
 
 public enum PropertyChange {
 
-    POINTS("points"),
+    SCORE("score"),
     ROUND("round"),
     FINISHED("finished");
 

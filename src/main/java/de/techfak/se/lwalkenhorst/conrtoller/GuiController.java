@@ -38,7 +38,7 @@ public class GuiController {
     public void initialize(final Game game) throws IOException {
         root.setBackground(new ImageFactory().createBackgroundImage(root.getWidth(), root.getHeight()));
         this.game = game;
-        this.game.addPropertyChangeListener(PropertyChange.POINTS, event -> updatePoints());
+        this.game.addPropertyChangeListener(PropertyChange.SCORE, event -> updatePoints());
         this.game.addPropertyChangeListener(PropertyChange.ROUND, event -> updateDice());
         this.game.addPropertyChangeListener(PropertyChange.FINISHED, event -> displayGameFinished());
         gameDisplay.init(game);
