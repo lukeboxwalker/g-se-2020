@@ -35,8 +35,6 @@ public class ImageFactory {
     private static final int POINT_FIVE_OFFSET = 675;
 
     private static final int CIRCLE_OFFSET = 90;
-    private static final int SUBMIT_OFFSET = 45;
-    private static final int SUBMIT_WIDTH = 225;
 
     private static final int BACKGROUND_OFFSET = 270;
 
@@ -98,9 +96,10 @@ public class ImageFactory {
         return new ImageView(new WritableImage(reader, 0, CIRCLE_OFFSET, WIDTH, HEIGHT));
     }
 
-    public ImageView createSubmitImage() {
-        return new ImageView(new WritableImage(reader, SUBMIT_OFFSET, CIRCLE_OFFSET, SUBMIT_WIDTH, HEIGHT));
+    public ImageView createImage(final int posX, final int posY, final int width, final int  height) {
+        return new ImageView(new WritableImage(reader, posX, posY, width, height));
     }
+
 
     public Background createBackgroundImage(final double width, final double height) {
         final Image image = new WritableImage(reader, BACKGROUND_OFFSET, CIRCLE_OFFSET, WIDTH, HEIGHT);

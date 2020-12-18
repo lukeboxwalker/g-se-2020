@@ -3,6 +3,7 @@ package de.techfak.se.lwalkenhorst.conrtoller;
 import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
 import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.PropertyChange;
+import de.techfak.se.lwalkenhorst.game.TileColor;
 import de.techfak.se.lwalkenhorst.game.TilePosition;
 import de.techfak.se.lwalkenhorst.game.Turn;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
@@ -36,13 +37,15 @@ public class GuiController {
         gameDisplay.init(game);
         gameDisplay.setTileClickHandler(this::clickTile);
         gameDisplay.setSubmitTurnHandler(this::submitTurn);
-        game.play();
     }
 
     private void updatePoints() {
         gameDisplay.setPoints(game.getPoints());
         for (final int column : game.getRuleManger().getFullColumns()) {
             gameDisplay.markColumnPoints(column);
+        }
+        for (final TileColor color : game.getRuleManger().getFullColors()) {
+            gameDisplay.markColorAsFull(color);
         }
     }
 

@@ -2,6 +2,7 @@ package de.techfak.se.lwalkenhorst.view;
 
 import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.Points;
+import de.techfak.se.lwalkenhorst.game.TileColor;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ public class GameDisplay extends VBox {
     private Button submitButton;
     private BoardDisplay boardDisplay;
     private ColumnPointsDisplay columnPointsDisplay;
+    private ColorPointsDisplay colorPointsDisplay;
     private Label pointsLabel;
 
     public void init(final Game game) {
@@ -30,8 +32,13 @@ public class GameDisplay extends VBox {
         this.boardDisplay = new BoardDisplay(game.getBoard(), imageFactory);
         this.columnPointsDisplay = new ColumnPointsDisplay(game.getBoard(), game.getRuleManger(), imageFactory);
         getChildren().add(imageFactory.createBoardHeaderImage());
-        getChildren().add(boardDisplay);
-        final HBox hBox = new HBox(columnPointsDisplay, submitButton, pointsLabel);
+
+        this.colorPointsDisplay = new ColorPointsDisplay(imageFactory);
+        HBox hBox = new HBox(boardDisplay, colorPointsDisplay);
+        hBox.setSpacing(SPACING);
+        getChildren().add(hBox);
+
+        hBox = new HBox(columnPointsDisplay, submitButton, pointsLabel);
         hBox.setSpacing(SPACING);
         getChildren().add(hBox);
     }
@@ -64,6 +71,10 @@ public class GameDisplay extends VBox {
 
     public void setPoints(final Points points) {
         pointsLabel.setText("Points: " + points);
+    }
+
+    public void markColorAsFull(final TileColor color) {
+        colorPointsDisplay.markColorAsFull(color);
     }
 
     public void markColumnPoints(final int column) {
