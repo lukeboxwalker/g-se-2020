@@ -27,7 +27,7 @@ public class GuiApplication extends Application {
     @Override
     public void init() throws Exception {
         final GameFactory factory = new GameFactory(ROWS, COLUMNS, DiceTurnValidator::new);
-        game = new GameInitializer(factory, getParameters().getRaw()).initGame();
+        game = new Launcher(factory, getParameters().getRaw()).initGame();
     }
 
     @Override

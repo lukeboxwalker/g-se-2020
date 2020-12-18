@@ -62,7 +62,7 @@ public class CliGame {
     }
 
     private String createBoardString() {
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder(42);
         stringBuilder.append("  A B C D E F G H I J K L M N O\n");
         final Board board = game.getBoard();
         final Bounds bounds = board.getBounds();

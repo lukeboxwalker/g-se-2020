@@ -29,7 +29,7 @@ public final class Encore {
     private static int run(final String... args) {
         try {
             final GameFactory factory = new GameFactory(ROWS, COLUMNS, TurnValidator::new);
-            final Game game = new GameInitializer(factory, Arrays.asList(args)).initGame();
+            final Game game = new Launcher(factory, Arrays.asList(args)).initGame();
             final CliGame cliGame = new CliGame();
             cliGame.play(game);
         } catch (InvalidBoardException e) {

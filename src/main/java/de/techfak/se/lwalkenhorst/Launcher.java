@@ -10,12 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class GameInitializer {
+public class Launcher {
 
     private final GameFactory gameFactory;
     private final List<String> args;
 
-    public GameInitializer(final GameFactory gameFactory, final List<String> args) {
+    public Launcher(final GameFactory gameFactory, final List<String> args) {
         this.gameFactory = gameFactory;
         this.args = args;
     }
