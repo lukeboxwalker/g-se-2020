@@ -49,8 +49,12 @@ public class GameDisplay extends VBox {
         getChildren().add(hBox);
     }
 
+    public void updateButtonText(final String text) {
+        submitButton.setText(text);
+    }
+
     private Button createSubmitButton() {
-        final Button submitButton = new Button("Submit");
+        final Button submitButton = new Button();
         submitButton.setPrefHeight(HEIGHT);
         submitButton.setPrefWidth(BUTTON_WIDTH);
         submitButton.setFont(Font.font("arial", FontWeight.BOLD, TEXT_FONT));

@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 
 public class GuiController {
 
+    private static final String BUTTON_PASS = "Pass";
+    private static final String BUTTON_SUBMIT = "Submit";
+
     @FXML
     public AnchorPane root;
 
@@ -41,6 +44,7 @@ public class GuiController {
         gameDisplay.init(game);
         gameDisplay.setTileClickHandler(this::clickTile);
         gameDisplay.setSubmitTurnHandler(this::submitTurn);
+        gameDisplay.updateButtonText(BUTTON_PASS);
     }
 
     private void displayGameFinished() {
@@ -64,6 +68,7 @@ public class GuiController {
 
     private void clickTile(final TileDisplay tileDisplay) {
         if (!game.getBoard().getTileAt(tileDisplay.getPosition()).isCrossed()) {
+            gameDisplay.updateButtonText(BUTTON_SUBMIT);
             clickedTiles.add(tileDisplay);
             tileDisplay.setCrossed(true);
         }
@@ -79,7 +84,7 @@ public class GuiController {
         } catch (InvalidTurnException e) {
             clickedTiles.forEach(tileDisplay -> tileDisplay.setCrossed(false));
         }
-
+        gameDisplay.updateButtonText(BUTTON_PASS);
         clickedTiles.clear();
     }
 }
