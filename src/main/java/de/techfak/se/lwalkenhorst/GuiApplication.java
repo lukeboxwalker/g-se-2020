@@ -1,7 +1,7 @@
 package de.techfak.se.lwalkenhorst;
 
 
-import de.techfak.se.lwalkenhorst.conrtoller.ViewController;
+import de.techfak.se.lwalkenhorst.conrtoller.GuiController;
 import de.techfak.se.lwalkenhorst.exception.InvalidBoardException;
 import de.techfak.se.lwalkenhorst.exception.InvalidParameterException;
 import de.techfak.se.lwalkenhorst.game.Game;
@@ -31,7 +31,7 @@ public class GuiApplication extends Application {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GameView.fxml"));
         final Pane root = fxmlLoader.load();
 
-        final ViewController controller = fxmlLoader.getController();
+        final GuiController controller = fxmlLoader.getController();
         controller.initialize(game);
 
         final Scene scene = new Scene(root);

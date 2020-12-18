@@ -1,20 +1,20 @@
 package de.techfak.se.lwalkenhorst.view;
 
 import de.techfak.se.lwalkenhorst.game.Game;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
 public class GameDisplay extends VBox {
 
-    private Button submitButton;
+    private ImageButton submitButton;
     private BoardDisplay boardDisplay;
     private ColumnPointsDisplay columnPointsDisplay;
 
     public void init(final Game game) {
-        this.submitButton = new Button("Sumbit");
+
         final ImageFactory imageFactory = new ImageFactory();
+        this.submitButton = new ImageButton(imageFactory.createSubmitImage());
         this.boardDisplay = new BoardDisplay(game.getBoard(), imageFactory);
         this.columnPointsDisplay = new ColumnPointsDisplay(game.getBoard(), game.getRuleManger(), imageFactory);
         getChildren().add(imageFactory.createBoardHeaderImage());

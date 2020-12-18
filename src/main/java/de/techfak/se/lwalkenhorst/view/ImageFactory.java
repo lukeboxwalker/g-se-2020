@@ -1,9 +1,16 @@
 package de.techfak.se.lwalkenhorst.view;
 
+import javafx.geometry.Side;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundSize;
+
+import static javafx.scene.layout.BackgroundRepeat.REPEAT;
 
 public class ImageFactory {
 
@@ -28,6 +35,10 @@ public class ImageFactory {
     private static final int POINT_FIVE_OFFSET = 675;
 
     private static final int CIRCLE_OFFSET = 90;
+    private static final int SUBMIT_OFFSET = 45;
+    private static final int SUBMIT_WIDTH = 225;
+
+    private static final int BACKGROUND_OFFSET = 270;
 
     private final PixelReader reader;
 
@@ -85,5 +96,17 @@ public class ImageFactory {
 
     public ImageView createCircleImage() {
         return new ImageView(new WritableImage(reader, 0, CIRCLE_OFFSET, WIDTH, HEIGHT));
+    }
+
+    public ImageView createSubmitImage() {
+        return new ImageView(new WritableImage(reader, SUBMIT_OFFSET, CIRCLE_OFFSET, SUBMIT_WIDTH, HEIGHT));
+    }
+
+    public Background createBackgroundImage(final double width, final double height) {
+        final Image image = new WritableImage(reader, BACKGROUND_OFFSET, CIRCLE_OFFSET, WIDTH, HEIGHT);
+        final BackgroundPosition position = new BackgroundPosition(Side.LEFT, 0, false, Side.TOP, 0, false);
+        final BackgroundSize size = new BackgroundSize(width, height, false, false, false, true);
+        final BackgroundImage backgroundImage = new BackgroundImage(image, REPEAT, REPEAT, position, size);
+        return new Background(backgroundImage);
     }
 }

@@ -2,19 +2,25 @@ package de.techfak.se.lwalkenhorst.conrtoller;
 
 import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
 import de.techfak.se.lwalkenhorst.game.Game;
+import de.techfak.se.lwalkenhorst.game.PropertyChange;
 import de.techfak.se.lwalkenhorst.game.TilePosition;
 import de.techfak.se.lwalkenhorst.game.Turn;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
 import de.techfak.se.lwalkenhorst.view.GameDisplay;
+import de.techfak.se.lwalkenhorst.view.ImageFactory;
 import de.techfak.se.lwalkenhorst.view.TileDisplay;
 import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class ViewController {
+public class GuiController {
+
+    @FXML
+    public VBox rootBox;
 
     @FXML
     private GameDisplay gameDisplay;
@@ -24,8 +30,9 @@ public class ViewController {
     private final TurnFactory turnFactory = new TurnFactory();
 
     public void initialize(final Game game) {
+        rootBox.setBackground(new ImageFactory().createBackgroundImage(rootBox.getWidth(), rootBox.getHeight()));
         this.game = game;
-        this.game.addPropertyChangeListener("points", event -> updatePoints());
+        this.game.addPropertyChangeListener(PropertyChange.POINTS, event -> updatePoints());
         gameDisplay.init(game);
         gameDisplay.setTileClickHandler(this::clickTile);
         gameDisplay.setSubmitTurnHandler(this::submitTurn);
@@ -33,7 +40,7 @@ public class ViewController {
     }
 
     private void updatePoints() {
-        for (int column : game.getRuleManger().getFullColumns()) {
+        for (final int column : game.getRuleManger().getFullColumns()) {
             gameDisplay.markColumnPoints(column);
         }
     }
