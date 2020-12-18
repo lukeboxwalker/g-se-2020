@@ -6,24 +6,24 @@ import de.techfak.se.lwalkenhorst.game.TileColor;
 import de.techfak.se.lwalkenhorst.game.TilePosition;
 import javafx.scene.image.ImageView;
 
-public class TileViewFactory {
+public class TileDisplayFactory {
 
     private final ImageFactory imageFactory;
 
-    public TileViewFactory(final ImageFactory imageFactory) {
+    public TileDisplayFactory(final ImageFactory imageFactory) {
         this.imageFactory = imageFactory;
     }
 
-    public TileView createTileView(final int row, final int column, final Board board) {
+    public TileDisplay createTileView(final int row, final int column, final Board board) {
         final Tile tile = board.getTileAt(row, column);
         final ImageView background = createBackgroundForColor(tile.getColor());
         final ImageView crossImage = imageFactory.createCrossImage();
-        final TileView tileView = new TileView(new TilePosition(row, column), background, crossImage);
+        final TileDisplay tileDisplay = new TileDisplay(new TilePosition(row, column), background, crossImage);
         if (board.getStartColumn() == column) {
-            tileView.getChildren().add(imageFactory.createStartColumnImage());
+            tileDisplay.getChildren().add(imageFactory.createStartColumnImage());
         }
-        tileView.setCrossed(tile.isCrossed());
-        return tileView;
+        tileDisplay.setCrossed(tile.isCrossed());
+        return tileDisplay;
     }
 
     public ImageView createBackgroundForColor(final TileColor color) {

@@ -5,10 +5,9 @@ import de.techfak.se.lwalkenhorst.game.Game;
 import de.techfak.se.lwalkenhorst.game.TilePosition;
 import de.techfak.se.lwalkenhorst.game.Turn;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
-import de.techfak.se.lwalkenhorst.view.GameView;
-import de.techfak.se.lwalkenhorst.view.TileView;
+import de.techfak.se.lwalkenhorst.view.GameDisplay;
+import de.techfak.se.lwalkenhorst.view.TileDisplay;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,37 +17,43 @@ import java.util.stream.Collectors;
 public class ViewController {
 
     @FXML
-    private VBox rootBox;
+    private GameDisplay gameDisplay;
 
     private Game game;
-    private final List<TileView> clickedTiles = new ArrayList<>();
+    private final List<TileDisplay> clickedTiles = new ArrayList<>();
     private final TurnFactory turnFactory = new TurnFactory();
 
     public void initialize(final Game game) {
         this.game = game;
-        final GameView gameView = new GameView(game);
-        gameView.setTileClickHandler(this::clickTile);
-        gameView.setSubmitTurnHandler(this::submitTurn);
-        rootBox.getChildren().add(gameView);
+        this.game.addPropertyChangeListener("points", event -> updatePoints());
+        gameDisplay.init(game);
+        gameDisplay.setTileClickHandler(this::clickTile);
+        gameDisplay.setSubmitTurnHandler(this::submitTurn);
         game.play();
     }
 
-    private void clickTile(final TileView tileView) {
-        if (!game.getBoard().getTileAt(tileView.getPosition()).isCrossed()) {
-            clickedTiles.add(tileView);
-            tileView.setCrossed(true);
+    private void updatePoints() {
+        for (int column : game.getRuleManger().getFullColumns()) {
+            gameDisplay.markColumnPoints(column);
+        }
+    }
+
+    private void clickTile(final TileDisplay tileDisplay) {
+        if (!game.getBoard().getTileAt(tileDisplay.getPosition()).isCrossed()) {
+            clickedTiles.add(tileDisplay);
+            tileDisplay.setCrossed(true);
         }
     }
 
     private void submitTurn() {
         final List<TilePosition> positions = clickedTiles.stream()
-            .map(TileView::getPosition).collect(Collectors.toList());
+            .map(TileDisplay::getPosition).collect(Collectors.toList());
         final Turn turn = turnFactory.createTurn(positions);
 
         try {
             game.applyTurn(turn);
         } catch (InvalidTurnException e) {
-            clickedTiles.forEach(tileView -> tileView.setCrossed(false));
+            clickedTiles.forEach(tileDisplay -> tileDisplay.setCrossed(false));
         }
 
         clickedTiles.clear();

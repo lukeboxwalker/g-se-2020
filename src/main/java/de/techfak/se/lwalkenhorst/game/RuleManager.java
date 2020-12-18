@@ -6,6 +6,8 @@ public interface RuleManager {
 
     List<TileColor> getFullColors();
 
+    List<Integer> getFullColumns();
+
     int getPointsForCol(final int column);
 
     boolean isColumnFull(final int column);

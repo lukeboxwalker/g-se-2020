@@ -5,16 +5,33 @@ import de.techfak.se.lwalkenhorst.game.RuleManager;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-public class PointsView extends GridPane {
+import java.util.HashMap;
+import java.util.Map;
 
-    public PointsView(final Board board, final RuleManager manager, final ImageFactory imageFactory) {
+public class ColumnPointsDisplay extends GridPane {
+
+    private final Map<Integer, PointDisplay> columnMap = new HashMap<>();
+
+    public ColumnPointsDisplay(final Board board, final RuleManager manager, final ImageFactory imageFactory) {
         super();
         for (int column = 0; column < board.getBounds().getColumns(); column++) {
             final int pointsForColumn = manager.getPointsForCol(column);
             final ImageView pointImage = getImageForColumn(pointsForColumn, imageFactory);
-            add(pointImage, column, 0);
+            final ImageView markedImage = imageFactory.createCircleImage();
+            final PointDisplay display = new PointDisplay(pointImage, markedImage);
+            columnMap.put(column, display);
+            add(display, column, 0);
         }
     }
+
+    public void mark(final int column) {
+        if (columnMap.containsKey(column)) {
+            columnMap.get(column).mark();
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     private ImageView getImageForColumn(final int pointsForColumn, final ImageFactory imageFactory) {
         switch (pointsForColumn) {

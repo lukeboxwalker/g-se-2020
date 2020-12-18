@@ -27,6 +27,8 @@ public class ImageFactory {
     private static final int POINT_THREE_OFFSET = 630;
     private static final int POINT_FIVE_OFFSET = 675;
 
+    private static final int CIRCLE_OFFSET = 90;
+
     private final PixelReader reader;
 
     public ImageFactory() {
@@ -79,5 +81,9 @@ public class ImageFactory {
 
     public ImageView createBoardHeaderImage() {
         return new ImageView(new WritableImage(reader, 0, HEADER_OFFSET, HEADER_WIDTH, HEIGHT));
+    }
+
+    public ImageView createCircleImage() {
+        return new ImageView(new WritableImage(reader, 0, CIRCLE_OFFSET, WIDTH, HEIGHT));
     }
 }

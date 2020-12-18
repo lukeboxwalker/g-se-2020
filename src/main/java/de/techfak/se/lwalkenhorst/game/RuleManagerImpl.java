@@ -65,6 +65,15 @@ public class RuleManagerImpl implements RuleManager {
     }
 
     @Override
+    public List<Integer> getFullColumns() {
+        return fullColumnMap.entrySet()
+            .stream()
+            .filter(Map.Entry::getValue)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean isGameFinished() {
         return getFullColors().size() >= 2;
     }

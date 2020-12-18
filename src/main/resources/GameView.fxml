@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.techfak.se.lwalkenhorst.view.GameDisplay?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430"
@@ -7,5 +8,6 @@
             fx:controller="de.techfak.se.lwalkenhorst.conrtoller.ViewController">
     <VBox fx:id="rootBox" prefHeight="750.0" prefWidth="1600.0" AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GameDisplay fx:id="gameDisplay"/>
     </VBox>
 </AnchorPane>

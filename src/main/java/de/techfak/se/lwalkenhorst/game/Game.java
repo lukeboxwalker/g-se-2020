@@ -2,6 +2,8 @@ package de.techfak.se.lwalkenhorst.game;
 
 import de.techfak.se.lwalkenhorst.exception.InvalidTurnException;
 
+import java.beans.PropertyChangeListener;
+
 public interface Game {
 
     void applyTurn(final Turn turn) throws InvalidTurnException;
@@ -15,4 +17,6 @@ public interface Game {
     void play();
 
     DiceResult getDiceResult();
+
+    void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener);
 }

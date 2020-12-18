@@ -7,17 +7,16 @@ import javafx.scene.layout.StackPane;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileView extends StackPane {
+public class TileDisplay extends StackPane {
 
     private final TilePosition position;
     private final ImageView crossImage;
     private final List<TileClickHandler> clickHandlers = new ArrayList<>();
 
-    public TileView(final TilePosition position, final ImageView backgroundImage, final ImageView crossImage) {
-        super();
+    public TileDisplay(final TilePosition position, final ImageView backgroundImage, final ImageView crossImage) {
+        super(backgroundImage);
         this.position = position;
         this.crossImage = crossImage;
-        getChildren().add(backgroundImage);
         setOnMouseClicked(event -> clickHandlers.forEach(clickHandler -> clickHandler.handle(this)));
     }
 
