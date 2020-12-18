@@ -12,12 +12,12 @@ public class GameImpl implements Game {
     private final BoardImpl board;
 
     private final GameStrategy gameStrategy;
-    private Points points;
+    private Score score;
     private Round round;
 
     public GameImpl(final BoardImpl board, final TurnValidator turnValidator) {
         this.board = board;
-        this.points = new Points();
+        this.score = new Score();
         this.gameStrategy = new SinglePlayerStrategy();
         this.turnValidator = turnValidator;
         this.ruleManager = new RuleManagerImpl(board);
@@ -38,10 +38,10 @@ public class GameImpl implements Game {
         if (!turn.isEmpty()) {
             turnValidator.validateTurn(turn, getDiceResult());
             board.cross(turn.getPositionsToCross());
-            final Points oldPoints = points;
-            points = ruleManager.calculatePoints();
+            final Score oldScore = score;
+            score = ruleManager.calculatePoints();
             propertyListenerSupport.firePropertyChange(PropertyChange.FINISHED, false, ruleManager.isGameFinished());
-            propertyListenerSupport.firePropertyChange(PropertyChange.POINTS, oldPoints, points);
+            propertyListenerSupport.firePropertyChange(PropertyChange.POINTS, oldScore, score);
         }
         enterNextRound();
     }
@@ -60,8 +60,8 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public Points getPoints() {
-        return points;
+    public Score getPoints() {
+        return score;
     }
 
     @Override

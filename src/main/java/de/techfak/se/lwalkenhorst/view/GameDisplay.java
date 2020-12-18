@@ -2,7 +2,7 @@ package de.techfak.se.lwalkenhorst.view;
 
 import de.techfak.se.lwalkenhorst.game.DiceResult;
 import de.techfak.se.lwalkenhorst.game.Game;
-import de.techfak.se.lwalkenhorst.game.Points;
+import de.techfak.se.lwalkenhorst.game.Score;
 import de.techfak.se.lwalkenhorst.game.TileColor;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -79,8 +79,8 @@ public class GameDisplay extends VBox {
         boardDisplay.registerClickHandler(eventHandler);
     }
 
-    public void setPoints(final Points points) {
-        pointsLabel.setText("Score: " + points);
+    public void setPoints(final Score score) {
+        pointsLabel.setText("Score: " + score);
     }
 
     public void markColorAsFull(final TileColor color) {

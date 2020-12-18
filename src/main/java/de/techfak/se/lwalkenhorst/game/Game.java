@@ -10,7 +10,7 @@ public interface Game {
 
     RuleManager getRuleManger();
 
-    Points getPoints();
+    Score getPoints();
 
     Board getBoard();
 

@@ -1,6 +1,6 @@
 package de.techfak.se.lwalkenhorst.view;
 
-import de.techfak.se.lwalkenhorst.game.Points;
+import de.techfak.se.lwalkenhorst.game.Score;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -12,9 +12,9 @@ import static javafx.scene.paint.Color.WHITE;
 
 public class GameOverScreen extends VBox {
 
-    public GameOverScreen(final Points points, final AnchorPane root) {
+    public GameOverScreen(final Score score, final AnchorPane root) {
         super();
-        final Text text = new Text("Game over. Your score: " + points);
+        final Text text = new Text("Game over. Your score: " + score);
         text.setFill(WHITE);
         text.setFont(Font.font("arial", FontWeight.BOLD, 40));
         getChildren().add(text);

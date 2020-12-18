@@ -53,7 +53,7 @@ public class CliGame {
                 } else {
                     game.applyTurn(turnFactory.parseTurn(input));
                     System.out.println(createBoardString());
-                    System.out.println("Points: " + game.getPoints());
+                    System.out.println("Score: " + game.getPoints());
                 }
             } catch (InvalidTurnException e) {
                 System.out.println(e.getMessage());

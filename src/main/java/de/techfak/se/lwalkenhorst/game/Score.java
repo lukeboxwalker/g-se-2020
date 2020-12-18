@@ -2,14 +2,14 @@ package de.techfak.se.lwalkenhorst.game;
 
 import java.util.Objects;
 
-public class Points {
+public class Score {
     private final int value;
 
-    public Points() {
+    public Score() {
         this(0);
     }
 
-    public Points(final int value) {
+    public Score(final int value) {
         this.value = value;
     }
 
@@ -25,8 +25,8 @@ public class Points {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        final Points points = (Points) other;
-        return value == points.value;
+        final Score score = (Score) other;
+        return value == score.value;
     }
 
     @Override

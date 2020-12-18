@@ -36,8 +36,8 @@ public class RuleManagerImpl implements RuleManager {
         }
     }
 
-    public Points calculatePoints() {
-        return new Points(getPointsForFullColors() + getPointsForFullColumns());
+    public Score calculatePoints() {
+        return new Score(getPointsForFullColors() + getPointsForFullColumns());
     }
 
     private int getPointsForFullColumns() {
