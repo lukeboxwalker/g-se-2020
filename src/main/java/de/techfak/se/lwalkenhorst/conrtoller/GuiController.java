@@ -13,6 +13,7 @@ import de.techfak.se.lwalkenhorst.view.TileDisplay;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class GuiController {
     private final List<TileDisplay> clickedTiles = new ArrayList<>();
     private final TurnFactory turnFactory = new TurnFactory();
 
-    public void initialize(final Game game) {
+    public void initialize(final Game game) throws IOException {
         rootBox.setBackground(new ImageFactory().createBackgroundImage(rootBox.getWidth(), rootBox.getHeight()));
         this.game = game;
         this.game.addPropertyChangeListener(PropertyChange.POINTS, event -> updatePoints());

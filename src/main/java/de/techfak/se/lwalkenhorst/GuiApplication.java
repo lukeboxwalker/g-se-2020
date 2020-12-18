@@ -1,6 +1,5 @@
 package de.techfak.se.lwalkenhorst;
 
-
 import de.techfak.se.lwalkenhorst.conrtoller.GuiController;
 import de.techfak.se.lwalkenhorst.exception.InvalidBoardException;
 import de.techfak.se.lwalkenhorst.exception.InvalidParameterException;
@@ -10,8 +9,11 @@ import de.techfak.se.lwalkenhorst.game.GameFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.io.InputStream;
 
 public class GuiApplication extends Application {
 
@@ -40,6 +42,10 @@ public class GuiApplication extends Application {
         final Scene scene = new Scene(root);
         stage.setTitle("GSE-2020 Encore!");
         stage.setScene(scene);
+
+        try (InputStream inputStream = getClass().getResourceAsStream("/images/icon.png")) {
+            stage.getIcons().add(new Image(inputStream));
+        }
         stage.show();
     }
 

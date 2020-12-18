@@ -10,6 +10,9 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundSize;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import static javafx.scene.layout.BackgroundRepeat.REPEAT;
 
 public class ImageFactory {
@@ -40,8 +43,10 @@ public class ImageFactory {
 
     private final PixelReader reader;
 
-    public ImageFactory() {
-        this.reader = new Image("/images/assets.png").getPixelReader();
+    public ImageFactory() throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream("/images/assets.png")) {
+            this.reader = new Image(inputStream).getPixelReader();
+        }
     }
 
     public ImageView createYellowBackground() {
