@@ -18,7 +18,7 @@ public class DiceColorValidation implements DiceValidation {
             final TileColor color = board.getTileAt(position).getColor();
             boolean colorMatched = false;
             for (final DiceColorFace colorFace : diceResult.getColors()) {
-                if (color.matches(colorFace)) {
+                if (colorFace.matches(color)) {
                     colorMatched = true;
                 }
             }

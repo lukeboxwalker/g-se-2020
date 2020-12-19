@@ -38,12 +38,14 @@ public class DiceDisplay extends Group {
         diceColorTextures.put(DiceColorFace.RED, () -> imageFactory.createImage(2 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
         diceColorTextures.put(DiceColorFace.BLUE, () -> imageFactory.createImage(3 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
         diceColorTextures.put(DiceColorFace.ORANGE, () -> imageFactory.createImage(4 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
+        diceColorTextures.put(DiceColorFace.JOKER, () -> imageFactory.createImage(5 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
 
         diceNumberTextures.put(DiceNumberFace.ONE, () -> imageFactory.createImage(0, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
         diceNumberTextures.put(DiceNumberFace.TWO, () -> imageFactory.createImage(FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
         diceNumberTextures.put(DiceNumberFace.THREE, () -> imageFactory.createImage(2 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
         diceNumberTextures.put(DiceNumberFace.FOUR, () -> imageFactory.createImage(3 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
         diceNumberTextures.put(DiceNumberFace.FIVE, () -> imageFactory.createImage(4 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
+        diceNumberTextures.put(DiceNumberFace.JOKER, () -> imageFactory.createImage(5 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
     }
 
     public void updateDice(final DiceResult diceResult) {

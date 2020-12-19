@@ -30,6 +30,12 @@ public enum DiceNumberFace {
         public boolean matches(final int number) {
             return number == 5;
         }
+    },
+    JOKER() {
+        @Override
+        public boolean matches(final int number) {
+            return number > 0 && number < 5;
+        }
     };
 
     public abstract boolean matches(final int number);
