@@ -42,7 +42,6 @@ public class GuiApplication extends Application {
         final Scene scene = new Scene(root);
         stage.setTitle("GSE-2020 Encore!");
         stage.setScene(scene);
-
         try (InputStream inputStream = getClass().getResourceAsStream("/images/icon.png")) {
             stage.getIcons().add(new Image(inputStream));
         }

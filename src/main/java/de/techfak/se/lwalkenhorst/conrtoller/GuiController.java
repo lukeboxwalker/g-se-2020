@@ -7,10 +7,12 @@ import de.techfak.se.lwalkenhorst.game.TileColor;
 import de.techfak.se.lwalkenhorst.game.TilePosition;
 import de.techfak.se.lwalkenhorst.game.Turn;
 import de.techfak.se.lwalkenhorst.game.TurnFactory;
+import de.techfak.se.lwalkenhorst.view.ChatDisplay;
 import de.techfak.se.lwalkenhorst.view.GameDisplay;
 import de.techfak.se.lwalkenhorst.view.GameOverScreen;
 import de.techfak.se.lwalkenhorst.view.ImageFactory;
 import de.techfak.se.lwalkenhorst.view.TileDisplay;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 
@@ -30,6 +32,9 @@ public class GuiController {
 
     @FXML
     private GameDisplay gameDisplay;
+
+    @FXML
+    private ChatDisplay chatDisplay;
 
     private Game game;
     private final List<TileDisplay> clickedTiles = new ArrayList<>();
@@ -53,17 +58,19 @@ public class GuiController {
     }
 
     private void updateDice() {
-        gameDisplay.updateDice(game.getDiceResult());
+        Platform.runLater(() -> gameDisplay.updateDice(game.getDiceResult()));
     }
 
     private void updatePoints() {
-        gameDisplay.setPoints(game.getPoints());
-        for (final int column : game.getRuleManger().getFullColumns()) {
-            gameDisplay.markColumnPoints(column);
-        }
-        for (final TileColor color : game.getRuleManger().getFullColors()) {
-            gameDisplay.markColorAsFull(color);
-        }
+        Platform.runLater(() -> {
+            gameDisplay.setPoints(game.getPoints());
+            for (final int column : game.getRuleManger().getFullColumns()) {
+                gameDisplay.markColumnPoints(column);
+            }
+            for (final TileColor color : game.getRuleManger().getFullColors()) {
+                gameDisplay.markColorAsFull(color);
+            }
+        });
     }
 
     private void clickTile(final TileDisplay tileDisplay) {
@@ -82,6 +89,7 @@ public class GuiController {
         try {
             game.applyTurn(turn);
         } catch (InvalidTurnException e) {
+            chatDisplay.info(e.getMessage());
             clickedTiles.forEach(tileDisplay -> tileDisplay.setCrossed(false));
         }
         gameDisplay.updateButtonText(BUTTON_PASS);

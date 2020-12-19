@@ -30,7 +30,7 @@ public class CorrectStartCrossValidation implements TurnValidation {
         hasCrossedNeighbor |= isNeighborCrossed(tilePosition.above());
         hasCrossedNeighbor |= isNeighborCrossed(tilePosition.down());
         if (!hasCrossedNeighbor) {
-            throw new InvalidTurnException("Position: " + tilePosition + " is not in column H or next to a crossed tile");
+            throw new InvalidTurnException(tilePosition + " is not in column 7 or next to a crossed tile");
         }
     }
 }

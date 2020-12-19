@@ -94,4 +94,5 @@ public class GameDisplay extends VBox {
     public void updateDice(final DiceResult diceResult) {
         diceDisplay.updateDice(diceResult);
     }
+
 }
