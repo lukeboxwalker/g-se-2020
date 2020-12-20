@@ -41,11 +41,12 @@ public class GuiController {
     private final TurnFactory turnFactory = new TurnFactory();
 
     public void initialize(final Game game) throws IOException {
+        chatDisplay.info("Starting new Game");
         root.setBackground(new ImageFactory().createBackgroundImage(root.getWidth(), root.getHeight()));
         this.game = game;
-        this.game.addPropertyChangeListener(PropertyChange.SCORE, event -> updatePoints());
-        this.game.addPropertyChangeListener(PropertyChange.ROUND, event -> updateDice());
-        this.game.addPropertyChangeListener(PropertyChange.FINISHED, event -> displayGameFinished());
+        this.game.addListener(PropertyChange.SCORE, event -> Platform.runLater(this::updatePoints));
+        this.game.addListener(PropertyChange.ROUND, event -> Platform.runLater(this::updateDice));
+        this.game.addListener(PropertyChange.FINISHED, event -> Platform.runLater(this::displayGameFinished));
         gameDisplay.init(game);
         gameDisplay.setTileClickHandler(this::clickTile);
         gameDisplay.setSubmitTurnHandler(this::submitTurn);
@@ -58,19 +59,17 @@ public class GuiController {
     }
 
     private void updateDice() {
-        Platform.runLater(() -> gameDisplay.updateDice(game.getDiceResult()));
+        gameDisplay.updateDice(game.getDiceResult());
     }
 
     private void updatePoints() {
-        Platform.runLater(() -> {
-            gameDisplay.setPoints(game.getPoints());
-            for (final int column : game.getRuleManger().getFullColumns()) {
-                gameDisplay.markColumnPoints(column);
-            }
-            for (final TileColor color : game.getRuleManger().getFullColors()) {
-                gameDisplay.markColorAsFull(color);
-            }
-        });
+        gameDisplay.setPoints(game.getPoints());
+        for (final int column : game.getRuleManger().getFullColumns()) {
+            gameDisplay.markColumnPoints(column);
+        }
+        for (final TileColor color : game.getRuleManger().getFullColors()) {
+            gameDisplay.markColorAsFull(color);
+        }
     }
 
     private void clickTile(final TileDisplay tileDisplay) {
@@ -89,7 +88,7 @@ public class GuiController {
         try {
             game.applyTurn(turn);
         } catch (InvalidTurnException e) {
-            chatDisplay.info(e.getMessage());
+            chatDisplay.warn(e.getMessage());
             clickedTiles.forEach(tileDisplay -> tileDisplay.setCrossed(false));
         }
         gameDisplay.updateButtonText(BUTTON_PASS);

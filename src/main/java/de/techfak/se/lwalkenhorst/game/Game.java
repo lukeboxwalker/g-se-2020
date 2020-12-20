@@ -18,5 +18,5 @@ public interface Game {
 
     DiceResult getDiceResult();
 
-    void addPropertyChangeListener(final PropertyChange propertyChange, final PropertyChangeListener listener);
+    void addListener(final PropertyChange propertyChange, final PropertyChangeListener listener);
 }

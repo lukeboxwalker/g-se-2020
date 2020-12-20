@@ -84,7 +84,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public void addPropertyChangeListener(final PropertyChange propertyChange, final PropertyChangeListener listener) {
+    public void addListener(final PropertyChange propertyChange, final PropertyChangeListener listener) {
         propertyListenerSupport.addPropertyChangeListener(propertyChange, listener);
     }
 }
