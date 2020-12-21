@@ -12,8 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.io.IOException;
-
 
 public class GameDisplay extends VBox {
 
@@ -29,17 +27,17 @@ public class GameDisplay extends VBox {
     private DiceDisplay diceDisplay;
     private Label pointsLabel;
 
-    public void init(final Game game) throws IOException {
-        final ImageFactory imageFactory = new ImageFactory();
+    public void init(final Game game) {
         this.pointsLabel = createPointsLabel();
         setPoints(game.getPoints());
         this.submitButton = createSubmitButton();
-        this.diceDisplay = new DiceDisplay(imageFactory);
-        this.boardDisplay = new BoardDisplay(game.getBoard(), imageFactory);
-        this.columnPointsDisplay = new ColumnPointsDisplay(game.getBoard(), game.getRuleManger(), imageFactory);
-        getChildren().add(imageFactory.createBoardHeaderImage());
+        this.diceDisplay = new DiceDisplay();
+        this.boardDisplay = new BoardDisplay();
+        this.boardDisplay.init(game.getBoard());
+        this.columnPointsDisplay = new ColumnPointsDisplay(game.getBoard(), game.getRuleManger());
+        getChildren().add(TextureUtils.loadTexture("/assets/board_header.png"));
 
-        this.colorPointsDisplay = new ColorPointsDisplay(imageFactory);
+        this.colorPointsDisplay = new ColorPointsDisplay();
         HBox hBox = new HBox(boardDisplay, diceDisplay, colorPointsDisplay);
         hBox.setSpacing(2 * SPACING);
         getChildren().add(hBox);

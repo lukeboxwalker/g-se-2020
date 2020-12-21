@@ -10,7 +10,7 @@ import de.techfak.se.lwalkenhorst.game.TurnFactory;
 import de.techfak.se.lwalkenhorst.view.ChatDisplay;
 import de.techfak.se.lwalkenhorst.view.GameDisplay;
 import de.techfak.se.lwalkenhorst.view.GameOverScreen;
-import de.techfak.se.lwalkenhorst.view.ImageFactory;
+import de.techfak.se.lwalkenhorst.view.TextureUtils;
 import de.techfak.se.lwalkenhorst.view.TileDisplay;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -42,7 +42,7 @@ public class GuiController {
 
     public void initialize(final Game game) throws IOException {
         chatDisplay.info("Starting new Game");
-        root.setBackground(new ImageFactory().createBackgroundImage(root.getWidth(), root.getHeight()));
+        root.setBackground(TextureUtils.createBackgroundImage("/assets/background.png", root.getWidth(), root.getHeight()));
         this.game = game;
         this.game.addListener(PropertyChange.SCORE, event -> Platform.runLater(this::updatePoints));
         this.game.addListener(PropertyChange.ROUND, event -> Platform.runLater(this::updateDice));

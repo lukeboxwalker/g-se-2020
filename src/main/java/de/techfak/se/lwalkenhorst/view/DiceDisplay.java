@@ -3,20 +3,30 @@ package de.techfak.se.lwalkenhorst.view;
 import de.techfak.se.lwalkenhorst.game.DiceColorFace;
 import de.techfak.se.lwalkenhorst.game.DiceNumberFace;
 import de.techfak.se.lwalkenhorst.game.DiceResult;
-import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class DiceDisplay extends Group {
+public class DiceDisplay extends HBox {
 
-    private static final int FACE_SIZE = 77;
-    private static final int COLOR_Y_OFFSET = 135;
-    private static final int NUMBER_Y_OFFSET = 212;
+    private static final String FACE_YELLOW = "/assets/dice/face_yellow.png";
+    private static final String FACE_GREEN = "/assets/dice/face_green.png";
+    private static final String FACE_RED = "/assets/dice/face_red.png";
+    private static final String FACE_BLUE = "/assets/dice/face_blue.png";
+    private static final String FACE_ORANGE = "/assets/dice/face_orange.png";
+    private static final String FACE_COLOR_JOKER = "/assets/dice/face_color_joker.png";
+
+    private static final String FACE_ONE = "/assets/dice/face_one.png";
+    private static final String FACE_TWO = "/assets/dice/face_two.png";
+    private static final String FACE_THREE = "/assets/dice/face_three.png";
+    private static final String FACE_FOUR = "/assets/dice/face_four.png";
+    private static final String FACE_FIVE = "/assets/dice/face_five.png";
+    private static final String FACE_NUMBER_JOKER = "/assets/dice/face_number_joker.png";
 
     private static final double DICE_SPACING = 10;
 
@@ -26,26 +36,29 @@ public class DiceDisplay extends Group {
     private final VBox colorDice = new VBox();
     private final VBox numberDice = new VBox();
 
-    public DiceDisplay(final ImageFactory imageFactory) {
+    public DiceDisplay() {
         super();
-        colorDice.setSpacing(DICE_SPACING);
-        numberDice.setSpacing(DICE_SPACING);
-        final HBox hBox = new HBox(colorDice, numberDice);
-        hBox.setSpacing(DICE_SPACING);
-        getChildren().add(hBox);
-        diceColorTextures.put(DiceColorFace.YELLOW, () -> imageFactory.createImage(0, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceColorTextures.put(DiceColorFace.GREEN, () -> imageFactory.createImage(FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceColorTextures.put(DiceColorFace.RED, () -> imageFactory.createImage(2 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceColorTextures.put(DiceColorFace.BLUE, () -> imageFactory.createImage(3 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceColorTextures.put(DiceColorFace.ORANGE, () -> imageFactory.createImage(4 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceColorTextures.put(DiceColorFace.JOKER, () -> imageFactory.createImage(5 * FACE_SIZE, COLOR_Y_OFFSET, FACE_SIZE, FACE_SIZE));
+        this.colorDice.setSpacing(DICE_SPACING);
+        this.numberDice.setSpacing(DICE_SPACING);
+        this.getChildren().addAll(List.of(colorDice, numberDice));
+        this.setSpacing(DICE_SPACING);
+        this.initTextures();
+    }
 
-        diceNumberTextures.put(DiceNumberFace.ONE, () -> imageFactory.createImage(0, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceNumberTextures.put(DiceNumberFace.TWO, () -> imageFactory.createImage(FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceNumberTextures.put(DiceNumberFace.THREE, () -> imageFactory.createImage(2 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceNumberTextures.put(DiceNumberFace.FOUR, () -> imageFactory.createImage(3 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceNumberTextures.put(DiceNumberFace.FIVE, () -> imageFactory.createImage(4 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
-        diceNumberTextures.put(DiceNumberFace.JOKER, () -> imageFactory.createImage(5 * FACE_SIZE, NUMBER_Y_OFFSET, FACE_SIZE, FACE_SIZE));
+    private void initTextures() {
+        diceColorTextures.put(DiceColorFace.YELLOW, TextureUtils.textureSupplier(FACE_YELLOW));
+        diceColorTextures.put(DiceColorFace.GREEN, TextureUtils.textureSupplier(FACE_GREEN));
+        diceColorTextures.put(DiceColorFace.RED, TextureUtils.textureSupplier(FACE_RED));
+        diceColorTextures.put(DiceColorFace.BLUE, TextureUtils.textureSupplier(FACE_BLUE));
+        diceColorTextures.put(DiceColorFace.ORANGE, TextureUtils.textureSupplier(FACE_ORANGE));
+        diceColorTextures.put(DiceColorFace.JOKER, TextureUtils.textureSupplier(FACE_COLOR_JOKER));
+
+        diceNumberTextures.put(DiceNumberFace.ONE, TextureUtils.textureSupplier(FACE_ONE));
+        diceNumberTextures.put(DiceNumberFace.TWO, TextureUtils.textureSupplier(FACE_TWO));
+        diceNumberTextures.put(DiceNumberFace.THREE, TextureUtils.textureSupplier(FACE_THREE));
+        diceNumberTextures.put(DiceNumberFace.FOUR, TextureUtils.textureSupplier(FACE_FOUR));
+        diceNumberTextures.put(DiceNumberFace.FIVE, TextureUtils.textureSupplier(FACE_FIVE));
+        diceNumberTextures.put(DiceNumberFace.JOKER, TextureUtils.textureSupplier(FACE_NUMBER_JOKER));
     }
 
     public void updateDice(final DiceResult diceResult) {

@@ -11,9 +11,8 @@ public class BoardDisplay extends GridPane {
 
     private final List<TileClickHandler> clickHandlers = new ArrayList<>();
 
-    public BoardDisplay(final Board board, final ImageFactory imageFactory) {
-        super();
-        final TileDisplayFactory tileDisplayFactory = new TileDisplayFactory(imageFactory);
+    public void init(final Board board) {
+        final TileDisplayFactory tileDisplayFactory = new TileDisplayFactory();
         final Bounds bounds = board.getBounds();
         for (int row = 0; row < bounds.getRows(); row++) {
             for (int column = 0; column < bounds.getColumns(); column++) {

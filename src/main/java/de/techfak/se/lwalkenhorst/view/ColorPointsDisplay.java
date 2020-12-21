@@ -9,43 +9,28 @@ import java.util.Map;
 
 public class ColorPointsDisplay extends VBox {
 
-    private static final int WIDTH = 45;
-    private static final int HEIGHT = 45;
-    private static final int Y_OFFSET = 90;
+    private static final String FULL_YELLOW = "/assets/points/full_yellow.png";
+    private static final String FULL_GREEN = "/assets/points/full_green.png";
+    private static final String FULL_BLUE = "/assets/points/full_blue.png";
+    private static final String FULL_RED = "/assets/points/full_red.png";
+    private static final String FULL_ORANGE = "/assets/points/full_orange.png";
+
+    private static final String MARK_CIRCLE = "/assets/points/mark_circle.png";
 
     private final Map<TileColor, PointDisplay> colorDisplayMap = new HashMap<>();
 
-    public ColorPointsDisplay(final ImageFactory imageFactory) {
+    public ColorPointsDisplay() {
         super();
-        addPointDisplay(TileColor.GREEN, imageFactory);
-        addPointDisplay(TileColor.YELLOW, imageFactory);
-        addPointDisplay(TileColor.BLUE, imageFactory);
-        addPointDisplay(TileColor.RED, imageFactory);
-        addPointDisplay(TileColor.ORANGE, imageFactory);
+        final ImageView marked = TextureUtils.loadTexture(MARK_CIRCLE);
+        addPointDisplay(TileColor.GREEN, TextureUtils.loadTexture(FULL_GREEN), marked);
+        addPointDisplay(TileColor.YELLOW, TextureUtils.loadTexture(FULL_YELLOW), marked);
+        addPointDisplay(TileColor.BLUE, TextureUtils.loadTexture(FULL_BLUE), marked);
+        addPointDisplay(TileColor.RED, TextureUtils.loadTexture(FULL_RED), marked);
+        addPointDisplay(TileColor.ORANGE, TextureUtils.loadTexture(FULL_ORANGE), marked);
     }
 
-    public final void addPointDisplay(final TileColor tileColor, final ImageFactory imageFactory) {
-        final ImageView crossed = imageFactory.createCrossImage();
-        final PointDisplay pointDisplay;
-        switch (tileColor) {
-            case GREEN:
-                pointDisplay = new PointDisplay(imageFactory.createImage(45, Y_OFFSET, WIDTH, HEIGHT), crossed);
-                break;
-            case YELLOW:
-                pointDisplay = new PointDisplay(imageFactory.createImage(90, Y_OFFSET, WIDTH, HEIGHT), crossed);
-                break;
-            case BLUE:
-                pointDisplay = new PointDisplay(imageFactory.createImage(135, Y_OFFSET, WIDTH, HEIGHT), crossed);
-                break;
-            case RED:
-                pointDisplay = new PointDisplay(imageFactory.createImage(180, Y_OFFSET, WIDTH, HEIGHT), crossed);
-                break;
-            case ORANGE:
-                pointDisplay = new PointDisplay(imageFactory.createImage(225, Y_OFFSET, WIDTH, HEIGHT), crossed);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public final void addPointDisplay(final TileColor tileColor, final ImageView texture, final ImageView marked) {
+        final PointDisplay pointDisplay = new PointDisplay(texture, marked);
         getChildren().add(pointDisplay);
         colorDisplayMap.put(tileColor, pointDisplay);
     }

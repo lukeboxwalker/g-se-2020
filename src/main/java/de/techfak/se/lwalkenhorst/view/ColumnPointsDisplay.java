@@ -10,14 +10,21 @@ import java.util.Map;
 
 public class ColumnPointsDisplay extends GridPane {
 
+    private static final String POINT_ONE = "/assets/points/point_one.png";
+    private static final String POINT_TWO = "/assets/points/point_two.png";
+    private static final String POINT_THREE = "/assets/points/point_three.png";
+    private static final String POINT_FIVE = "/assets/points/point_five.png";
+
+    private static final String MARK_CIRCLE = "/assets/points/mark_circle.png";
+
     private final Map<Integer, PointDisplay> columnMap = new HashMap<>();
 
-    public ColumnPointsDisplay(final Board board, final RuleManager manager, final ImageFactory imageFactory) {
+    public ColumnPointsDisplay(final Board board, final RuleManager manager) {
         super();
+        final ImageView markedImage = TextureUtils.loadTexture(MARK_CIRCLE);
         for (int column = 0; column < board.getBounds().getColumns(); column++) {
             final int pointsForColumn = manager.getPointsForCol(column);
-            final ImageView pointImage = getImageForColumn(pointsForColumn, imageFactory);
-            final ImageView markedImage = imageFactory.createCircleImage();
+            final ImageView pointImage = getImageForColumn(pointsForColumn);
             final PointDisplay display = new PointDisplay(pointImage, markedImage);
             columnMap.put(column, display);
             add(display, column, 0);
@@ -33,16 +40,16 @@ public class ColumnPointsDisplay extends GridPane {
     }
 
 
-    private ImageView getImageForColumn(final int pointsForColumn, final ImageFactory imageFactory) {
+    private ImageView getImageForColumn(final int pointsForColumn) {
         switch (pointsForColumn) {
             case 1:
-                return imageFactory.createPointOneImage();
+                return TextureUtils.loadTexture(POINT_ONE);
             case 2:
-                return imageFactory.createPointTwoImage();
+                return TextureUtils.loadTexture(POINT_TWO);
             case 3:
-                return imageFactory.createPointThreeImage();
+                return TextureUtils.loadTexture(POINT_THREE);
             case 5:
-                return imageFactory.createPointFiveImage();
+                return TextureUtils.loadTexture(POINT_FIVE);
             default:
                 throw new IllegalArgumentException();
         }
