@@ -19,8 +19,7 @@ public class ColumnPointsDisplay extends GridPane {
 
     private final Map<Integer, PointDisplay> columnMap = new HashMap<>();
 
-    public ColumnPointsDisplay(final Board board, final RuleManager manager) {
-        super();
+    public void init(final Board board, final RuleManager manager) {
         final ImageView markedImage = TextureUtils.loadTexture(MARK_CIRCLE);
         for (int column = 0; column < board.getBounds().getColumns(); column++) {
             final int pointsForColumn = manager.getPointsForCol(column);
@@ -31,7 +30,7 @@ public class ColumnPointsDisplay extends GridPane {
         }
     }
 
-    public void mark(final int column) {
+    public void markColumnAsFiull(final int column) {
         if (columnMap.containsKey(column)) {
             columnMap.get(column).mark();
         } else {

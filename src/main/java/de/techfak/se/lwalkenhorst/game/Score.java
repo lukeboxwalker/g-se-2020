@@ -6,7 +6,7 @@ public class Score {
     private final int value;
 
     public Score() {
-        this(0);
+        this(-1);
     }
 
     public Score(final int value) {
