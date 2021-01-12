@@ -7,6 +7,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Region;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,10 +38,10 @@ public final class TextureUtils {
         return () -> loadTexture(resource);
     }
 
-    public static Background createBackgroundImage(final String resource, final double width, final double height) {
+    public static Background createBackgroundImage(final String resource, final Region region) {
         final Image image = loadImage(resource);
         final BackgroundPosition position = new BackgroundPosition(Side.LEFT, 0, false, Side.TOP, 0, false);
-        final BackgroundSize size = new BackgroundSize(width, height, false, false, false, true);
+        final BackgroundSize size = new BackgroundSize(region.getWidth(), region.getHeight(), false, false, false, true);
         final BackgroundImage backgroundImage = new BackgroundImage(image, REPEAT, REPEAT, position, size);
         return new Background(backgroundImage);
     }

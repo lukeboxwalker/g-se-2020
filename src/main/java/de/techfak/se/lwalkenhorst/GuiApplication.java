@@ -1,6 +1,6 @@
 package de.techfak.se.lwalkenhorst;
 
-import de.techfak.se.lwalkenhorst.conrtoller.GuiController;
+import de.techfak.se.lwalkenhorst.conrtoller.StartController;
 import de.techfak.se.lwalkenhorst.exception.InvalidBoardException;
 import de.techfak.se.lwalkenhorst.exception.InvalidParameterException;
 import de.techfak.se.lwalkenhorst.game.DiceTurnValidator;
@@ -32,12 +32,13 @@ public class GuiApplication extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GameView.fxml"));
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/StartView.fxml"));
         final Pane root = fxmlLoader.load();
 
-        final GuiController controller = fxmlLoader.getController();
-        controller.initialize(game);
-        game.play();
+        final StartController controller = fxmlLoader.getController();
+        controller.initialize(stage, game);
+//        controller.initialize(game);
+//        game.play();
 
         final Scene scene = new Scene(root);
         stage.setTitle("GSE-2020 Encore!");

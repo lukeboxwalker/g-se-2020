@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="de.techfak.se.lwalkenhorst.conrtoller.StartController"
+            prefHeight="520" prefWidth="1000">
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0" style="-fx-alignment: CENTER" spacing="40">
+        <Button fx:id="singlePlayer"
+                style="-fx-base: white; -fx-border-color: black; -fx-focus-color: transparent;"
+                prefHeight="45" prefWidth="335">
+            <font>
+                <Font name="arial" size="20"/>
+            </font>
+        </Button>
+        <Button fx:id="multiPlayer"
+                style="-fx-base: white; -fx-border-color: black; -fx-focus-color: transparent;"
+                prefHeight="45" prefWidth="335">
+            <font>
+                <Font name="arial" size="20"/>
+            </font>
+        </Button>
+    </VBox>
+</AnchorPane>

@@ -25,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-public class GuiController {
+public class GameController {
 
     private static final String BUTTON_PASS = "Pass";
     private static final String BUTTON_SUBMIT = "Submit";
@@ -62,7 +61,7 @@ public class GuiController {
     public void initialize(final Game game) {
         this.game = game;
         chatDisplay.info("Starting new Game");
-        root.setBackground(TextureUtils.createBackgroundImage("/assets/background.png", root.getWidth(), root.getHeight()));
+        root.setBackground(TextureUtils.createBackgroundImage("/assets/background.png", root));
         game.addListener(PropertyChange.SCORE, event -> Platform.runLater(this::updatePoints));
         game.addListener(PropertyChange.ROUND, event -> Platform.runLater(this::updateDice));
         game.addListener(PropertyChange.FINISHED, event -> Platform.runLater(this::displayGameFinished));

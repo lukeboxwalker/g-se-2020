@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="520" prefWidth="1000" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.techfak.se.lwalkenhorst.conrtoller.GuiController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.techfak.se.lwalkenhorst.conrtoller.GameController">
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0">
         <VBox>
@@ -45,6 +45,7 @@
                 </Label>
             </HBox>
         </VBox>
-        <ChatDisplay fx:id="chatDisplay" styleClass="edge-to-edge" prefHeight="110"/>
+        <ChatDisplay fx:id="chatDisplay" styleClass="edge-to-edge" prefHeight="110"
+                     style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-padding: 15px"/>
     </VBox>
 </AnchorPane>

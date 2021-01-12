@@ -18,7 +18,6 @@ public class ChatDisplay extends ScrollPane {
     public ChatDisplay() {
         super();
         setContent(messages);
-        setStyle("-fx-background-color: transparent; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-padding: 15px");
         setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
