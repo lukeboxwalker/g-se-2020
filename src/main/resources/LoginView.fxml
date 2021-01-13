@@ -12,25 +12,26 @@
             fx:controller="de.techfak.se.lwalkenhorst.conrtoller.LoginController"
             prefHeight="520" prefWidth="1000">
 
-        <VBox style="-fx-alignment: CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               AnchorPane.topAnchor="0.0">
-            <HBox alignment="CENTER" spacing="20">
-                <VBox style="-fx-padding: 15px" spacing="15" alignment="CENTER">
-                    <TextField fx:id="name" promptText="&lt;player name&gt;" prefWidth="500"
-                               style="-fx-alignment: center; -fx-prompt-text-fill: black;"/>
-                    <TextField fx:id="address" promptText="&lt;server address&gt;" prefWidth="500"
-                               style="-fx-alignment: center; -fx-prompt-text-fill: black;"/>
-                </VBox>
-                <Button fx:id="connectButton"
-                        style="-fx-base: white; -fx-focus-color: transparent;" prefHeight="35" text="connect">
-                    <font>
-                        <Font name="arial" size="15"/>
-                    </font>
-                </Button>
-            </HBox>
-            <ChatDisplay fx:id="chatDisplay" styleClass="edge-to-edge" prefHeight="310" prefWidth="100"
+    <VBox style="-fx-alignment: CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER" spacing="20">
+            <VBox style="-fx-padding: 15px" spacing="15" alignment="CENTER">
+                <TextField fx:id="name" promptText="&lt;player name&gt;" prefWidth="500"
+                           style="-fx-alignment: center; -fx-prompt-text-fill: black;"/>
+                <TextField fx:id="address" promptText="&lt;server address&gt;" prefWidth="500"
+                           style="-fx-alignment: center; -fx-prompt-text-fill: black;"/>
+            </VBox>
+            <Button fx:id="connectButton"
+                    style="-fx-base: white; -fx-focus-color: transparent;" prefHeight="35" text="Connect">
+                <font>
+                    <Font name="arial" size="15"/>
+                </font>
+            </Button>
+        </HBox>
+        <HBox alignment="CENTER" spacing="20">
+            <ChatDisplay fx:id="chatDisplay" styleClass="edge-to-edge" prefHeight="310" prefWidth="700"
                          style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-padding: 45px"/>
-        </VBox>
-
-
+        </HBox>
+    </VBox>
 </AnchorPane>
