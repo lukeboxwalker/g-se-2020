@@ -1,3 +1,6 @@
+<a href="https://github.com/lukeboxwalker/g-se-2020/actions">![example workflow](https://github.com/lukeboxwalker/g-se-2020/actions/workflows/main.yml/badge.svg)</a>
+<a href="https://app.codecov.io/gh/lukeboxwalker/g-se-2020">![coverage](https://img.shields.io/codecov/c/github/lukeboxwalker/g-se-2020?token=JRMFAFQVXV)</a>
+
 # GSE-Nochmal
 
 Projekt für Grundlagen-Software-Engineering 2020.
