@@ -1,6 +1,12 @@
 language: java
-after_success:
-    - bash <(curl -s https://codecov.io/bash)
+sudo: false
+
+jdk:
+    - oraclejdk11
+
 env:
     global:
-        - CODECOV_TOKEN='5b98df4a-0d60-4dd2-882d-eacd698b3c27'
+        - CODECOV_TOKEN=5b98df4a-0d60-4dd2-882d-eacd698b3c27
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
