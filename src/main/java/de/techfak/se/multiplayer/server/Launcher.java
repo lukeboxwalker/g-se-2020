@@ -32,7 +32,9 @@ public class Launcher implements Callable<Integer> {
 
     public static void main(final String[] args) {
         final int exitCode = new CommandLine(new Launcher()).execute(args);
-        System.exit(exitCode);
+        if (exitCode != 0) {
+            System.exit(exitCode);
+        }
     }
 
     @Override
@@ -46,14 +48,10 @@ public class Launcher implements Callable<Integer> {
             final SynchronizedGame game = new SynchronizedGame(baseGame);
             final Server server = new Server(game);
             server.start(port);
-
-            Thread.currentThread().join();
         } catch (InvalidBoardLayoutException | InvalidFieldException e) {
             return INVALID_BOARD_EXIT_CODE;
         } catch (IOException e) {
             return INVALID_FILE_EXIT_CODE;
-        } catch (InterruptedException e) {
-            return -1;
         }
         return 0;
     }
